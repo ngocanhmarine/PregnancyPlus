@@ -1,0 +1,80 @@
+﻿using PregnancyData.Entity;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace PregnancyData.Dao
+{
+	public class MyWeightDao
+	{
+		PregnancyEntity connect = null;
+		public MyWeightDao()
+		{
+			connect = new PregnancyEntity();
+			connect.Configuration.ProxyCreationEnabled = false;
+		}
+
+		public IEnumerable<preg_my_weight> GetListItem()
+		{
+			return connect.preg_my_weights;
+		}
+
+		public preg_my_weight GetItemByID(int id)
+		{
+			return connect.preg_my_weights.Where(c => c.id == id).FirstOrDefault();
+		}
+		public IEnumerable<preg_my_weight> GetItemsByParams(preg_my_weight data)
+		{
+			IEnumerable<preg_my_weight> result = connect.preg_my_weights;
+			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
+			{
+				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
+				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
+				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				{
+					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+				}
+				else if (propertyName == "user_id" && propertyValue != null)
+				{
+					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+				}
+				else if (propertyName == "my_weight_type_id" && propertyValue != null)
+				{
+					result = result.Where(c => c.my_weight_type_id == Convert.ToInt32(propertyValue));
+				}
+				else if (propertyName == "start_date" && propertyValue != null)
+				{
+					result = result.Where(c => c.start_date == Convert.ToDateTime(propertyValue));
+				}
+				else if (propertyName == "pre_pregnancy_weight" && propertyValue != null)
+				{
+					result = result.Where(c => c.pre_pregnancy_weight == Convert.ToDouble(propertyValue));
+				}
+				else if (propertyName == "current_weight" && propertyValue != null)
+				{
+					result = result.Where(c => c.current_weight == Convert.ToDouble(propertyValue));
+				}
+			}
+			return result;
+		}
+		public void InsertData(preg_my_weight item)
+		{
+			connect.preg_my_weights.Add(item);
+			connect.SaveChanges();
+		}
+
+		public void UpdateData(preg_my_weight item)
+		{
+			connect.SaveChanges();
+		}
+
+        public void DeleteData(preg_my_weight item)
+		{
+			
+			connect.preg_my_weights.Remove(item);
+			connect.SaveChanges();
+		}
+
+	}
+}

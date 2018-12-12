@@ -1,0 +1,10 @@
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\bin\PregnancyData.dll.config
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\bin\PregnancyData.dll
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\bin\PregnancyData.pdb
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\bin\EntityFramework.dll
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\bin\EntityFramework.SqlServer.dll
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\bin\EntityFramework.xml
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\bin\EntityFramework.SqlServer.xml
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\obj\Debug\PregnancyData.dll
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\obj\Debug\PregnancyData.pdb
+E:\02.WSOFTPRO\07.Pregnacy_ASPNet\02.SourceCode\01.Pregnacy_API\PregnancyData\obj\Debug\PregnancyData.csprojResolveAssemblyReference.cache
