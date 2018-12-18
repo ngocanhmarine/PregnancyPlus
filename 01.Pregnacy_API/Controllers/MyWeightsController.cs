@@ -89,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -120,12 +120,13 @@ namespace _01.Pregnacy_API.Controllers
 					my_weight.start_date = dataUpdate.start_date;
 					my_weight.pre_pregnancy_weight = dataUpdate.pre_pregnancy_weight;
 					my_weight.current_weight = dataUpdate.current_weight;
+
 					dao.UpdateData(my_weight);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

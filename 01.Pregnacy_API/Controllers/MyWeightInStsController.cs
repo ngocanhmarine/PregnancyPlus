@@ -25,26 +25,24 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-                IEnumerable<preg_my_weight_in_st> result;
+				IEnumerable<preg_my_weight_in_st> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
-					
+					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					 result = dao.GetListItem();
-					
+					result = dao.GetListItem();
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -90,7 +88,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -112,18 +110,19 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_my_weight_in_st my_weight_in_st = new preg_my_weight_in_st();
 					my_weight_in_st = dao.GetItemByID(Convert.ToInt32(id));
-                    if (my_weight_in_st== null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
+					if (my_weight_in_st == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
 					my_weight_in_st.position = dataUpdate.position;
 					my_weight_in_st.value = dataUpdate.value;
+
 					dao.UpdateData(my_weight_in_st);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -141,11 +140,11 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_my_weight_in_st item = dao.GetItemByID(Convert.ToInt32(id));
-                if (item == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
+				preg_my_weight_in_st item = dao.GetItemByID(Convert.ToInt32(id));
+				if (item == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}

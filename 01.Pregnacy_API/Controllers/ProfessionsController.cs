@@ -89,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -109,16 +109,16 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (dataUpdate != null)
 				{
-					preg_profession Profession = new preg_profession();
-					Profession = dao.GetItemByID(Convert.ToInt32(id));
-					Profession.profession_type = dataUpdate.profession_type;
+					preg_profession profession = new preg_profession();
+					profession = dao.GetItemByID(Convert.ToInt32(id));
+					profession.profession_type = dataUpdate.profession_type;
 
-					dao.UpdateData(Profession);
+					dao.UpdateData(profession);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

@@ -17,17 +17,17 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_week> GetListItem()
 		{
-			return connect.preg_weeks;
+			return connect.preg_week;
 		}
 
 		public preg_week GetItemByID(int id)
 		{
-			return connect.preg_weeks.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_week.Where(c => c.id == id).FirstOrDefault();
 		}
 
 		public IEnumerable<preg_week> GetItemsByParams(preg_week data)
 		{
-			IEnumerable<preg_week> result = connect.preg_weeks;
+			IEnumerable<preg_week> result = connect.preg_week;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -66,7 +66,7 @@ namespace PregnancyData.Dao
 
 		public void InsertData(preg_week item)
 		{
-			connect.preg_weeks.Add(item);
+			connect.preg_week.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -78,9 +78,8 @@ namespace PregnancyData.Dao
 		public void DeleteData(int id)
 		{
 			preg_week item = GetItemByID(id);
-			connect.preg_weeks.Remove(item);
+			connect.preg_week.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

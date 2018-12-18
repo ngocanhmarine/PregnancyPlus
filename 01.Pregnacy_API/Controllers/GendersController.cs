@@ -90,7 +90,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -117,12 +117,13 @@ namespace _01.Pregnacy_API.Controllers
                         return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
                     }
 					gender.gender = dataUpdate.gender;
+
 					dao.UpdateData(gender);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

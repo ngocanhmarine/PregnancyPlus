@@ -20,4 +20,5 @@ public class SysMethod
 		}
 		return hash.ToString();
 	}
+
 }

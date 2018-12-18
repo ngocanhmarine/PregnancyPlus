@@ -96,7 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -121,12 +121,13 @@ namespace _01.Pregnacy_API.Controllers
 					phone.profession_id = dataUpdate.profession_id;
 					phone.phone_number = dataUpdate.phone_number;
 					phone.user_id = dataUpdate.user_id;
+
 					dao.UpdateData(phone);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

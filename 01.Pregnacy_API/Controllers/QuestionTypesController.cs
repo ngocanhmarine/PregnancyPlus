@@ -9,34 +9,41 @@ using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class AppointmentBpSyssController : ApiController
+	public class QuestionTypesController : ApiController
 	{
-		AppointmentBpSysDao dao = new AppointmentBpSysDao();
+		QuestionTypeDao dao = new QuestionTypeDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_appointment_bp_sys data)
+		public HttpResponseMessage Get([FromBody]preg_question_type data)
 		{
 			try
 			{
-                IEnumerable<preg_appointment_bp_sys> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
+					IEnumerable<preg_question_type> result = dao.GetItemsByParams(data);
+					if (result.Count() > 0)
+					{
+						return Request.CreateResponse(HttpStatusCode.OK, result);
+					}
+					else
+					{
+						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+					}
 				}
 				else
 				{
-					 result = dao.GetListItem();
-					
+					IEnumerable<preg_question_type> result = dao.GetListItem();
+					if (result.Count() > 0)
+					{
+						return Request.CreateResponse(HttpStatusCode.OK, result);
+					}
+					else
+					{
+						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+					}
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
 			}
 			catch (Exception ex)
 			{
@@ -51,7 +58,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_appointment_bp_sys data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_question_type data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -71,7 +78,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// POST api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Post([FromBody]preg_appointment_bp_sys data)
+		public HttpResponseMessage Post([FromBody]preg_question_type data)
 		{
 			try
 			{
@@ -82,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -95,28 +102,23 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_appointment_bp_sys dataUpdate)
+		public HttpResponseMessage Put(string id, [FromBody]preg_question_type dataUpdate)
 		{
 
 			try
 			{
 				if (dataUpdate != null)
 				{
-					preg_appointment_bp_sys appointment_bp_sys = new preg_appointment_bp_sys();
-					appointment_bp_sys = dao.GetItemByID(Convert.ToInt32(id));
-                    if (appointment_bp_sys == null)
-                    {
+					preg_question_type question_type = new preg_question_type();
+					question_type = dao.GetItemByID(Convert.ToInt32(id));
+					question_type.type = dataUpdate.type;
 
-                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					appointment_bp_sys.value = dataUpdate.value;
-
-					dao.UpdateData(appointment_bp_sys);
+					dao.UpdateData(question_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -131,16 +133,9 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
-                preg_appointment_bp_sys appointment_bp_sys = dao.GetItemByID(Convert.ToInt32(id));
-                if (appointment_bp_sys == null)
-                {
-
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(appointment_bp_sys);
+				dao.DeleteData(Convert.ToInt32(id));
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

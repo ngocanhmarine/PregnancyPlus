@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_todo> GetListItem()
 		{
-			return connect.preg_todos;
+			return connect.preg_todo;
 		}
 
 		public preg_todo GetItemByID(int id)
 		{
-			return connect.preg_todos.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_todo.Where(c => c.id == id).FirstOrDefault();
 		}
 		public IEnumerable<preg_todo> GetItemsByParams(preg_todo data)
 		{
-			IEnumerable<preg_todo> result = connect.preg_todos;
+			IEnumerable<preg_todo> result = connect.preg_todo;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -43,9 +43,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.title == propertyValue.ToString());
 				}
-				else if (propertyName == "user_id" && propertyValue != null)
+				else if (propertyName == "custom_task_by_user_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.custom_task_by_user_id == Convert.ToInt32(propertyValue));
 				}
 			}
 			return result;
@@ -53,7 +53,7 @@ namespace PregnancyData.Dao
 
 		public void InsertData(preg_todo item)
 		{
-			connect.preg_todos.Add(item);
+			connect.preg_todo.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -65,9 +65,8 @@ namespace PregnancyData.Dao
 		public void DeleteData(int id)
 		{
 			preg_todo item = GetItemByID(id);
-			connect.preg_todos.Remove(item);
+			connect.preg_todo.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

@@ -96,7 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -119,12 +119,13 @@ namespace _01.Pregnacy_API.Controllers
 					preg_time_frame time_frame = new preg_time_frame();
 					time_frame = dao.GetItemByID(Convert.ToInt32(id));
 					time_frame.frame_title = dataUpdate.frame_title;
+
 					dao.UpdateData(time_frame);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

@@ -17,46 +17,41 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_my_birth_plan> GetListItem()
 		{
-			return connect.preg_my_birth_plans;
+			return connect.preg_my_birth_plan;
 		}
 
-		public preg_my_birth_plan GetItemByID(int id)
+		public preg_my_birth_plan GetItemByID(int user_id, int my_birth_plan_item_id)
 		{
-			return connect.preg_my_birth_plans.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_my_birth_plan.Where(c => c.my_birth_plan_item_id == my_birth_plan_item_id && c.user_id == user_id).FirstOrDefault();
 		}
+
+		public IEnumerable<preg_my_birth_plan> GetItemByUserID(int user_id)
+		{
+			return connect.preg_my_birth_plan.Where(c => c.user_id == user_id);
+		}
+
 		public IEnumerable<preg_my_birth_plan> GetItemsByParams(preg_my_birth_plan data)
 		{
-			IEnumerable<preg_my_birth_plan> result = connect.preg_my_birth_plans;
+			IEnumerable<preg_my_birth_plan> result = connect.preg_my_birth_plan;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "my_birth_plan_item_id" && Convert.ToInt32(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
-				}
-				else if (propertyName == "my_birth_plan_type_id" && propertyValue != null)
-				{
-					result = result.Where(c => c.my_birth_plan_type_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.my_birth_plan_item_id == Convert.ToInt32(propertyValue));
 				}
 				else if (propertyName == "user_id" && propertyValue != null)
 				{
 					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
 				}
-				else if (propertyName == "icon" && propertyValue != null)
-				{
-					result = result.Where(c => c.icon == propertyValue.ToString());
-				}
-				else if (propertyName == "title" && propertyValue != null)
-				{
-					result = result.Where(c => c.title == propertyValue.ToString());
-				}
 			}
 			return result;
 		}
+
 		public void InsertData(preg_my_birth_plan item)
 		{
-			connect.preg_my_birth_plans.Add(item);
+			connect.preg_my_birth_plan.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -65,12 +60,10 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-        public void DeleteData(preg_my_birth_plan item)
+		public void DeleteData(preg_my_birth_plan item)
 		{
-			
-			connect.preg_my_birth_plans.Remove(item);
+			connect.preg_my_birth_plan.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

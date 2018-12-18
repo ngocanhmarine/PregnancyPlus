@@ -18,26 +18,24 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-                IEnumerable<preg_baby_name> result;
+				IEnumerable<preg_baby_name> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
-					
+					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					 result = dao.GetListItem();
-					
+					result = dao.GetListItem();
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -83,7 +81,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -105,21 +103,21 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_baby_name baby_name = new preg_baby_name();
 					baby_name = dao.GetItemByID(Convert.ToInt32(id));
-                    if (baby_name == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					baby_name.user_id = dataUpdate.user_id;
-					baby_name.preg_country_id = dataUpdate.preg_country_id;
-					baby_name.preg_gender_id = dataUpdate.preg_gender_id;
+					if (baby_name == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					baby_name.country_id = dataUpdate.country_id;
+					baby_name.gender_id = dataUpdate.gender_id;
 					baby_name.name = dataUpdate.name;
+					baby_name.custom_baby_name_by_user_id = dataUpdate.custom_baby_name_by_user_id;
 
 					dao.UpdateData(baby_name);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -137,12 +135,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id));
-                if (item == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(item);
+				preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id));
+				if (item == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

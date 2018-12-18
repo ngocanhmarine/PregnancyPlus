@@ -6,20 +6,20 @@ namespace PregnancyData.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class preg_appointment_bp_dia
+    public partial class preg_social_type
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public preg_appointment_bp_dia()
+        public preg_social_type()
         {
-            preg_appointment = new HashSet<preg_appointment>();
+            preg_user = new HashSet<preg_user>();
         }
 
         public int id { get; set; }
 
         [StringLength(1024)]
-        public string value { get; set; }
+        public string type { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_appointment> preg_appointment { get; set; }
+        public virtual ICollection<preg_user> preg_user { get; set; }
     }
 }

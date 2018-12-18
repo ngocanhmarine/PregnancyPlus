@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_appointment> GetListItem()
 		{
-			return connect.preg_appointments;
+			return connect.preg_appointment;
 		}
 
 		public preg_appointment GetItemByID(int id)
 		{
-			return connect.preg_appointments.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_appointment.Where(c => c.id == id).FirstOrDefault();
 		}
 		public IEnumerable<preg_appointment> GetItemsByParams(preg_appointment data)
 		{
-			IEnumerable<preg_appointment> result = connect.preg_appointments;
+			IEnumerable<preg_appointment> result = connect.preg_appointment;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -39,13 +39,13 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.name == propertyValue.ToString());
 				}
+				else if (propertyName == "contact_name" && propertyValue != null)
+				{
+					result = result.Where(c => c.contact_name == propertyValue.ToString());
+				}
 				else if (propertyName == "profession_id" && propertyValue != null)
 				{
 					result = result.Where(c => c.profession_id == Convert.ToInt32(propertyValue));
-				}
-				else if (propertyName == "appointment_type_id" && propertyValue != null)
-				{
-					result = result.Where(c => c.appointment_type_id == Convert.ToInt32(propertyValue));
 				}
 				else if (propertyName == "appointment_date" && propertyValue != null)
 				{
@@ -63,21 +63,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.weight_in_st == Convert.ToDouble(propertyValue));
 				}
-				else if (propertyName == "appointment_bp_dia_id" && propertyValue != null)
+				else if (propertyName == "sync_to_calendar" && propertyValue != null)
 				{
-					result = result.Where(c => c.appointment_bp_dia_id == Convert.ToInt32(propertyValue));
-				}
-				else if (propertyName == "appointment_bp_sys_id" && propertyValue != null)
-				{
-					result = result.Where(c => c.appointment_bp_sys_id == Convert.ToInt32(propertyValue));
-				}
-				else if (propertyName == "appointment_baby_heart_id" && propertyValue != null)
-				{
-					result = result.Where(c => c.appointment_baby_heart_id == Convert.ToInt32(propertyValue));
-				}
-				else if (propertyName == "sync_to_heart" && propertyValue != null)
-				{
-					result = result.Where(c => c.sync_to_heart == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.sync_to_calendar == Convert.ToInt32(propertyValue));
 				}
 				else if (propertyName == "note" && propertyValue != null)
 				{
@@ -87,12 +75,16 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
 				}
+				else if (propertyName == "appointment_type_id" && propertyValue != null)
+				{
+					result = result.Where(c => c.appointment_type_id == Convert.ToInt32(propertyValue));
+				}
 			}
 			return result;
 		}
 		public void InsertData(preg_appointment item)
 		{
-			connect.preg_appointments.Add(item);
+			connect.preg_appointment.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -104,7 +96,7 @@ namespace PregnancyData.Dao
         public void DeleteData(preg_appointment item)
 		{
 			
-			connect.preg_appointments.Remove(item);
+			connect.preg_appointment.Remove(item);
 			connect.SaveChanges();
 		}
 

@@ -17,16 +17,17 @@ namespace PregnancyData.Dao
 
         public IEnumerable<preg_phone> GetListItem()
         {
-            return connect.preg_phones;
+            return connect.preg_phone;
         }
 
         public preg_phone GetItemByID(int id)
         {
-            return connect.preg_phones.Where(c => c.id == id).FirstOrDefault();
+            return connect.preg_phone.Where(c => c.id == id).FirstOrDefault();
         }
+
 		public IEnumerable<preg_phone> GetItemsByParams(preg_phone data)
 		{
-			IEnumerable<preg_phone> result = connect.preg_phones;
+			IEnumerable<preg_phone> result = connect.preg_phone;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -50,9 +51,10 @@ namespace PregnancyData.Dao
 			}
 			return result;
 		}
+
 		public void InsertData(preg_phone item)
         {
-            connect.preg_phones.Add(item);
+            connect.preg_phone.Add(item);
             connect.SaveChanges();
         }
 
@@ -64,7 +66,7 @@ namespace PregnancyData.Dao
         public void DeleteData(int id)
         {
             preg_phone Phone = GetItemByID(id);
-            connect.preg_phones.Remove(Phone);
+            connect.preg_phone.Remove(Phone);
             connect.SaveChanges();
         }
 

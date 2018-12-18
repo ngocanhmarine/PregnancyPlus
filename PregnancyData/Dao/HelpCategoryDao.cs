@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
         public IEnumerable<preg_help_category> GetListItem()
         {
-            return connect.preg_help_categorys;
+            return connect.preg_help_category;
         }
 
         public preg_help_category GetItemByID(int id)
         {
-            return connect.preg_help_categorys.Where(c => c.id == id).FirstOrDefault();
+            return connect.preg_help_category.Where(c => c.id == id).FirstOrDefault();
         }
 		public IEnumerable<preg_help_category> GetItemsByParams(preg_help_category data)
 		{
-			IEnumerable<preg_help_category> result = connect.preg_help_categorys;
+			IEnumerable<preg_help_category> result = connect.preg_help_category;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -39,9 +39,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.name == propertyValue.ToString());
 				}
-				else if (propertyName == "image" && propertyValue != null)
+				else if (propertyName == "highline_image" && propertyValue != null)
 				{
-					result = result.Where(c => c.image == propertyValue.ToString());
+					result = result.Where(c => c.highline_image == propertyValue.ToString());
 				}
 				else if (propertyName == "order" && propertyValue != null)
 				{
@@ -52,7 +52,7 @@ namespace PregnancyData.Dao
 		}
 		public void InsertData(preg_help_category item)
         {
-            connect.preg_help_categorys.Add(item);
+            connect.preg_help_category.Add(item);
             connect.SaveChanges();
         }
 
@@ -63,8 +63,7 @@ namespace PregnancyData.Dao
 
         public void DeleteData(preg_help_category item)
         {
-		
-            connect.preg_help_categorys.Remove(item);
+            connect.preg_help_category.Remove(item);
             connect.SaveChanges();
         }
 

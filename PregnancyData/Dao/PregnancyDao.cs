@@ -6,27 +6,27 @@ using System.Web;
 
 namespace PregnancyData.Dao
 {
-    public class PregnancyDao
-    {
-         PregnancyEntity connect = null;
-        public PregnancyDao()
-        {
-            connect = new PregnancyEntity();
+	public class PregnancyDao
+	{
+		PregnancyEntity connect = null;
+		public PregnancyDao()
+		{
+			connect = new PregnancyEntity();
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-        public IEnumerable<preg_pregnancy> GetListItem()
-        {
-            return connect.preg_pregnancys;
-        }
+		public IEnumerable<preg_pregnancy> GetListItem()
+		{
+			return connect.preg_pregnancy;
+		}
 
-        public preg_pregnancy GetItemByID(int id)
-        {
-            return connect.preg_pregnancys.Where(c => c.id == id).FirstOrDefault();
-        }
+		public preg_pregnancy GetItemByID(int id)
+		{
+			return connect.preg_pregnancy.Where(c => c.id == id).FirstOrDefault();
+		}
 		public IEnumerable<preg_pregnancy> GetItemsByParams(preg_pregnancy data)
 		{
-			IEnumerable<preg_pregnancy> result = connect.preg_pregnancys;
+			IEnumerable<preg_pregnancy> result = connect.preg_pregnancy;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -55,9 +55,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.pregnancy_loss == Convert.ToInt32(propertyValue));
 				}
-				else if (propertyName == "baby_already_bom" && propertyValue != null)
+				else if (propertyName == "baby_already_born" && propertyValue != null)
 				{
-					result = result.Where(c => c.baby_already_bom == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.baby_already_born == Convert.ToInt32(propertyValue));
 				}
 				else if (propertyName == "date_of_birth" && propertyValue != null)
 				{
@@ -70,23 +70,23 @@ namespace PregnancyData.Dao
 			}
 			return result;
 		}
+
 		public void InsertData(preg_pregnancy item)
-        {
-            connect.preg_pregnancys.Add(item);
-            connect.SaveChanges();
-        }
+		{
+			connect.preg_pregnancy.Add(item);
+			connect.SaveChanges();
+		}
 
-        public void UpdateData(preg_pregnancy item)
-        {
-            connect.SaveChanges();
-        }
+		public void UpdateData(preg_pregnancy item)
+		{
+			connect.SaveChanges();
+		}
 
-        public void DeleteData(int id)
-        {
-            preg_pregnancy item = GetItemByID(id);
-            connect.preg_pregnancys.Remove(item);
-            connect.SaveChanges();
-        }
-
-    }
+		public void DeleteData(int id)
+		{
+			preg_pregnancy item = GetItemByID(id);
+			connect.preg_pregnancy.Remove(item);
+			connect.SaveChanges();
+		}
+	}
 }

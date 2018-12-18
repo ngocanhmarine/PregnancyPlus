@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_question> GetListItem()
 		{
-			return connect.preg_questions;
+			return connect.preg_question;
 		}
 
 		public preg_question GetItemByID(int id)
 		{
-			return connect.preg_questions.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_question.Where(c => c.id == id).FirstOrDefault();
 		}
 		public IEnumerable<preg_question> GetItemsByParams(preg_question data)
 		{
-			IEnumerable<preg_question> result = connect.preg_questions;
+			IEnumerable<preg_question> result = connect.preg_question;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -35,28 +35,24 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
 				}
-				else if (propertyName == "user_id" && propertyValue != null)
+				else if (propertyName == "question_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
-				}
-				else if (propertyName == "questiondate" && propertyValue != null)
-				{
-					result = result.Where(c => c.questiondate == Convert.ToDateTime(propertyValue));
-				}
-				else if (propertyName == "title" && propertyValue != null)
-				{
-					result = result.Where(c => c.title == propertyValue.ToString());
+					result = result.Where(c => c.question_type_id == Convert.ToInt32(propertyValue));
 				}
 				else if (propertyName == "content" && propertyValue != null)
 				{
 					result = result.Where(c => c.content == propertyValue.ToString());
+				}
+				else if (propertyName == "custom_question_by_user_id" && propertyValue != null)
+				{
+					result = result.Where(c => c.custom_question_by_user_id == Convert.ToInt32(propertyValue));
 				}
 			}
 			return result;
 		}
 		public void InsertData(preg_question item)
 		{
-			connect.preg_questions.Add(item);
+			connect.preg_question.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -68,9 +64,8 @@ namespace PregnancyData.Dao
 		public void DeleteData(int id)
 		{
 			preg_question item = GetItemByID(id);
-			connect.preg_questions.Remove(item);
+			connect.preg_question.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

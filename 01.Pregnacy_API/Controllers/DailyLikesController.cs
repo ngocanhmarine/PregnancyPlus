@@ -22,12 +22,10 @@ namespace _01.Pregnacy_API.Controllers
 				if (data != null)
 				{
 					 result = dao.GetItemsByParams(data);
-					
 				}
 				else
 				{
 					 result = dao.GetListItem();
-					
 				}
                 if (result.Count() > 0)
                 {
@@ -83,7 +81,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -111,19 +109,15 @@ namespace _01.Pregnacy_API.Controllers
                         return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
                     }
 					daily_like.user_id = dataUpdate.user_id;
-					daily_like.daily_id = dataUpdate.daily_id;
 					daily_like.like_type_id = dataUpdate.like_type_id;
-					daily_like.preg_daily = dataUpdate.preg_daily;
-					daily_like.preg_like_type = dataUpdate.preg_like_type;
-					daily_like.preg_user = dataUpdate.preg_user;
-					daily_like.user_id = dataUpdate.user_id;
+					daily_like.daily_id = dataUpdate.daily_id;
 
 					dao.UpdateData(daily_like);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

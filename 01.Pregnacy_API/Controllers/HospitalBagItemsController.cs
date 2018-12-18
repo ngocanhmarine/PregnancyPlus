@@ -9,16 +9,16 @@ using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-    public class AppointmentBabyHeartsController : ApiController
+    public class HospitalBagItemsController : ApiController
     {
-        AppointmentBabyHeartDao dao = new AppointmentBabyHeartDao();
+        HospitalBagItemDao dao = new HospitalBagItemDao();
         // GET api/values
         [Authorize]
-        public HttpResponseMessage Get([FromBody]preg_appointment_baby_heart data)
+        public HttpResponseMessage Get([FromBody]preg_hospital_bag_item data)
         {
             try
             {
-                IEnumerable<preg_appointment_baby_heart> result;
+                IEnumerable<preg_hospital_bag_item> result;
                 if (data != null)
                 {
                     result = dao.GetItemsByParams(data);
@@ -27,6 +27,7 @@ namespace _01.Pregnacy_API.Controllers
                 else
                 {
                     result = dao.GetListItem();
+
                 }
                 if (result.Count() > 0)
                 {
@@ -51,7 +52,7 @@ namespace _01.Pregnacy_API.Controllers
         {
             try
             {
-                preg_appointment_baby_heart data = dao.GetItemByID(Convert.ToInt32(id));
+                preg_hospital_bag_item data = dao.GetItemByID(Convert.ToInt32(id));
                 if (data != null)
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -71,7 +72,7 @@ namespace _01.Pregnacy_API.Controllers
 
         // POST api/values
         [Authorize(Roles = "dev, admin")]
-        public HttpResponseMessage Post([FromBody]preg_appointment_baby_heart data)
+        public HttpResponseMessage Post([FromBody]preg_hospital_bag_item data)
         {
             try
             {
@@ -82,7 +83,7 @@ namespace _01.Pregnacy_API.Controllers
                 }
                 else
                 {
-                    HttpError err = new HttpError(SysConst.DATA_EMPTY);
+                    HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
                 }
             }
@@ -95,26 +96,28 @@ namespace _01.Pregnacy_API.Controllers
 
         // PUT api/values/5
         [Authorize(Roles = "dev, admin")]
-        public HttpResponseMessage Put(string id, [FromBody]preg_appointment_baby_heart dataUpdate)
+        public HttpResponseMessage Put(string id, [FromBody]preg_hospital_bag_item dataUpdate)
         {
             try
             {
                 if (dataUpdate != null)
                 {
-                    preg_appointment_baby_heart appointment_baby_heart = new preg_appointment_baby_heart();
-                    appointment_baby_heart = dao.GetItemByID(Convert.ToInt32(id));
-                    if (appointment_baby_heart == null)
+                    preg_hospital_bag_item HospitalBagItem = new preg_hospital_bag_item();
+                    HospitalBagItem = dao.GetItemByID(Convert.ToInt32(id));
+                    if (HospitalBagItem == null)
                     {
                         return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
                     }
-                    appointment_baby_heart.value = dataUpdate.value;
+                    HospitalBagItem.name = dataUpdate.name;
+                    HospitalBagItem.type = dataUpdate.type;
+                    HospitalBagItem.custom_item_by_user_id = dataUpdate.custom_item_by_user_id;
 
-                    dao.UpdateData(appointment_baby_heart);
+                    dao.UpdateData(HospitalBagItem);
                     return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
                 }
                 else
                 {
-                    HttpError err = new HttpError(SysConst.DATA_EMPTY);
+                    HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
                 }
             }
@@ -129,10 +132,9 @@ namespace _01.Pregnacy_API.Controllers
         [Authorize(Roles = "dev, admin")]
         public HttpResponseMessage Delete(string id)
         {
-            //lstStrings[id] = value;
             try
             {
-                preg_appointment_baby_heart item = dao.GetItemByID(Convert.ToInt32(id));
+                preg_hospital_bag_item item = dao.GetItemByID(Convert.ToInt32(id));
                 if (item == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

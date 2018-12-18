@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
         public IEnumerable<preg_help> GetListItem()
         {
-            return connect.preg_helps;
+            return connect.preg_help;
         }
 
         public preg_help GetItemByID(int id)
         {
-            return connect.preg_helps.Where(c => c.id == id).FirstOrDefault();
+            return connect.preg_help.Where(c => c.id == id).FirstOrDefault();
         }
 		public IEnumerable<preg_help> GetItemsByParams(preg_help data)
 		{
-			IEnumerable<preg_help> result = connect.preg_helps;
+			IEnumerable<preg_help> result = connect.preg_help;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -39,9 +39,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.help_category_id == Convert.ToInt32(propertyValue));
 				}
-				else if (propertyName == "hingline_image" && propertyValue != null)
+				else if (propertyName == "image" && propertyValue != null)
 				{
-					result = result.Where(c => c.hingline_image == propertyValue.ToString());
+					result = result.Where(c => c.image == propertyValue.ToString());
 				}
 				else if (propertyName == "description" && propertyValue != null)
 				{
@@ -52,7 +52,7 @@ namespace PregnancyData.Dao
 		}
 		public void InsertData(preg_help item)
         {
-            connect.preg_helps.Add(item);
+            connect.preg_help.Add(item);
             connect.SaveChanges();
         }
 
@@ -63,8 +63,7 @@ namespace PregnancyData.Dao
 
         public void DeleteData(preg_help item)
         {
-			
-            connect.preg_helps.Remove(item);
+            connect.preg_help.Remove(item);
             connect.SaveChanges();
         }
 

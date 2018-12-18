@@ -16,18 +16,17 @@ namespace PregnancyData.Entity
 
         public int id { get; set; }
 
-        public int? user_id { get; set; }
-
-        public DateTime? questiondate { get; set; }
-
-        [StringLength(1024)]
-        public string title { get; set; }
+        public int? question_type_id { get; set; }
 
         [StringLength(1024)]
         public string content { get; set; }
 
+        public int? custom_question_by_user_id { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_answer> preg_answer { get; set; }
+
+        public virtual preg_question_type preg_question_type { get; set; }
 
         public virtual preg_user preg_user { get; set; }
     }

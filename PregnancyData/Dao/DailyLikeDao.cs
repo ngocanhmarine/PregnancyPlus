@@ -17,17 +17,17 @@ namespace PregnancyData.Dao
 
         public IEnumerable<preg_daily_like> GetListItem()
         {
-            return connect.preg_daily_likes;
+            return connect.preg_daily_like;
         }
 
         public preg_daily_like GetItemByID(int id)
         {
-            return connect.preg_daily_likes.Where(c => c.id == id).FirstOrDefault();
+            return connect.preg_daily_like.Where(c => c.id == id).FirstOrDefault();
         }
 
 		public IEnumerable<preg_daily_like> GetItemsByParams(preg_daily_like data)
 		{
-			IEnumerable<preg_daily_like> result = connect.preg_daily_likes;
+			IEnumerable<preg_daily_like> result = connect.preg_daily_like;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -51,9 +51,10 @@ namespace PregnancyData.Dao
 			}
 			return result;
 		}
+
 		public void InsertData(preg_daily_like item)
         {
-            connect.preg_daily_likes.Add(item);
+            connect.preg_daily_like.Add(item);
             connect.SaveChanges();
         }
 
@@ -64,10 +65,8 @@ namespace PregnancyData.Dao
 
         public void DeleteData(preg_daily_like item)
         {
-            
-            connect.preg_daily_likes.Remove(item);
+            connect.preg_daily_like.Remove(item);
             connect.SaveChanges();
         }
-
     }
 }

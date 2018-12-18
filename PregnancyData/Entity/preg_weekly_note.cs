@@ -20,6 +20,8 @@ namespace PregnancyData.Entity
         [StringLength(1024)]
         public string note { get; set; }
 
+        public int? like { get; set; }
+
         public virtual preg_user preg_user { get; set; }
 
         public virtual preg_week preg_week { get; set; }

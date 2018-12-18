@@ -9,40 +9,32 @@ using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class TodoOthersController : ApiController
+	public class ContractionController : ApiController
 	{
-		TodoOtherDao dao = new TodoOtherDao();
+		ContractionDao dao = new ContractionDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_todo_other data)
+		public HttpResponseMessage Get([FromBody]preg_contraction data)
 		{
 			try
 			{
+				IEnumerable<preg_contraction> result;
 				if (data != null)
 				{
-					IEnumerable<preg_todo_other> result = dao.GetItemsByParams(data);
-					if (result.Count() > 0)
-					{
-						return Request.CreateResponse(HttpStatusCode.OK, result);
-					}
-					else
-					{
-						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-					}
+					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					IEnumerable<preg_todo_other> result = dao.GetListItem();
-					if (result.Count() > 0)
-					{
-						return Request.CreateResponse(HttpStatusCode.OK, result);
-					}
-					else
-					{
-						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-					}
+					result = dao.GetListItem();
+				}
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 				}
 			}
 			catch (Exception ex)
@@ -58,7 +50,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_todo_other data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_contraction data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -78,7 +70,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// POST api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Post([FromBody]preg_todo_other data)
+		public HttpResponseMessage Post([FromBody]preg_contraction data)
 		{
 			try
 			{
@@ -89,7 +81,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -102,24 +94,29 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_todo_other dataUpdate)
+		public HttpResponseMessage Put(string id, [FromBody]preg_contraction dataUpdate)
 		{
 			try
 			{
 				if (dataUpdate != null)
 				{
-					preg_todo_other TodoOther = new preg_todo_other();
-					TodoOther = dao.GetItemByID(Convert.ToInt32(id));
-					TodoOther.title = dataUpdate.title;
-					TodoOther.content = dataUpdate.content;
-					TodoOther.user_id = dataUpdate.user_id;
+					preg_contraction contraction = new preg_contraction();
+					contraction = dao.GetItemByID(Convert.ToInt32(id));
+					if (contraction == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					contraction.user_id = dataUpdate.user_id;
+					contraction.date_time = dataUpdate.date_time;
+					contraction.duration = dataUpdate.duration;
+					contraction.interval = dataUpdate.interval;
 
-					dao.UpdateData(TodoOther);
+					dao.UpdateData(contraction);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -137,7 +134,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(id));
+				preg_contraction contraction = dao.GetItemByID(Convert.ToInt32(id));
+				if (contraction == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(contraction);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

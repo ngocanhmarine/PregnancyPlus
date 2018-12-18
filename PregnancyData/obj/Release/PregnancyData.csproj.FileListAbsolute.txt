@@ -50,3 +50,15 @@ E:\02.WSOFTPRO\07.Pregnacy_ASPNet\05Code\Pregnancy\PregnancyData\bin\EntityFrame
 E:\02.WSOFTPRO\07.Pregnacy_ASPNet\05Code\Pregnancy\PregnancyData\obj\Release\PregnancyData.csprojResolveAssemblyReference.cache
 E:\02.WSOFTPRO\07.Pregnacy_ASPNet\05Code\Pregnancy\PregnancyData\obj\Release\PregnancyData.dll
 E:\02.WSOFTPRO\07.Pregnacy_ASPNet\05Code\Pregnancy\PregnancyData\obj\Release\PregnancyData.pdb
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\obj\Release\PregnancyData.csprojAssemblyReference.cache
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\obj\Release\PregnancyData.csproj.CoreCompileInputs.cache
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\obj\Release\PregnancyData.dll
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\obj\Release\PregnancyData.pdb
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\bin\PregnancyData.dll.config
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\bin\PregnancyData.dll
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\bin\PregnancyData.pdb
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\bin\EntityFramework.dll
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\bin\EntityFramework.SqlServer.dll
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\bin\EntityFramework.xml
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\bin\EntityFramework.SqlServer.xml
+D:\WSoftPro\PegnancyPlus\Ver1\My git\Pregnancy\PregnancyData\obj\Release\PregnancyData.csproj.CopyComplete

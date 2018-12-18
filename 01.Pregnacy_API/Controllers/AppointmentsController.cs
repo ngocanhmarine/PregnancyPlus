@@ -35,7 +35,6 @@ namespace _01.Pregnacy_API.Controllers
 				else
 				{
 					 result = dao.GetListItem();
-					
 				}
                 if (result.Count() > 0)
                 {
@@ -93,7 +92,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -121,24 +120,23 @@ namespace _01.Pregnacy_API.Controllers
                         return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
                     }
 					appointment.name = dataUpdate.name;
+					appointment.contact_name = dataUpdate.contact_name;
 					appointment.profession_id = dataUpdate.profession_id;
-					appointment.appointment_type_id = dataUpdate.appointment_type_id;
 					appointment.appointment_date = dataUpdate.appointment_date;
 					appointment.appointment_time = dataUpdate.appointment_time;
 					appointment.my_weight_type_id = dataUpdate.my_weight_type_id;
 					appointment.weight_in_st = dataUpdate.weight_in_st;
-					appointment.appointment_bp_dia_id = dataUpdate.appointment_bp_dia_id;
-					appointment.appointment_bp_sys_id = dataUpdate.appointment_bp_sys_id;
-					appointment.appointment_baby_heart_id = dataUpdate.appointment_baby_heart_id;
-					appointment.sync_to_heart = dataUpdate.sync_to_heart;
+					appointment.sync_to_calendar = dataUpdate.sync_to_calendar;
 					appointment.note = dataUpdate.note;
 					appointment.user_id = dataUpdate.user_id;
+					appointment.appointment_type_id = dataUpdate.appointment_type_id;
+
 					dao.UpdateData(appointment);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

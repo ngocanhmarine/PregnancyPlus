@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
         public IEnumerable<preg_daily> GetListItem()
         {
-            return connect.preg_dailys;
+            return connect.preg_daily;
         }
 
         public preg_daily GetItemByID(int id)
         {
-            return connect.preg_dailys.Where(c => c.id == id).FirstOrDefault();
+            return connect.preg_daily.Where(c => c.id == id).FirstOrDefault();
         }
 		public IEnumerable<preg_daily> GetItemsByParams(preg_daily data)
 		{
-			IEnumerable<preg_daily> result = connect.preg_dailys;
+			IEnumerable<preg_daily> result = connect.preg_daily;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -43,9 +43,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.title == propertyValue.ToString());
 				}
-				else if (propertyName == "hingline_image" && propertyValue != null)
+				else if (propertyName == "highline_image" && propertyValue != null)
 				{
-					result = result.Where(c => c.hingline_image == propertyValue.ToString());
+					result = result.Where(c => c.highline_image == propertyValue.ToString());
 				}
 				else if (propertyName == "short_description" && propertyValue != null)
 				{
@@ -64,7 +64,7 @@ namespace PregnancyData.Dao
 		}
 		public void InsertData(preg_daily item)
         {
-            connect.preg_dailys.Add(item);
+            connect.preg_daily.Add(item);
             connect.SaveChanges();
         }
 
@@ -76,7 +76,7 @@ namespace PregnancyData.Dao
         public void DeleteData(preg_daily item)
         {
           
-            connect.preg_dailys.Remove(item);
+            connect.preg_daily.Remove(item);
             connect.SaveChanges();
         }
 

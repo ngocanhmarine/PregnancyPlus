@@ -12,7 +12,6 @@ namespace PregnancyData.Entity
 
         public int? image_type_id { get; set; }
 
-        [StringLength(1024)]
         public string image { get; set; }
 
         public int? week_id { get; set; }

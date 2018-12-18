@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_guides_type> GetListItem()
 		{
-			return connect.preg_guides_types;
+			return connect.preg_guides_type;
 		}
 
 		public preg_guides_type GetItemByID(int id)
 		{
-			return connect.preg_guides_types.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_guides_type.Where(c => c.id == id).FirstOrDefault();
 		}
 		public IEnumerable<preg_guides_type> GetItemsByParams(preg_guides_type data)
 		{
-			IEnumerable<preg_guides_type> result = connect.preg_guides_types;
+			IEnumerable<preg_guides_type> result = connect.preg_guides_type;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -44,7 +44,7 @@ namespace PregnancyData.Dao
 		}
 		public void InsertData(preg_guides_type item)
 		{
-			connect.preg_guides_types.Add(item);
+			connect.preg_guides_type.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -55,8 +55,7 @@ namespace PregnancyData.Dao
 
         public void DeleteData(preg_guides_type item)
 		{
-			
-			connect.preg_guides_types.Remove(item);
+			connect.preg_guides_type.Remove(item);
 			connect.SaveChanges();
 		}
 

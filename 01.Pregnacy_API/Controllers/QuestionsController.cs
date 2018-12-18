@@ -89,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -109,19 +109,18 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (dataUpdate != null)
 				{
-					preg_question Question = new preg_question();
-					Question = dao.GetItemByID(Convert.ToInt32(id));
-					Question.user_id = dataUpdate.user_id;
-					Question.questiondate = dataUpdate.questiondate;
-					Question.title = dataUpdate.title;
-					Question.content = dataUpdate.content;
+					preg_question question = new preg_question();
+					question = dao.GetItemByID(Convert.ToInt32(id));
+					question.question_type_id = dataUpdate.question_type_id;
+					question.content = dataUpdate.content;
+					question.custom_question_by_user_id = dataUpdate.custom_question_by_user_id;
 
-					dao.UpdateData(Question);
+					dao.UpdateData(question);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -136,7 +135,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				dao.DeleteData(Convert.ToInt32(id));

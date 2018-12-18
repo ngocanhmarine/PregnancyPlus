@@ -20,7 +20,7 @@ namespace PregnancyData.Entity
         public string name { get; set; }
 
         [StringLength(1024)]
-        public string image { get; set; }
+        public string highline_image { get; set; }
 
         public int? order { get; set; }
 

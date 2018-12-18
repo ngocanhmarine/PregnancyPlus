@@ -13,9 +13,8 @@ namespace PregnancyData.Entity
         public int? help_category_id { get; set; }
 
         [StringLength(1024)]
-        public string hingline_image { get; set; }
+        public string image { get; set; }
 
-        [StringLength(1024)]
         public string description { get; set; }
 
         public virtual preg_help_category preg_help_category { get; set; }

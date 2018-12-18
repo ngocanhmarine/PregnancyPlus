@@ -8,19 +8,19 @@ namespace PregnancyData.Entity
 
     public partial class preg_my_birth_plan
     {
-        public int id { get; set; }
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int my_birth_plan_item_id { get; set; }
 
-        public int? my_birth_plan_type_id { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int user_id { get; set; }
 
-        public int? user_id { get; set; }
+        public virtual preg_my_birth_plan_item preg_my_birth_plan_item { get; set; }
 
-        [StringLength(1024)]
-        public string icon { get; set; }
-
-        [StringLength(1024)]
-        public string title { get; set; }
-
-        public virtual preg_my_birth_plan_type preg_my_birth_plan_type { get; set; }
+        public virtual preg_my_birth_plan_item preg_my_birth_plan_item1 { get; set; }
 
         public virtual preg_user preg_user { get; set; }
     }

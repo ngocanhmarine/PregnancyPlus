@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
+using System.IO;
+using System.Threading.Tasks;
+using System.Security.Claims;
 using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
@@ -96,7 +98,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -111,33 +113,7 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_time_line dataUpdate)
 		{
-			//lstStrings[id] = value;
-			try
-			{
-				if (dataUpdate != null)
-				{
-					preg_time_line time_line = new preg_time_line();
-					time_line = dao.GetItemByID(Convert.ToInt32(id));
-					time_line.week_id = dataUpdate.week_id;
-					time_line.title = dataUpdate.title;
-					time_line.image = dataUpdate.image;
-					time_line.position = dataUpdate.position;
-					time_line.time_line_id = dataUpdate.time_line_id;
-
-					dao.UpdateData(time_line);
-					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
+			return UpdateData(id, dataUpdate);
 		}
 
 		// DELETE api/values/5
@@ -156,5 +132,118 @@ namespace _01.Pregnacy_API.Controllers
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 			}
 		}
+		public HttpResponseMessage UpdateData(string id, preg_time_line dataUpdate)
+		{
+			//lstStrings[id] = value;
+			try
+			{
+				if (dataUpdate != null)
+				{
+					preg_time_line time_line = new preg_time_line();
+					time_line = dao.GetItemByID(Convert.ToInt32(id));
+					if (dataUpdate.week_id != null)
+					{
+						time_line.week_id = dataUpdate.week_id;
+					}
+					if (dataUpdate.title != null)
+					{
+						time_line.title = dataUpdate.title;
+					}
+					if (dataUpdate.image != null)
+					{
+						time_line.image = dataUpdate.image;
+					}
+					if (dataUpdate.position != null)
+					{
+						time_line.position = dataUpdate.position;
+					}
+					if (dataUpdate.time_frame_id != null)
+					{
+						time_line.time_frame_id = dataUpdate.time_frame_id;
+					}
+
+					dao.UpdateData(time_line);
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		#region Upload files
+		[Authorize]
+		[Route("api/timelines/{timeline_id}/upload")]
+		[HttpPost]
+		public async Task<HttpResponseMessage> Upload(string timeline_id)
+		{
+			// Check daily_id exist
+			preg_time_line checkItem = dao.GetItemByID(Convert.ToInt32(timeline_id));
+			if (checkItem == null)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, timeline_id));
+			}
+			// Get current user_id
+			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+			string dir = "~/Files/TimeLines/" + timeline_id.ToString();
+			string dirRoot = HttpContext.Current.Server.MapPath(dir);
+			// Check if request contains multipart/form-data
+			if (!Request.Content.IsMimeMultipartContent())
+			{
+				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+			}
+			// Check if directory folder created
+			if (!Directory.Exists(dirRoot))
+			{
+				Directory.CreateDirectory(dirRoot);
+			}
+			// Check if image and html filetype
+			for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
+			{
+				HttpPostedFile file = HttpContext.Current.Request.Files[i];
+				if (!SysConst.imgOnlyExtensions.Any(x => x.Equals(Path.GetExtension(file.FileName.ToLower()), StringComparison.OrdinalIgnoreCase)))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.INVALID_FILE_TYPE);
+				}
+				else if (File.Exists(dirRoot + "/" + file.FileName))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+				}
+			}
+
+			CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(dirRoot);
+
+			List<string> files = new List<string>();
+
+			try
+			{
+				// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+				await Request.Content.ReadAsMultipartAsync(provider);
+
+				// Update to database
+				preg_time_line updateRow = new preg_time_line();
+				foreach (MultipartFileData file in provider.FileData)
+				{
+					string path = dir + "/" + Path.GetFileName(file.LocalFileName);
+					files.Add(path);
+					updateRow.image = path;
+				}
+				UpdateData(timeline_id, updateRow);
+
+				return Request.CreateResponse(HttpStatusCode.Created, files);
+			}
+			catch (System.Exception ex)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+			}
+		}
+		#endregion
 	}
 }

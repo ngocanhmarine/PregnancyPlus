@@ -89,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -111,20 +111,18 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_setting setting = new preg_setting();
 					setting = dao.GetItemByID(Convert.ToInt32(id));
-					setting.user_id = dataUpdate.user_id;
-					setting.length_units = dataUpdate.length_units;
-					setting.preg_user = dataUpdate.preg_user;
 					setting.reminders = dataUpdate.reminders;
-					setting.revoke_consent = dataUpdate.revoke_consent;
+					setting.length_units = dataUpdate.length_units;
 					setting.weight_unit = dataUpdate.weight_unit;
-
+					setting.user_id = dataUpdate.user_id;
+					setting.revoke_consent = dataUpdate.revoke_consent;
 
 					dao.UpdateData(setting);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

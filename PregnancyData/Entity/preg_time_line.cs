@@ -21,7 +21,7 @@ namespace PregnancyData.Entity
         [StringLength(1024)]
         public string position { get; set; }
 
-        public int? time_line_id { get; set; }
+        public int? time_frame_id { get; set; }
 
         public virtual preg_time_frame preg_time_frame { get; set; }
 

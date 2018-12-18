@@ -88,7 +88,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -111,8 +111,6 @@ namespace _01.Pregnacy_API.Controllers
 					preg_upgrade upgrade = new preg_upgrade();
 					upgrade = dao.GetItemByID(Convert.ToInt32(id));
 					upgrade.user_id = dataUpdate.user_id;
-					upgrade.preg_user = dataUpdate.preg_user;
-					upgrade.user_id = dataUpdate.user_id;
 					upgrade.version = dataUpdate.version;
 
 					dao.UpdateData(upgrade);
@@ -120,7 +118,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 

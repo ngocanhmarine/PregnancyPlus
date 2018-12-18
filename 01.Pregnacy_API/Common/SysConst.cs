@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-
 [Serializable]
 public class SysConst
 {
@@ -15,14 +14,19 @@ public class SysConst
 	}
 	public enum UserStatus
 	{
-		noactive=0,active
+		noactive = 0, active
 	}
+	public static string[] imgOnlyExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".webp" };
+	public static string[] imgHtmlExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".webp", ".html" };
 	#endregion
 
 	#region Error Messages
+	public static string ADMIN_DONT_HAVE_PROFILE = "You are admin. You dont have a profile.";
 	public static string DATA_NOT_FOUND = "Data not found.";
-	public static string DATA_EMPTY = "Data empty.";
+	public static string DATA_NOT_EMPTY = "Data must not be empty.";
+	public static string DATA_EXIST = "Data already exist.";
 	public static string ID_MUST_INTEGER = "ID must be an integer.";
+	public static string ITEM_ID_NOT_EXIST = "Item with ID={0} not exist.";
 	public static string PHONE_EXIST = "Phone already exist.";
 	public static string PHONE_PASSWORD_NOT_NULL = "Phone and password cannot be null.";
 	public static string DATA_INSERT_SUCCESS = "Data insert succeed.";
@@ -32,5 +36,8 @@ public class SysConst
 	public static string DATA_DELETE_SUCCESS = "Data delete succeed.";
 	public static string DATA_DELETE_FAIL = "Data delete failed.";
 	public static string LOGIN_FAILED = "Provided username & password is incorrect.";
+	public static string INVALID_FILE_TYPE = "Invalid file type.";
+	public static string FILE_NOT_EXIST = "File with path {0} not exist.";
+	public static string FILE_EXIST = "File with name {0} already exist.";
 	#endregion
 }

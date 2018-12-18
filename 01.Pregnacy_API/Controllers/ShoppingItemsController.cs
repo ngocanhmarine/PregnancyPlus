@@ -9,35 +9,41 @@ using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class AppointmentBpDiasController : ApiController
+	public class ShoppingItemsController : ApiController
 	{
-		AppointmentBpDiaDao dao = new AppointmentBpDiaDao();
+		ShoppingItemDao dao = new ShoppingItemDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_appointment_bp_dia data)
+		public HttpResponseMessage Get([FromBody]preg_shopping_item data)
 		{
 			try
 			{
-                IEnumerable<preg_appointment_bp_dia> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
-					
+					IEnumerable<preg_shopping_item> result = dao.GetItemsByParams(data);
+					if (result.Count() > 0)
+					{
+						return Request.CreateResponse(HttpStatusCode.OK, result);
+					}
+					else
+					{
+						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+					}
 				}
 				else
 				{
-					result = dao.GetListItem();
-					
+					IEnumerable<preg_shopping_item> result = dao.GetListItem();
+					if (result.Count() > 0)
+					{
+						return Request.CreateResponse(HttpStatusCode.OK, result);
+					}
+					else
+					{
+						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+					}
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
 			}
 			catch (Exception ex)
 			{
@@ -52,7 +58,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_appointment_bp_dia data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_shopping_item data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -72,7 +78,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// POST api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Post([FromBody]preg_appointment_bp_dia data)
+		public HttpResponseMessage Post([FromBody]preg_shopping_item data)
 		{
 			try
 			{
@@ -83,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -94,28 +100,28 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
+
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_appointment_bp_dia dataUpdate)
+		public HttpResponseMessage Put(string id, [FromBody]preg_shopping_item dataUpdate)
 		{
 			try
 			{
 				if (dataUpdate != null)
 				{
-					preg_appointment_bp_dia appointment_bp_dia = new preg_appointment_bp_dia();
-					appointment_bp_dia = dao.GetItemByID(Convert.ToInt32(id));
-                    if (appointment_bp_dia == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					appointment_bp_dia.value = dataUpdate.value;
+					preg_shopping_item setting = new preg_shopping_item();
+					setting = dao.GetItemByID(Convert.ToInt32(id));
+					setting.item_name = dataUpdate.item_name;
+					setting.custom_item_by_user_id = dataUpdate.custom_item_by_user_id;
+					setting.category_id = dataUpdate.category_id;
+					setting.status = dataUpdate.status;
 
-					dao.UpdateData(appointment_bp_dia);
+					dao.UpdateData(setting);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -133,12 +139,7 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_appointment_bp_dia appointment_bp_dia = dao.GetItemByID(Convert.ToInt32(id));
-                if (appointment_bp_dia == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(appointment_bp_dia);
+				dao.DeleteData(Convert.ToInt32(id));
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

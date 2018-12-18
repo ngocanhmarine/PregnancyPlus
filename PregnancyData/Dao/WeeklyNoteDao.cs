@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_weekly_note> GetListItem()
 		{
-			return connect.preg_weekly_notes;
+			return connect.preg_weekly_note;
 		}
 
 		public preg_weekly_note GetItemByID(int id)
 		{
-			return connect.preg_weekly_notes.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_weekly_note.Where(c => c.id == id).FirstOrDefault();
 		}
 		public IEnumerable<preg_weekly_note> GetItemsByParams(preg_weekly_note data)
 		{
-			IEnumerable<preg_weekly_note> result = connect.preg_weekly_notes;
+			IEnumerable<preg_weekly_note> result = connect.preg_weekly_note;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -51,13 +51,17 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.note == propertyValue.ToString());
 				}
+				else if (propertyName == "like" && propertyValue != null)
+				{
+					result = result.Where(c => c.like == Convert.ToInt32(propertyValue));
+				}
 			}
 			return result;
 		}
 
 		public void InsertData(preg_weekly_note item)
 		{
-			connect.preg_weekly_notes.Add(item);
+			connect.preg_weekly_note.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -69,9 +73,8 @@ namespace PregnancyData.Dao
 		public void DeleteData(int id)
 		{
 			preg_weekly_note item = GetItemByID(id);
-			connect.preg_weekly_notes.Remove(item);
+			connect.preg_weekly_note.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

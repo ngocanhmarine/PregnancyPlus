@@ -34,7 +34,6 @@ namespace _01.Pregnacy_API.Controllers
 				else
 				{
 					 result = dao.GetListItem();
-					
 				}
                 if (result.Count() > 0)
                 {
@@ -90,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -117,12 +116,13 @@ namespace _01.Pregnacy_API.Controllers
                         return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
                     }
 					guides_type.type = dataUpdate.type;
+
 					dao.UpdateData(guides_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -140,12 +140,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_guides_type guides_type = dao.GetItemByID(Convert.ToInt32(id));
-                if (guides_type == null)
+                preg_guides_type item = dao.GetItemByID(Convert.ToInt32(id));
+                if (item == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
                 }
-                dao.DeleteData(guides_type);
+                dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

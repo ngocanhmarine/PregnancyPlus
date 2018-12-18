@@ -8,19 +8,23 @@ namespace PregnancyData.Entity
 
     public partial class preg_answer
     {
-        public int id { get; set; }
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int user_id { get; set; }
 
-        public int? user_id { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int question_id { get; set; }
 
-        public DateTime? answerdate { get; set; }
+        public DateTime? questiondate { get; set; }
 
         [StringLength(1024)]
         public string title { get; set; }
 
-        [StringLength(1024)]
+        [Column(TypeName = "text")]
         public string content { get; set; }
-
-        public int? question_id { get; set; }
 
         public virtual preg_question preg_question { get; set; }
 

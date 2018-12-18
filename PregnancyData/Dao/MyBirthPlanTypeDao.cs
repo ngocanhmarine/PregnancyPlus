@@ -17,16 +17,17 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_my_birth_plan_type> GetListItem()
 		{
-			return connect.preg_my_birth_plan_types;
+			return connect.preg_my_birth_plan_type;
 		}
 
 		public preg_my_birth_plan_type GetItemByID(int id)
 		{
-			return connect.preg_my_birth_plan_types.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_my_birth_plan_type.Where(c => c.id == id).FirstOrDefault();
 		}
+
 		public IEnumerable<preg_my_birth_plan_type> GetItemsByParams(preg_my_birth_plan_type data)
 		{
-			IEnumerable<preg_my_birth_plan_type> result = connect.preg_my_birth_plan_types;
+			IEnumerable<preg_my_birth_plan_type> result = connect.preg_my_birth_plan_type;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -39,12 +40,17 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.type == propertyValue.ToString());
 				}
+				else if (propertyName == "type_icon" && propertyValue != null)
+				{
+					result = result.Where(c => c.type_icon == propertyValue.ToString());
+				}
 			}
 			return result;
 		}
+
 		public void InsertData(preg_my_birth_plan_type item)
 		{
-			connect.preg_my_birth_plan_types.Add(item);
+			connect.preg_my_birth_plan_type.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -53,12 +59,10 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-        public void DeleteData(preg_my_birth_plan_type item)
+		public void DeleteData(preg_my_birth_plan_type item)
 		{
-		
-			connect.preg_my_birth_plan_types.Remove(item);
+			connect.preg_my_birth_plan_type.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

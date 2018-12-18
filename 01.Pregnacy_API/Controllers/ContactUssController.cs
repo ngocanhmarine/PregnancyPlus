@@ -14,11 +14,11 @@ namespace _01.Pregnacy_API.Controllers
 		ContactUsDao dao = new ContactUsDao();
 		// GET api/values
 		[AllowAnonymous]
-		public HttpResponseMessage Get([FromBody]preg_cotact_us data)
+		public HttpResponseMessage Get([FromBody]preg_contact_us data)
 		{
 			try
 			{
-                IEnumerable<preg_cotact_us> result;
+                IEnumerable<preg_contact_us> result;
 				if (data != null)
 				{
 					 result = dao.GetItemsByParams(data);
@@ -52,7 +52,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_cotact_us data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_contact_us data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -72,7 +72,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// POST api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Post([FromBody]preg_cotact_us data)
+		public HttpResponseMessage Post([FromBody]preg_contact_us data)
 		{
 			try
 			{
@@ -83,7 +83,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -97,13 +97,13 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_cotact_us dataUpdate)
+		public HttpResponseMessage Put(string id, [FromBody]preg_contact_us dataUpdate)
 		{
 			try
 			{
 				if (dataUpdate != null)
 				{
-					preg_cotact_us cotact_us = new preg_cotact_us();
+					preg_contact_us cotact_us = new preg_contact_us();
 					cotact_us = dao.GetItemByID(Convert.ToInt32(id));
                     if (cotact_us == null)
                     {
@@ -112,15 +112,13 @@ namespace _01.Pregnacy_API.Controllers
 					cotact_us.user_id = dataUpdate.user_id;
 					cotact_us.email = dataUpdate.email;
 					cotact_us.message = dataUpdate.message;
-					cotact_us.preg_user = dataUpdate.preg_user;
-					cotact_us.user_id = dataUpdate.user_id;
 
 					dao.UpdateData(cotact_us);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -138,7 +136,7 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_cotact_us cotact_us = dao.GetItemByID(Convert.ToInt32(id));
+                preg_contact_us cotact_us = dao.GetItemByID(Convert.ToInt32(id));
                 if (cotact_us == null)
                 {
                     return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

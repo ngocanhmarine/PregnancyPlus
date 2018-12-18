@@ -96,7 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -123,12 +123,14 @@ namespace _01.Pregnacy_API.Controllers
 					weekly_note.user_id = dataUpdate.user_id;
 					weekly_note.photo = dataUpdate.photo;
 					weekly_note.note = dataUpdate.note;
+					weekly_note.like = dataUpdate.like;
+
 					dao.UpdateData(weekly_note);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

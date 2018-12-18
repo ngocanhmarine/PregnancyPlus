@@ -89,7 +89,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -113,14 +113,12 @@ namespace _01.Pregnacy_API.Controllers
 					preg_pregnancy pregnancy = new preg_pregnancy();
 					pregnancy = dao.GetItemByID(Convert.ToInt32(id));
 					pregnancy.user_id = dataUpdate.user_id;
-					pregnancy.baby_already_bom = dataUpdate.baby_already_bom;
 					pregnancy.baby_gender = dataUpdate.baby_gender;
-					pregnancy.date_of_birth = dataUpdate.date_of_birth;
 					pregnancy.due_date = dataUpdate.due_date;
-					pregnancy.preg_user = dataUpdate.preg_user;
-					pregnancy.pregnancy_loss = dataUpdate.pregnancy_loss;
 					pregnancy.show_week = dataUpdate.show_week;
-					pregnancy.user_id = dataUpdate.user_id;
+					pregnancy.pregnancy_loss = dataUpdate.pregnancy_loss;
+					pregnancy.baby_already_born = dataUpdate.baby_already_born;
+					pregnancy.date_of_birth = dataUpdate.date_of_birth;
 					pregnancy.weeks_pregnant = dataUpdate.weeks_pregnant;
 
 					dao.UpdateData(pregnancy);
@@ -128,7 +126,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -143,7 +141,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				dao.DeleteData(Convert.ToInt32(id));

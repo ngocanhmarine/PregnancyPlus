@@ -6,17 +6,17 @@ namespace PregnancyData.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class preg_cotact_us
+    public partial class preg_contraction
     {
         public int id { get; set; }
 
         public int? user_id { get; set; }
 
-        [StringLength(300)]
-        public string email { get; set; }
+        public DateTime? date_time { get; set; }
 
-        [StringLength(1024)]
-        public string message { get; set; }
+        public DateTime? duration { get; set; }
+
+        public DateTime? interval { get; set; }
 
         public virtual preg_user preg_user { get; set; }
     }

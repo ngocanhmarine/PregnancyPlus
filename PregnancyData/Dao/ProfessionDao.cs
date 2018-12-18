@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
         public IEnumerable<preg_profession> GetListItem()
         {
-            return connect.preg_professions;
+            return connect.preg_profession;
         }
 
         public preg_profession GetItemByID(int id)
         {
-            return connect.preg_professions.Where(c => c.id == id).FirstOrDefault();
+            return connect.preg_profession.Where(c => c.id == id).FirstOrDefault();
         }
 		public IEnumerable<preg_profession> GetItemsByParams(preg_profession data)
 		{
-			IEnumerable<preg_profession> result = connect.preg_professions;
+			IEnumerable<preg_profession> result = connect.preg_profession;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -44,7 +44,7 @@ namespace PregnancyData.Dao
 		}
 		public void InsertData(preg_profession item)
         {
-            connect.preg_professions.Add(item);
+            connect.preg_profession.Add(item);
             connect.SaveChanges();
         }
 
@@ -56,7 +56,7 @@ namespace PregnancyData.Dao
         public void DeleteData(int id)
         {
             preg_profession item = GetItemByID(id);
-            connect.preg_professions.Remove(item);
+            connect.preg_profession.Remove(item);
             connect.SaveChanges();
         }
 

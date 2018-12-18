@@ -16,10 +16,14 @@ namespace PregnancyData.Entity
 
         public int id { get; set; }
 
-        public int? title { get; set; }
+        [StringLength(1024)]
+        public string title { get; set; }
 
         [StringLength(1024)]
         public string content { get; set; }
+
+        [StringLength(1024)]
+        public string page_image { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_guides> preg_guides { get; set; }

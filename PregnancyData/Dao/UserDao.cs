@@ -17,16 +17,16 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_user> GetListUser()
 		{
-			return connect.preg_users;
+			return connect.preg_user;
 		}
 
 		public preg_user GetUserByID(int id)
 		{
-			return connect.preg_users.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_user.Where(c => c.id == id).FirstOrDefault();
 		}
 		public IEnumerable<preg_user> GetUsersByParams(preg_user data)
 		{
-			IEnumerable<preg_user> result = connect.preg_users;
+			IEnumerable<preg_user> result = connect.preg_user;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -43,9 +43,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.phone == propertyValue.ToString());
 				}
-				else if (propertyName == "social_type" && propertyValue != null)
+				else if (propertyName == "social_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.social_type == propertyValue.ToString());
+					result = result.Where(c => c.social_type_id == Convert.ToInt32(propertyValue));
 				}
 				else if (propertyName == "first_name" && propertyValue != null)
 				{
@@ -71,6 +71,10 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.avarta == propertyValue.ToString());
 				}
+				else if (propertyName == "email" && propertyValue != null)
+				{
+					result = result.Where(c => c.email == propertyValue.ToString());
+				}
 			}
 			return result;
 		}
@@ -84,7 +88,7 @@ namespace PregnancyData.Dao
 			}
 			else
 			{
-				connect.preg_users.Add(item);
+				connect.preg_user.Add(item);
 				connect.SaveChanges();
 				return true;
 			}
@@ -98,7 +102,7 @@ namespace PregnancyData.Dao
 		public void DeleteData(int id)
 		{
 			preg_user user = GetUserByID(id);
-			connect.preg_users.Remove(user);
+			connect.preg_user.Remove(user);
 			connect.SaveChanges();
 		}
 	}

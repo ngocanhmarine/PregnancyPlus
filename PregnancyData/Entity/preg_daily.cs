@@ -22,12 +22,11 @@ namespace PregnancyData.Entity
         public string title { get; set; }
 
         [StringLength(1024)]
-        public string hingline_image { get; set; }
+        public string highline_image { get; set; }
 
         [StringLength(1024)]
         public string short_description { get; set; }
 
-        [StringLength(1024)]
         public string description { get; set; }
 
         [StringLength(1024)]

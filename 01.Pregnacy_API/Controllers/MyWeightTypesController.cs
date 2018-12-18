@@ -96,7 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -119,12 +119,13 @@ namespace _01.Pregnacy_API.Controllers
 					preg_my_weight_type my_weight_type = new preg_my_weight_type();
 					my_weight_type = dao.GetItemByID(Convert.ToInt32(id));
 					my_weight_type.type = dataUpdate.type;
+
 					dao.UpdateData(my_weight_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.DATA_EMPTY);
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}

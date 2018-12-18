@@ -22,12 +22,10 @@ namespace _01.Pregnacy_API.Controllers
                 if (data != null)
                 {
                     result = dao.GetItemsByParams(data);
-
                 }
                 else
                 {
                     result = dao.GetListItem();
-
                 }
                 if (result.Count() > 0)
                 {
@@ -83,7 +81,7 @@ namespace _01.Pregnacy_API.Controllers
                 }
                 else
                 {
-                    HttpError err = new HttpError(SysConst.DATA_EMPTY);
+                    HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
                 }
             }
@@ -109,13 +107,14 @@ namespace _01.Pregnacy_API.Controllers
                         return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
                     }
                     MyBirthPlanType.type = dataUpdate.type;
+                    MyBirthPlanType.type_icon = dataUpdate.type_icon;
 
                     dao.UpdateData(MyBirthPlanType);
                     return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
                 }
                 else
                 {
-                    HttpError err = new HttpError(SysConst.DATA_EMPTY);
+                    HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
                 }
             }

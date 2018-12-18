@@ -20,7 +20,7 @@ namespace PregnancyData.Entity
 
         public int? pregnancy_loss { get; set; }
 
-        public int? baby_already_bom { get; set; }
+        public int? baby_already_born { get; set; }
 
         public DateTime? date_of_birth { get; set; }
 

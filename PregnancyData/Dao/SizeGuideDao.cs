@@ -6,27 +6,27 @@ using System.Web;
 
 namespace PregnancyData.Dao
 {
-    public class SizeGuideDao
-    {
-         PregnancyEntity connect = null;
-         public SizeGuideDao()
-        {
-            connect = new PregnancyEntity();
+	public class SizeGuideDao
+	{
+		PregnancyEntity connect = null;
+		public SizeGuideDao()
+		{
+			connect = new PregnancyEntity();
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-        public IEnumerable<preg_size_guide> GetListItem()
-        {
-            return connect.preg_size_guides;
-        }
+		public IEnumerable<preg_size_guide> GetListItem()
+		{
+			return connect.preg_size_guide;
+		}
 
-        public preg_size_guide GetItemByID(int id)
-        {
-            return connect.preg_size_guides.Where(c => c.id == id).FirstOrDefault();
-        }
+		public preg_size_guide GetItemByID(int id)
+		{
+			return connect.preg_size_guide.Where(c => c.id == id).FirstOrDefault();
+		}
 		public IEnumerable<preg_size_guide> GetItemsByParams(preg_size_guide data)
 		{
-			IEnumerable<preg_size_guide> result = connect.preg_size_guides;
+			IEnumerable<preg_size_guide> result = connect.preg_size_guide;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -51,22 +51,21 @@ namespace PregnancyData.Dao
 			return result;
 		}
 		public void InsertData(preg_size_guide item)
-        {
-            connect.preg_size_guides.Add(item);
-            connect.SaveChanges();
-        }
+		{
+			connect.preg_size_guide.Add(item);
+			connect.SaveChanges();
+		}
 
-        public void UpdateData(preg_size_guide item)
-        {
-            connect.SaveChanges();
-        }
+		public void UpdateData(preg_size_guide item)
+		{
+			connect.SaveChanges();
+		}
 
-        public void DeleteData(int id)
-        {
-            preg_size_guide item = GetItemByID(id);
-            connect.preg_size_guides.Remove(item);
-            connect.SaveChanges();
-        }
-
-    }
+		public void DeleteData(int id)
+		{
+			preg_size_guide item = GetItemByID(id);
+			connect.preg_size_guide.Remove(item);
+			connect.SaveChanges();
+		}
+	}
 }

@@ -17,16 +17,17 @@ namespace PregnancyData.Dao
 
 		public IEnumerable<preg_country> GetListItem()
 		{
-			return connect.preg_countrys;
+			return connect.preg_country;
 		}
 
 		public preg_country GetItemByID(int id)
 		{
-			return connect.preg_countrys.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_country.Where(c => c.id == id).FirstOrDefault();
 		}
+
 		public IEnumerable<preg_country> GetItemsByParams(preg_country data)
 		{
-			IEnumerable<preg_country> result = connect.preg_countrys;
+			IEnumerable<preg_country> result = connect.preg_country;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -42,9 +43,10 @@ namespace PregnancyData.Dao
 			}
 			return result;
 		}
+
 		public void InsertData(preg_country item)
 		{
-			connect.preg_countrys.Add(item);
+			connect.preg_country.Add(item);
 			connect.SaveChanges();
 		}
 
@@ -56,7 +58,7 @@ namespace PregnancyData.Dao
         public void DeleteData(preg_country item)
 		{
 
-            connect.preg_countrys.Remove(item);
+            connect.preg_country.Remove(item);
 			connect.SaveChanges();
 		}
 
