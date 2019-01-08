@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1193F7A3-87B9-45DC-A73F-021AF5CF0AD8}</ProjectGuid>
+    <ProjectGuid>{6D1DCF44-D936-42C2-A827-62F923108AE3}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -75,7 +75,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dao\AnswerDao.cs" />
@@ -86,10 +88,10 @@
     <Compile Include="Dao\BabyNameDao.cs" />
     <Compile Include="Dao\ContactUsDao.cs" />
     <Compile Include="Dao\ContractionDao.cs" />
+    <Compile Include="Dao\CustomerResponseDao.cs" />
     <Compile Include="Dao\CountryDao.cs" />
+    <Compile Include="Dao\DailyInteractDao.cs" />
     <Compile Include="Dao\DailyDao.cs" />
-    <Compile Include="Dao\DailyLikeDao.cs" />
-    <Compile Include="Dao\DailyTypeDao.cs" />
     <Compile Include="Dao\FaqAnswerDao.cs" />
     <Compile Include="Dao\FaqDao.cs" />
     <Compile Include="Dao\GenderDao.cs" />
@@ -100,19 +102,20 @@
     <Compile Include="Dao\HospitalBagItemDao.cs" />
     <Compile Include="Dao\ImageDao.cs" />
     <Compile Include="Dao\ImageTypeDao.cs" />
+    <Compile Include="Dao\MedicalTestDao.cs" />
+    <Compile Include="Dao\MedicalServicePackageDao.cs" />
+    <Compile Include="Dao\MedicalPackageTestDao.cs" />
     <Compile Include="Dao\KickResultDao.cs" />
-    <Compile Include="Dao\LikeTypeDao.cs" />
     <Compile Include="Dao\MyBellyDao.cs" />
-    <Compile Include="Dao\MyBellyTypeDao.cs" />
     <Compile Include="Dao\MyBirthPlanDao.cs" />
     <Compile Include="Dao\MyBirthPlanItemDao.cs" />
     <Compile Include="Dao\MyBirthPlanTypeDao.cs" />
     <Compile Include="Dao\MyWeightDao.cs" />
-    <Compile Include="Dao\MyWeightInStDao.cs" />
-    <Compile Include="Dao\MyWeightTypeDao.cs" />
+    <Compile Include="Dao\MyWeightUnitDao.cs" />
     <Compile Include="Dao\PageDao.cs" />
     <Compile Include="Dao\PhoneDao.cs" />
     <Compile Include="Dao\PregnancyDao.cs" />
+    <Compile Include="Dao\ProfessionTypeDao.cs" />
     <Compile Include="Dao\ProfessionDao.cs" />
     <Compile Include="Dao\QuestionDao.cs" />
     <Compile Include="Dao\QuestionTypeDao.cs" />
@@ -128,11 +131,12 @@
     <Compile Include="Dao\UserBabyNameDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dao\UserHospitalBagItemDao.cs" />
+    <Compile Include="Dao\UserMedicalServicePackageDao.cs" />
     <Compile Include="Dao\UserKickHistory.cs" />
     <Compile Include="Dao\UserShoppingCart.cs" />
     <Compile Include="Dao\UserTodoDao.cs" />
     <Compile Include="Dao\WeekDao.cs" />
-    <Compile Include="Dao\WeeklyNoteDao.cs" />
+    <Compile Include="Dao\WeeklyInteractDao.cs" />
     <Compile Include="Entity\PregnancyEntity.cs" />
     <Compile Include="Entity\preg_answer.cs" />
     <Compile Include="Entity\preg_appointment.cs" />
@@ -143,9 +147,9 @@
     <Compile Include="Entity\preg_contact_us.cs" />
     <Compile Include="Entity\preg_contraction.cs" />
     <Compile Include="Entity\preg_country.cs" />
+    <Compile Include="Entity\preg_customer_response.cs" />
     <Compile Include="Entity\preg_daily.cs" />
-    <Compile Include="Entity\preg_daily_like.cs" />
-    <Compile Include="Entity\preg_daily_type.cs" />
+    <Compile Include="Entity\preg_daily_interact.cs" />
     <Compile Include="Entity\preg_faq.cs" />
     <Compile Include="Entity\preg_faq_answer.cs" />
     <Compile Include="Entity\preg_gender.cs" />
@@ -157,19 +161,20 @@
     <Compile Include="Entity\preg_image.cs" />
     <Compile Include="Entity\preg_image_type.cs" />
     <Compile Include="Entity\preg_kick_result.cs" />
-    <Compile Include="Entity\preg_like_type.cs" />
+    <Compile Include="Entity\preg_medical_package_test.cs" />
+    <Compile Include="Entity\preg_medical_service_package.cs" />
+    <Compile Include="Entity\preg_medical_test.cs" />
     <Compile Include="Entity\preg_my_belly.cs" />
-    <Compile Include="Entity\preg_my_belly_type.cs" />
     <Compile Include="Entity\preg_my_birth_plan.cs" />
     <Compile Include="Entity\preg_my_birth_plan_item.cs" />
     <Compile Include="Entity\preg_my_birth_plan_type.cs" />
     <Compile Include="Entity\preg_my_weight.cs" />
-    <Compile Include="Entity\preg_my_weight_in_st.cs" />
-    <Compile Include="Entity\preg_my_weight_type.cs" />
+    <Compile Include="Entity\preg_my_weight_unit.cs" />
     <Compile Include="Entity\preg_page.cs" />
     <Compile Include="Entity\preg_phone.cs" />
     <Compile Include="Entity\preg_pregnancy.cs" />
     <Compile Include="Entity\preg_profession.cs" />
+    <Compile Include="Entity\preg_profession_type.cs" />
     <Compile Include="Entity\preg_question.cs" />
     <Compile Include="Entity\preg_question_type.cs" />
     <Compile Include="Entity\preg_setting.cs" />
@@ -185,14 +190,14 @@
     <Compile Include="Entity\preg_user_baby_name.cs" />
     <Compile Include="Entity\preg_user_hospital_bag_item.cs" />
     <Compile Include="Entity\preg_user_kick_history.cs" />
+    <Compile Include="Entity\preg_user_medical_service_package.cs" />
     <Compile Include="Entity\preg_user_shopping_cart.cs" />
     <Compile Include="Entity\preg_user_todo.cs" />
     <Compile Include="Entity\preg_week.cs" />
-    <Compile Include="Entity\preg_weekly_note.cs" />
+    <Compile Include="Entity\preg_weekly_interact.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="libman.json" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -201,7 +206,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -215,9 +219,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>58765</DevelopmentServerPort>
+          <DevelopmentServerPort>62326</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:58765/</IISUrl>
+          <IISUrl>http://localhost:62326/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

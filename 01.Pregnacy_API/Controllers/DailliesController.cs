@@ -138,10 +138,6 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					if (dataUpdate.daily_type_id != null)
-					{
-						daily.daily_type_id = dataUpdate.daily_type_id;
-					}
 					if (dataUpdate.title != null)
 					{
 						daily.title = dataUpdate.title;
@@ -158,9 +154,9 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						daily.description = dataUpdate.description;
 					}
-					if (dataUpdate.daily_relation != null)
+					if (dataUpdate.daily_blog != null)
 					{
-						daily.daily_relation = dataUpdate.daily_relation;
+						daily.daily_blog = dataUpdate.daily_blog;
 					}
 
 					dao.UpdateData(daily);
@@ -236,7 +232,7 @@ namespace _01.Pregnacy_API.Controllers
 					files.Add(path);
 					if (Path.GetExtension(file.LocalFileName).ToLower().Equals(".html"))
 					{
-						updateRow.daily_relation = path;
+						updateRow.description = path;
 					}
 					else
 					{

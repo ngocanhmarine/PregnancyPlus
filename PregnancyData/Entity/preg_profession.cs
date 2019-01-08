@@ -8,22 +8,20 @@ namespace PregnancyData.Entity
 
     public partial class preg_profession
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public preg_profession()
-        {
-            preg_appointment = new HashSet<preg_appointment>();
-            preg_phone = new HashSet<preg_phone>();
-        }
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int user_id { get; set; }
 
-        public int id { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int profession_type_id { get; set; }
 
-        [StringLength(1024)]
-        public string profession_type { get; set; }
+        public int? status { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_appointment> preg_appointment { get; set; }
+        public virtual preg_profession_type preg_profession_type { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_phone> preg_phone { get; set; }
+        public virtual preg_user preg_user { get; set; }
     }
 }

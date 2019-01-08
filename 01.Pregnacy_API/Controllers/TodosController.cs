@@ -104,33 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_todo dataUpdate)
 		{
-
-			try
-			{
-				if (dataUpdate != null)
-				{
-
-					preg_todo TodoOther = new preg_todo();
-					TodoOther = dao.GetItemByID(Convert.ToInt32(id));
-					TodoOther.week_id = dataUpdate.week_id;
-					TodoOther.title = dataUpdate.title;
-					TodoOther.custom_task_by_user_id = dataUpdate.custom_task_by_user_id;
-
-					dao.UpdateData(TodoOther);
-					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-				}
-
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
+			return UpdateData(id, dataUpdate);
 		}
 
 		// DELETE api/values/5
@@ -142,6 +116,49 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				dao.DeleteData(Convert.ToInt32(id));
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public HttpResponseMessage UpdateData(string id, [FromBody]preg_todo dataUpdate)
+		{
+			try
+			{
+				if (dataUpdate != null)
+				{
+
+					preg_todo todo = new preg_todo();
+					todo = dao.GetItemByID(Convert.ToInt32(id));
+					if (todo == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.day_id != null)
+					{
+						todo.day_id = dataUpdate.day_id;
+					}
+					if (dataUpdate.title != null)
+					{
+						todo.title = dataUpdate.title;
+					}
+					if (dataUpdate.custom_task_by_user_id != null)
+					{
+						todo.custom_task_by_user_id = dataUpdate.custom_task_by_user_id;
+					}
+
+					dao.UpdateData(todo);
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+				}
+
 			}
 			catch (Exception ex)
 			{

@@ -118,8 +118,14 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					guides.page_id = dataUpdate.page_id;
-					guides.guides_type_id = dataUpdate.guides_type_id;
+					if (dataUpdate.page_id != null)
+					{
+						guides.page_id = dataUpdate.page_id;
+					}
+					if (dataUpdate.guides_type_id != null)
+					{
+						guides.guides_type_id = dataUpdate.guides_type_id;
+					}
 
 					dao.UpdateData(guides);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

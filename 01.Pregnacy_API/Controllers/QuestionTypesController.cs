@@ -104,14 +104,20 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_question_type dataUpdate)
 		{
-
 			try
 			{
 				if (dataUpdate != null)
 				{
 					preg_question_type question_type = new preg_question_type();
 					question_type = dao.GetItemByID(Convert.ToInt32(id));
-					question_type.type = dataUpdate.type;
+					if (question_type == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.type != null)
+					{
+						question_type.type = dataUpdate.type;
+					}
 
 					dao.UpdateData(question_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

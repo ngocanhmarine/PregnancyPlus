@@ -25,26 +25,26 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-                IEnumerable<preg_gender> result;
+				IEnumerable<preg_gender> result;
 				if (data != null)
 				{
 					result = dao.GetItemsByParams(data);
-					
+
 				}
 				else
 				{
 					result = dao.GetListItem();
-					
+
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -112,11 +112,14 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_gender gender = new preg_gender();
 					gender = dao.GetItemByID(Convert.ToInt32(id));
-                    if (gender == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					gender.gender = dataUpdate.gender;
+					if (gender == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.gender != null)
+					{
+						gender.gender = dataUpdate.gender;
+					}
 
 					dao.UpdateData(gender);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -141,12 +144,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_gender gender = dao.GetItemByID(Convert.ToInt32(id));
-                if (gender == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(gender);
+				preg_gender gender = dao.GetItemByID(Convert.ToInt32(id));
+				if (gender == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(gender);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

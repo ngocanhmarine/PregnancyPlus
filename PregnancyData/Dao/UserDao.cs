@@ -81,7 +81,7 @@ namespace PregnancyData.Dao
 
 		public bool InsertData(preg_user item)
 		{
-			IEnumerable<preg_user> result = GetUsersByParams(new preg_user() { phone = item.phone });
+			IEnumerable<preg_user> result = GetUsersByParams(new preg_user() { email = item.email, social_type_id = item.social_type_id });
 			if (result.Count() > 0)
 			{
 				return false;

@@ -45,6 +45,10 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.todo_id == Convert.ToInt32(propertyValue));
 				}
+				else if (propertyName == "status" && Convert.ToInt32(propertyValue) != 0)
+				{
+					result = result.Where(c => c.status == Convert.ToInt32(propertyValue));
+				}
 			}
 			return result;
 		}

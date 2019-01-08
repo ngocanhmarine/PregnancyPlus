@@ -107,10 +107,22 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					baby_name.country_id = dataUpdate.country_id;
-					baby_name.gender_id = dataUpdate.gender_id;
-					baby_name.name = dataUpdate.name;
-					baby_name.custom_baby_name_by_user_id = dataUpdate.custom_baby_name_by_user_id;
+					if (dataUpdate.country_id != null)
+					{
+						baby_name.country_id = dataUpdate.country_id;
+					}
+					if (dataUpdate.gender_id != null)
+					{
+						baby_name.gender_id = dataUpdate.gender_id;
+					}
+					if (dataUpdate.name != null)
+					{
+						baby_name.name = dataUpdate.name;
+					}
+					if (dataUpdate.custom_baby_name_by_user_id != null)
+					{
+						baby_name.custom_baby_name_by_user_id = dataUpdate.custom_baby_name_by_user_id;
+					}
 
 					dao.UpdateData(baby_name);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

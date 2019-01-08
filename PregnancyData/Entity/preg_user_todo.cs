@@ -22,8 +22,6 @@ namespace PregnancyData.Entity
 
         public virtual preg_todo preg_todo { get; set; }
 
-        public virtual preg_todo preg_todo1 { get; set; }
-
         public virtual preg_user preg_user { get; set; }
     }
 }

@@ -35,10 +35,6 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
 				}
-				else if (propertyName == "daily_type_id" && propertyValue != null)
-				{
-					result = result.Where(c => c.daily_type_id == Convert.ToInt32(propertyValue));
-				}
 				else if (propertyName == "title" && propertyValue != null)
 				{
 					result = result.Where(c => c.title == propertyValue.ToString());
@@ -55,9 +51,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.description == propertyValue.ToString());
 				}
-				else if (propertyName == "daily_relation" && propertyValue != null)
+				else if (propertyName == "daily_blog" && propertyValue != null)
 				{
-					result = result.Where(c => c.daily_relation == propertyValue.ToString());
+					result = result.Where(c => c.daily_blog == propertyValue.ToString());
 				}
 			}
 			return result;

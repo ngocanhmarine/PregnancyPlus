@@ -21,9 +21,9 @@ namespace PregnancyData.Entity
 		public virtual DbSet<preg_contact_us> preg_contact_us { get; set; }
 		public virtual DbSet<preg_contraction> preg_contraction { get; set; }
 		public virtual DbSet<preg_country> preg_country { get; set; }
+		public virtual DbSet<preg_customer_response> preg_customer_response { get; set; }
 		public virtual DbSet<preg_daily> preg_daily { get; set; }
-		public virtual DbSet<preg_daily_like> preg_daily_like { get; set; }
-		public virtual DbSet<preg_daily_type> preg_daily_type { get; set; }
+		public virtual DbSet<preg_daily_interact> preg_daily_interact { get; set; }
 		public virtual DbSet<preg_faq> preg_faq { get; set; }
 		public virtual DbSet<preg_faq_answer> preg_faq_answer { get; set; }
 		public virtual DbSet<preg_gender> preg_gender { get; set; }
@@ -35,19 +35,20 @@ namespace PregnancyData.Entity
 		public virtual DbSet<preg_image> preg_image { get; set; }
 		public virtual DbSet<preg_image_type> preg_image_type { get; set; }
 		public virtual DbSet<preg_kick_result> preg_kick_result { get; set; }
-		public virtual DbSet<preg_like_type> preg_like_type { get; set; }
+		public virtual DbSet<preg_medical_package_test> preg_medical_package_test { get; set; }
+		public virtual DbSet<preg_medical_service_package> preg_medical_service_package { get; set; }
+		public virtual DbSet<preg_medical_test> preg_medical_test { get; set; }
 		public virtual DbSet<preg_my_belly> preg_my_belly { get; set; }
-		public virtual DbSet<preg_my_belly_type> preg_my_belly_type { get; set; }
 		public virtual DbSet<preg_my_birth_plan> preg_my_birth_plan { get; set; }
 		public virtual DbSet<preg_my_birth_plan_item> preg_my_birth_plan_item { get; set; }
 		public virtual DbSet<preg_my_birth_plan_type> preg_my_birth_plan_type { get; set; }
 		public virtual DbSet<preg_my_weight> preg_my_weight { get; set; }
-		public virtual DbSet<preg_my_weight_in_st> preg_my_weight_in_st { get; set; }
-		public virtual DbSet<preg_my_weight_type> preg_my_weight_type { get; set; }
+		public virtual DbSet<preg_my_weight_unit> preg_my_weight_unit { get; set; }
 		public virtual DbSet<preg_page> preg_page { get; set; }
 		public virtual DbSet<preg_phone> preg_phone { get; set; }
 		public virtual DbSet<preg_pregnancy> preg_pregnancy { get; set; }
 		public virtual DbSet<preg_profession> preg_profession { get; set; }
+		public virtual DbSet<preg_profession_type> preg_profession_type { get; set; }
 		public virtual DbSet<preg_question> preg_question { get; set; }
 		public virtual DbSet<preg_question_type> preg_question_type { get; set; }
 		public virtual DbSet<preg_setting> preg_setting { get; set; }
@@ -63,10 +64,11 @@ namespace PregnancyData.Entity
 		public virtual DbSet<preg_user_baby_name> preg_user_baby_name { get; set; }
 		public virtual DbSet<preg_user_hospital_bag_item> preg_user_hospital_bag_item { get; set; }
 		public virtual DbSet<preg_user_kick_history> preg_user_kick_history { get; set; }
+		public virtual DbSet<preg_user_medical_service_package> preg_user_medical_service_package { get; set; }
 		public virtual DbSet<preg_user_shopping_cart> preg_user_shopping_cart { get; set; }
 		public virtual DbSet<preg_user_todo> preg_user_todo { get; set; }
 		public virtual DbSet<preg_week> preg_week { get; set; }
-		public virtual DbSet<preg_weekly_note> preg_weekly_note { get; set; }
+		public virtual DbSet<preg_weekly_interact> preg_weekly_interact { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -145,6 +147,14 @@ namespace PregnancyData.Entity
 				.WithOptional(e => e.preg_country)
 				.HasForeignKey(e => e.country_id);
 
+			modelBuilder.Entity<preg_customer_response>()
+				.Property(e => e.content)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_customer_response>()
+				.Property(e => e.answer_content)
+				.IsUnicode(false);
+
 			modelBuilder.Entity<preg_daily>()
 				.Property(e => e.title)
 				.IsUnicode(false);
@@ -162,18 +172,23 @@ namespace PregnancyData.Entity
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_daily>()
-				.Property(e => e.daily_relation)
+				.Property(e => e.daily_blog)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_daily>()
-				.HasMany(e => e.preg_daily_like)
-				.WithOptional(e => e.preg_daily)
-				.HasForeignKey(e => e.daily_id);
+				.HasMany(e => e.preg_daily_interact)
+				.WithRequired(e => e.preg_daily)
+				.HasForeignKey(e => e.daily_id)
+				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<preg_daily_type>()
-				.HasMany(e => e.preg_daily)
-				.WithOptional(e => e.preg_daily_type)
-				.HasForeignKey(e => e.daily_type_id);
+			modelBuilder.Entity<preg_daily>()
+				.HasMany(e => e.preg_todo)
+				.WithOptional(e => e.preg_daily)
+				.HasForeignKey(e => e.day_id);
+
+			modelBuilder.Entity<preg_daily_interact>()
+				.Property(e => e.comment)
+				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_faq>()
 				.Property(e => e.question)
@@ -257,27 +272,61 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.kick_result_id)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<preg_like_type>()
+			modelBuilder.Entity<preg_medical_service_package>()
+				.Property(e => e.title)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_medical_service_package>()
+				.Property(e => e.description)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_medical_service_package>()
+				.Property(e => e.content)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_medical_service_package>()
+				.Property(e => e.execution_department)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_medical_service_package>()
+				.Property(e => e.address)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_medical_service_package>()
+				.HasMany(e => e.preg_medical_package_test)
+				.WithRequired(e => e.preg_medical_service_package)
+				.HasForeignKey(e => e.medical_service_package_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_medical_service_package>()
+				.HasMany(e => e.preg_medical_package_test1)
+				.WithRequired(e => e.preg_medical_service_package1)
+				.HasForeignKey(e => e.medical_service_package_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_medical_service_package>()
+				.HasMany(e => e.preg_user_medical_service_package)
+				.WithRequired(e => e.preg_medical_service_package)
+				.HasForeignKey(e => e.medical_service_package_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_medical_test>()
+				.Property(e => e.title)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_medical_test>()
 				.Property(e => e.type)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_like_type>()
-				.HasMany(e => e.preg_daily_like)
-				.WithOptional(e => e.preg_like_type)
-				.HasForeignKey(e => e.like_type_id);
+			modelBuilder.Entity<preg_medical_test>()
+				.HasMany(e => e.preg_medical_package_test)
+				.WithRequired(e => e.preg_medical_test)
+				.HasForeignKey(e => e.medical_test_id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_my_belly>()
 				.Property(e => e.image)
 				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_my_belly_type>()
-				.Property(e => e.type)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_my_belly_type>()
-				.HasMany(e => e.preg_my_belly)
-				.WithOptional(e => e.preg_my_belly_type)
-				.HasForeignKey(e => e.my_belly_type_id);
 
 			modelBuilder.Entity<preg_my_birth_plan_item>()
 				.Property(e => e.item_content)
@@ -308,18 +357,18 @@ namespace PregnancyData.Entity
 				.WithOptional(e => e.preg_my_birth_plan_type)
 				.HasForeignKey(e => e.my_birth_plan_type_id);
 
-			modelBuilder.Entity<preg_my_weight_type>()
-				.Property(e => e.type)
+			modelBuilder.Entity<preg_my_weight_unit>()
+				.Property(e => e.unit)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_my_weight_type>()
+			modelBuilder.Entity<preg_my_weight_unit>()
 				.HasMany(e => e.preg_appointment)
-				.WithOptional(e => e.preg_my_weight_type)
+				.WithOptional(e => e.preg_my_weight_unit)
 				.HasForeignKey(e => e.my_weight_type_id);
 
-			modelBuilder.Entity<preg_my_weight_type>()
+			modelBuilder.Entity<preg_my_weight_unit>()
 				.HasMany(e => e.preg_my_weight)
-				.WithOptional(e => e.preg_my_weight_type)
+				.WithOptional(e => e.preg_my_weight_unit)
 				.HasForeignKey(e => e.my_weight_type_id);
 
 			modelBuilder.Entity<preg_page>()
@@ -343,19 +392,25 @@ namespace PregnancyData.Entity
 				.Property(e => e.phone_number)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_profession>()
+			modelBuilder.Entity<preg_profession_type>()
 				.Property(e => e.profession_type)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_profession>()
+			modelBuilder.Entity<preg_profession_type>()
 				.HasMany(e => e.preg_appointment)
-				.WithOptional(e => e.preg_profession)
+				.WithOptional(e => e.preg_profession_type)
 				.HasForeignKey(e => e.profession_id);
 
-			modelBuilder.Entity<preg_profession>()
+			modelBuilder.Entity<preg_profession_type>()
 				.HasMany(e => e.preg_phone)
-				.WithOptional(e => e.preg_profession)
+				.WithOptional(e => e.preg_profession_type)
 				.HasForeignKey(e => e.profession_id);
+
+			modelBuilder.Entity<preg_profession_type>()
+				.HasMany(e => e.preg_profession)
+				.WithRequired(e => e.preg_profession_type)
+				.HasForeignKey(e => e.profession_type_id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_question>()
 				.Property(e => e.content)
@@ -447,12 +502,6 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.todo_id)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<preg_todo>()
-				.HasMany(e => e.preg_user_todo1)
-				.WithRequired(e => e.preg_todo1)
-				.HasForeignKey(e => e.todo_id)
-				.WillCascadeOnDelete(false);
-
 			modelBuilder.Entity<preg_upgrade>()
 				.Property(e => e.version)
 				.IsUnicode(false);
@@ -520,9 +569,19 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.user_id);
 
 			modelBuilder.Entity<preg_user>()
-				.HasMany(e => e.preg_daily_like)
-				.WithOptional(e => e.preg_user)
-				.HasForeignKey(e => e.user_id);
+				.HasOptional(e => e.preg_customer_response)
+				.WithRequired(e => e.preg_user);
+
+			modelBuilder.Entity<preg_user>()
+				.HasMany(e => e.preg_customer_response1)
+				.WithOptional(e => e.preg_user1)
+				.HasForeignKey(e => e.answer_user_id);
+
+			modelBuilder.Entity<preg_user>()
+				.HasMany(e => e.preg_daily_interact)
+				.WithRequired(e => e.preg_user)
+				.HasForeignKey(e => e.user_id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_user>()
 				.HasMany(e => e.preg_hospital_bag_item)
@@ -561,6 +620,12 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.user_id);
 
 			modelBuilder.Entity<preg_user>()
+				.HasMany(e => e.preg_profession)
+				.WithRequired(e => e.preg_user)
+				.HasForeignKey(e => e.user_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_user>()
 				.HasMany(e => e.preg_question)
 				.WithOptional(e => e.preg_user)
 				.HasForeignKey(e => e.custom_question_by_user_id);
@@ -586,9 +651,10 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.user_id);
 
 			modelBuilder.Entity<preg_user>()
-				.HasMany(e => e.preg_weekly_note)
-				.WithOptional(e => e.preg_user)
-				.HasForeignKey(e => e.user_id);
+				.HasMany(e => e.preg_weekly_interact)
+				.WithRequired(e => e.preg_user)
+				.HasForeignKey(e => e.user_id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_user>()
 				.HasMany(e => e.preg_user_baby_name)
@@ -609,6 +675,12 @@ namespace PregnancyData.Entity
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_user>()
+				.HasMany(e => e.preg_user_medical_service_package)
+				.WithRequired(e => e.preg_user)
+				.HasForeignKey(e => e.user_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_user>()
 				.HasMany(e => e.preg_user_shopping_cart)
 				.WithRequired(e => e.preg_user)
 				.HasForeignKey(e => e.user_id)
@@ -619,6 +691,14 @@ namespace PregnancyData.Entity
 				.WithRequired(e => e.preg_user)
 				.HasForeignKey(e => e.user_id)
 				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_user_medical_service_package>()
+				.Property(e => e.description)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_user_medical_service_package>()
+				.Property(e => e.payment_method)
+				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_week>()
 				.Property(e => e.title)
@@ -642,26 +722,31 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.week_id);
 
 			modelBuilder.Entity<preg_week>()
+				.HasMany(e => e.preg_size_guide)
+				.WithOptional(e => e.preg_week)
+				.HasForeignKey(e => e.week_id);
+
+			modelBuilder.Entity<preg_week>()
 				.HasMany(e => e.preg_time_line)
 				.WithOptional(e => e.preg_week)
 				.HasForeignKey(e => e.week_id);
 
 			modelBuilder.Entity<preg_week>()
-				.HasMany(e => e.preg_todo)
-				.WithOptional(e => e.preg_week)
-				.HasForeignKey(e => e.week_id);
+				.HasMany(e => e.preg_weekly_interact)
+				.WithRequired(e => e.preg_week)
+				.HasForeignKey(e => e.week_id)
+				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<preg_week>()
-				.HasMany(e => e.preg_weekly_note)
-				.WithOptional(e => e.preg_week)
-				.HasForeignKey(e => e.week_id);
+			modelBuilder.Entity<preg_weekly_interact>()
+				.Property(e => e.comment)
+				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_weekly_note>()
+			modelBuilder.Entity<preg_weekly_interact>()
 				.Property(e => e.photo)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_weekly_note>()
-				.Property(e => e.note)
+			modelBuilder.Entity<preg_weekly_interact>()
+				.Property(e => e.share)
 				.IsUnicode(false);
 		}
 	}

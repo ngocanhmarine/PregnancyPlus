@@ -106,10 +106,22 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					contraction.user_id = dataUpdate.user_id;
-					contraction.date_time = dataUpdate.date_time;
-					contraction.duration = dataUpdate.duration;
-					contraction.interval = dataUpdate.interval;
+					if (dataUpdate.user_id != null)
+					{
+						contraction.user_id = dataUpdate.user_id;
+					}
+					if (dataUpdate.date_time != null)
+					{
+						contraction.date_time = dataUpdate.date_time;
+					}
+					if (dataUpdate.duration != null)
+					{
+						contraction.duration = dataUpdate.duration;
+					}
+					if (dataUpdate.interval != null)
+					{
+						contraction.interval = dataUpdate.interval;
+					}
 
 					dao.UpdateData(contraction);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

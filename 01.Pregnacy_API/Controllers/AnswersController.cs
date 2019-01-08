@@ -141,9 +141,18 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					answer.questiondate = dataUpdate.questiondate;
-					answer.title = dataUpdate.title;
-					answer.content = dataUpdate.content;
+					if (dataUpdate.questiondate != null)
+					{
+						answer.questiondate = dataUpdate.questiondate;
+					}
+					if (dataUpdate.title != null)
+					{
+						answer.title = dataUpdate.title;
+					}
+					if (dataUpdate.content != null)
+					{
+						answer.content = dataUpdate.content;
+					}
 
 					dao.UpdateData(answer);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

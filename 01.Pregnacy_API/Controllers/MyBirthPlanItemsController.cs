@@ -118,9 +118,18 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					my_birth_plan_item.my_birth_plan_type_id = dataUpdate.my_birth_plan_type_id;
-					my_birth_plan_item.item_content = dataUpdate.item_content;
-					my_birth_plan_item.custom_item_by_user_id = dataUpdate.custom_item_by_user_id;
+					if (dataUpdate.my_birth_plan_type_id != null)
+					{
+						my_birth_plan_item.my_birth_plan_type_id = dataUpdate.my_birth_plan_type_id;
+					}
+					if (dataUpdate.item_content != null)
+					{
+						my_birth_plan_item.item_content = dataUpdate.item_content;
+					}
+					if (dataUpdate.custom_item_by_user_id != null)
+					{
+						my_birth_plan_item.custom_item_by_user_id = dataUpdate.custom_item_by_user_id;
+					}
 
 					dao.UpdateData(my_birth_plan_item);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

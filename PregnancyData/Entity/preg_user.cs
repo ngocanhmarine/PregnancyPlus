@@ -16,7 +16,8 @@ namespace PregnancyData.Entity
             preg_auth = new HashSet<preg_auth>();
             preg_contact_us = new HashSet<preg_contact_us>();
             preg_contraction = new HashSet<preg_contraction>();
-            preg_daily_like = new HashSet<preg_daily_like>();
+            preg_customer_response1 = new HashSet<preg_customer_response>();
+            preg_daily_interact = new HashSet<preg_daily_interact>();
             preg_hospital_bag_item = new HashSet<preg_hospital_bag_item>();
             preg_my_belly = new HashSet<preg_my_belly>();
             preg_my_birth_plan = new HashSet<preg_my_birth_plan>();
@@ -24,15 +25,17 @@ namespace PregnancyData.Entity
             preg_my_weight = new HashSet<preg_my_weight>();
             preg_phone = new HashSet<preg_phone>();
             preg_pregnancy = new HashSet<preg_pregnancy>();
+            preg_profession = new HashSet<preg_profession>();
             preg_question = new HashSet<preg_question>();
             preg_setting = new HashSet<preg_setting>();
             preg_shopping_item = new HashSet<preg_shopping_item>();
             preg_todo = new HashSet<preg_todo>();
             preg_upgrade = new HashSet<preg_upgrade>();
-            preg_weekly_note = new HashSet<preg_weekly_note>();
+            preg_weekly_interact = new HashSet<preg_weekly_interact>();
             preg_user_baby_name = new HashSet<preg_user_baby_name>();
             preg_user_hospital_bag_item = new HashSet<preg_user_hospital_bag_item>();
             preg_user_kick_history = new HashSet<preg_user_kick_history>();
+            preg_user_medical_service_package = new HashSet<preg_user_medical_service_package>();
             preg_user_shopping_cart = new HashSet<preg_user_shopping_cart>();
             preg_user_todo = new HashSet<preg_user_todo>();
         }
@@ -83,8 +86,13 @@ namespace PregnancyData.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_contraction> preg_contraction { get; set; }
 
+        public virtual preg_customer_response preg_customer_response { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_daily_like> preg_daily_like { get; set; }
+        public virtual ICollection<preg_customer_response> preg_customer_response1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preg_daily_interact> preg_daily_interact { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_hospital_bag_item> preg_hospital_bag_item { get; set; }
@@ -108,6 +116,9 @@ namespace PregnancyData.Entity
         public virtual ICollection<preg_pregnancy> preg_pregnancy { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preg_profession> preg_profession { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_question> preg_question { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -125,7 +136,7 @@ namespace PregnancyData.Entity
         public virtual ICollection<preg_upgrade> preg_upgrade { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_weekly_note> preg_weekly_note { get; set; }
+        public virtual ICollection<preg_weekly_interact> preg_weekly_interact { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_user_baby_name> preg_user_baby_name { get; set; }
@@ -135,6 +146,9 @@ namespace PregnancyData.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_user_kick_history> preg_user_kick_history { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preg_user_medical_service_package> preg_user_medical_service_package { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_user_shopping_cart> preg_user_shopping_cart { get; set; }

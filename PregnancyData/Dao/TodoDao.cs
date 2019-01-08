@@ -35,9 +35,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
 				}
-				else if (propertyName == "week_id" && propertyValue != null)
+				else if (propertyName == "day_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.week_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.day_id == Convert.ToInt32(propertyValue));
 				}
 				else if (propertyName == "title" && propertyValue != null)
 				{

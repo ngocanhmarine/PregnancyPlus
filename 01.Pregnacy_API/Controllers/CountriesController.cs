@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class CountriesController : ApiController
+	public class CustomerResponseController : ApiController
 	{
 		CountryDao dao = new CountryDao();
 		// GET api/values
@@ -18,25 +18,25 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-                IEnumerable<preg_country> result;
+				IEnumerable<preg_country> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
+					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					 result = dao.GetListItem();
-					
+					result = dao.GetListItem();
+
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -104,11 +104,14 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_country country = new preg_country();
 					country = dao.GetItemByID(Convert.ToInt32(id));
-                    if (country == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					country.name = dataUpdate.name;
+					if (country == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.name != null)
+					{
+						country.name = dataUpdate.name;
+					}
 
 					dao.UpdateData(country);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -133,12 +136,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_country country = dao.GetItemByID(Convert.ToInt32(id));
-                if (country == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(country);
+				preg_country country = dao.GetItemByID(Convert.ToInt32(id));
+				if (country == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(country);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

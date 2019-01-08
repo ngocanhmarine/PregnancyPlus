@@ -17,7 +17,7 @@ namespace PregnancyData.Entity
 
         public int? user_id { get; set; }
 
-        public virtual preg_profession preg_profession { get; set; }
+        public virtual preg_profession_type preg_profession_type { get; set; }
 
         public virtual preg_user preg_user { get; set; }
     }

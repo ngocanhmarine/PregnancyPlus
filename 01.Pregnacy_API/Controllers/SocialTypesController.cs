@@ -118,7 +118,14 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_social_type social_type = new preg_social_type();
 					social_type = dao.GetItemByID(Convert.ToInt32(id));
-					social_type.type = dataUpdate.type;
+					if (social_type == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.type != null)
+					{
+						social_type.type = dataUpdate.type;
+					}
 
 					dao.UpdateData(social_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -139,7 +146,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				dao.DeleteData(Convert.ToInt32(id));

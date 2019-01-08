@@ -109,30 +109,7 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_page dataUpdate)
 		{
-			try
-			{
-				if (dataUpdate != null)
-				{
-					preg_page page = new preg_page();
-					page = dao.GetItemByID(Convert.ToInt32(id));
-					page.title = dataUpdate.title;
-					page.content = dataUpdate.content;
-					page.page_image = dataUpdate.page_image;
-
-					dao.UpdateData(page);
-					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
+			return UpdateData(id, dataUpdate);
 		}
 
 		// DELETE api/values/5
@@ -160,7 +137,11 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_page page = new preg_page();
 					page = dao.GetItemByID(Convert.ToInt32(id));
-					if (dataUpdate.title!=null)
+					if (page == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.title != null)
 					{
 						page.title = dataUpdate.title;
 					}

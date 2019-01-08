@@ -58,7 +58,31 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_profession data = dao.GetItemByID(Convert.ToInt32(id));
+				IEnumerable<preg_profession> data = dao.GetItemsByUserID(Convert.ToInt32(id));
+				if (data.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, data);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+			}
+		}
+		// GET api/values/5
+		[Authorize]
+		[Route("api/professions/{user_id}/{profession_type_id}")]
+		public HttpResponseMessage Get(string user_id, string profession_type_id)
+		{
+			try
+			{
+				preg_profession data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -82,7 +106,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (data.user_id != 0 && data.profession_type_id != 0)
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -102,16 +126,45 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_profession dataUpdate)
+		[Route("api/professions/{user_id}/{profession_type_id}")]
+		public HttpResponseMessage Put(string user_id, string profession_type_id, [FromBody]preg_profession dataUpdate)
 		{
+			return UpdateData(user_id, profession_type_id, dataUpdate);
+		}
 
+		// DELETE api/values/5
+		[Authorize(Roles = "dev, admin")]
+		[Route("api/professions/{user_id}/{profession_type_id}")]
+		public HttpResponseMessage Delete(string user_id, string profession_type_id)
+		{
+			try
+			{
+				dao.DeleteData(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id));
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public HttpResponseMessage UpdateData(string user_id, string profession_type_id, [FromBody]preg_profession dataUpdate)
+		{
 			try
 			{
 				if (dataUpdate != null)
 				{
 					preg_profession profession = new preg_profession();
-					profession = dao.GetItemByID(Convert.ToInt32(id));
-					profession.profession_type = dataUpdate.profession_type;
+					profession = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id));
+					if (profession == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.status != null)
+					{
+						profession.status = dataUpdate.status;
+					}
 
 					dao.UpdateData(profession);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -121,23 +174,6 @@ namespace _01.Pregnacy_API.Controllers
 					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
-		}
-
-		// DELETE api/values/5
-		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Delete(string id)
-		{
-			//lstStrings[id] = value;
-			try
-			{
-				dao.DeleteData(Convert.ToInt32(id));
-				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
 			{

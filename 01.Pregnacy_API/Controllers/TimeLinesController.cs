@@ -141,6 +141,10 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_time_line time_line = new preg_time_line();
 					time_line = dao.GetItemByID(Convert.ToInt32(id));
+					if (time_line == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
 					if (dataUpdate.week_id != null)
 					{
 						time_line.week_id = dataUpdate.week_id;

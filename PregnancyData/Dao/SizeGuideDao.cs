@@ -20,10 +20,11 @@ namespace PregnancyData.Dao
 			return connect.preg_size_guide;
 		}
 
-		public preg_size_guide GetItemByID(int id)
+		public preg_size_guide GetItemByWeekID(int week_id)
 		{
-			return connect.preg_size_guide.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_size_guide.Where(c => c.week_id == week_id).FirstOrDefault();
 		}
+
 		public IEnumerable<preg_size_guide> GetItemsByParams(preg_size_guide data)
 		{
 			IEnumerable<preg_size_guide> result = connect.preg_size_guide;
@@ -47,6 +48,22 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.description == propertyValue.ToString());
 				}
+				else if (propertyName == "week_id" && propertyValue != null)
+				{
+					result = result.Where(c => c.week_id == Convert.ToInt32(propertyValue));
+				}
+				else if (propertyName == "length" && propertyValue != null)
+				{
+					result = result.Where(c => c.length == Convert.ToDouble(propertyValue));
+				}
+				else if (propertyName == "weight" && propertyValue != null)
+				{
+					result = result.Where(c => c.weight == Convert.ToDouble(propertyValue));
+				}
+				else if (propertyName == "type" && propertyValue != null)
+				{
+					result = result.Where(c => c.type == Convert.ToInt32(propertyValue));
+				}
 			}
 			return result;
 		}
@@ -63,7 +80,7 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int id)
 		{
-			preg_size_guide item = GetItemByID(id);
+			preg_size_guide item = GetItemByWeekID(id);
 			connect.preg_size_guide.Remove(item);
 			connect.SaveChanges();
 		}

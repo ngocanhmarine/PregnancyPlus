@@ -18,5 +18,15 @@ namespace PregnancyData.Entity
 
         [StringLength(1024)]
         public string description { get; set; }
+
+        public int? week_id { get; set; }
+
+        public double? length { get; set; }
+
+        public double? weight { get; set; }
+
+        public int? type { get; set; }
+
+        public virtual preg_week preg_week { get; set; }
     }
 }

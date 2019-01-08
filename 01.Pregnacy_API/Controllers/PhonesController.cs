@@ -111,16 +111,49 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_phone dataUpdate)
 		{
-			//lstStrings[id] = value;
+			return UpdateData(id, dataUpdate);
+		}
+
+		// DELETE api/values/5
+		[Authorize(Roles = "dev, admin")]
+		public HttpResponseMessage Delete(string id)
+		{
+			try
+			{
+				dao.DeleteData(Convert.ToInt32(id));
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public HttpResponseMessage UpdateData(string id, [FromBody]preg_phone dataUpdate)
+		{
 			try
 			{
 				if (dataUpdate != null)
 				{
 					preg_phone phone = new preg_phone();
 					phone = dao.GetItemByID(Convert.ToInt32(id));
-					phone.profession_id = dataUpdate.profession_id;
-					phone.phone_number = dataUpdate.phone_number;
-					phone.user_id = dataUpdate.user_id;
+					if (phone == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.profession_id != null)
+					{
+						phone.profession_id = dataUpdate.profession_id;
+					}
+					if (dataUpdate.phone_number != null)
+					{
+						phone.phone_number = dataUpdate.phone_number;
+					}
+					if (dataUpdate.user_id != null)
+					{
+						phone.user_id = dataUpdate.user_id;
+					}
 
 					dao.UpdateData(phone);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -130,23 +163,6 @@ namespace _01.Pregnacy_API.Controllers
 					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
-		}
-
-		// DELETE api/values/5
-		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Delete(string id)
-		{
-			//lstStrings[id] = value;
-			try
-			{
-				dao.DeleteData(Convert.ToInt32(id));
-				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
 			{

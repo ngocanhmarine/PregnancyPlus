@@ -118,7 +118,14 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_time_frame time_frame = new preg_time_frame();
 					time_frame = dao.GetItemByID(Convert.ToInt32(id));
-					time_frame.frame_title = dataUpdate.frame_title;
+					if (time_frame == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.frame_title != null)
+					{
+						time_frame.frame_title = dataUpdate.frame_title;
+					}
 
 					dao.UpdateData(time_frame);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

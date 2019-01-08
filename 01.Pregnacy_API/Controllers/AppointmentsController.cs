@@ -26,25 +26,25 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-                IEnumerable<preg_appointment> result;
+				IEnumerable<preg_appointment> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
-					
+					result = dao.GetItemsByParams(data);
+
 				}
 				else
 				{
-					 result = dao.GetListItem();
+					result = dao.GetListItem();
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -115,21 +115,54 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_appointment appointment = new preg_appointment();
 					appointment = dao.GetItemByID(Convert.ToInt32(id));
-                    if (appointment == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					appointment.name = dataUpdate.name;
-					appointment.contact_name = dataUpdate.contact_name;
-					appointment.profession_id = dataUpdate.profession_id;
-					appointment.appointment_date = dataUpdate.appointment_date;
-					appointment.appointment_time = dataUpdate.appointment_time;
-					appointment.my_weight_type_id = dataUpdate.my_weight_type_id;
-					appointment.weight_in_st = dataUpdate.weight_in_st;
-					appointment.sync_to_calendar = dataUpdate.sync_to_calendar;
-					appointment.note = dataUpdate.note;
-					appointment.user_id = dataUpdate.user_id;
-					appointment.appointment_type_id = dataUpdate.appointment_type_id;
+					if (appointment == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.name != null)
+					{
+						appointment.name = dataUpdate.name;
+					}
+					if (dataUpdate.contact_name != null)
+					{
+						appointment.contact_name = dataUpdate.contact_name;
+					}
+					if (dataUpdate.profession_id != null)
+					{
+						appointment.profession_id = dataUpdate.profession_id;
+					}
+					if (dataUpdate.appointment_date != null)
+					{
+						appointment.appointment_date = dataUpdate.appointment_date;
+					}
+					if (dataUpdate.appointment_time != null)
+					{
+						appointment.appointment_time = dataUpdate.appointment_time;
+					}
+					if (dataUpdate.my_weight_type_id != null)
+					{
+						appointment.my_weight_type_id = dataUpdate.my_weight_type_id;
+					}
+					if (dataUpdate.weight_in_st != null)
+					{
+						appointment.weight_in_st = dataUpdate.weight_in_st;
+					}
+					if (dataUpdate.sync_to_calendar != null)
+					{
+						appointment.sync_to_calendar = dataUpdate.sync_to_calendar;
+					}
+					if (dataUpdate.note != null)
+					{
+						appointment.note = dataUpdate.note;
+					}
+					if (dataUpdate.user_id != null)
+					{
+						appointment.user_id = dataUpdate.user_id;
+					}
+					if (dataUpdate.appointment_type_id != null)
+					{
+						appointment.appointment_type_id = dataUpdate.appointment_type_id;
+					}
 
 					dao.UpdateData(appointment);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -155,12 +188,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_appointment appointment = dao.GetItemByID(Convert.ToInt32(id));
-                if (appointment == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(appointment);
+				preg_appointment appointment = dao.GetItemByID(Convert.ToInt32(id));
+				if (appointment == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(appointment);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

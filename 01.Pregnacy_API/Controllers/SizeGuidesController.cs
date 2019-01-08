@@ -63,7 +63,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_size_guide data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_size_guide data = dao.GetItemByWeekID(Convert.ToInt32(id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -135,7 +135,11 @@ namespace _01.Pregnacy_API.Controllers
 				if (dataUpdate != null)
 				{
 					preg_size_guide size_guide = new preg_size_guide();
-					size_guide = dao.GetItemByID(Convert.ToInt32(id));
+					size_guide = dao.GetItemByWeekID(Convert.ToInt32(id));
+					if (size_guide == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
 					if (dataUpdate.image != null)
 					{
 						size_guide.image = dataUpdate.image;
@@ -147,6 +151,22 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.description != null)
 					{
 						size_guide.description = dataUpdate.description;
+					}
+					if (dataUpdate.week_id != null)
+					{
+						size_guide.week_id = dataUpdate.week_id;
+					}
+					if (dataUpdate.length != null)
+					{
+						size_guide.length = dataUpdate.length;
+					}
+					if (dataUpdate.weight != null)
+					{
+						size_guide.weight = dataUpdate.weight;
+					}
+					if (dataUpdate.type != null)
+					{
+						size_guide.type = dataUpdate.type;
 					}
 
 					dao.UpdateData(size_guide);
@@ -172,7 +192,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string size_guide_id)
 		{
 			// Check daily_id exist
-			preg_size_guide checkItem = dao.GetItemByID(Convert.ToInt32(size_guide_id));
+			preg_size_guide checkItem = dao.GetItemByWeekID(Convert.ToInt32(size_guide_id));
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, size_guide_id));

@@ -12,9 +12,9 @@ namespace PregnancyData.Entity
         public preg_week()
         {
             preg_image = new HashSet<preg_image>();
+            preg_size_guide = new HashSet<preg_size_guide>();
             preg_time_line = new HashSet<preg_time_line>();
-            preg_todo = new HashSet<preg_todo>();
-            preg_weekly_note = new HashSet<preg_weekly_note>();
+            preg_weekly_interact = new HashSet<preg_weekly_interact>();
         }
 
         public int id { get; set; }
@@ -39,12 +39,12 @@ namespace PregnancyData.Entity
         public virtual ICollection<preg_image> preg_image { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preg_size_guide> preg_size_guide { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_time_line> preg_time_line { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_todo> preg_todo { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_weekly_note> preg_weekly_note { get; set; }
+        public virtual ICollection<preg_weekly_interact> preg_weekly_interact { get; set; }
     }
 }

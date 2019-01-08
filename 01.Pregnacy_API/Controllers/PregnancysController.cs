@@ -105,36 +105,7 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_pregnancy dataUpdate)
 		{
-
-			try
-			{
-				if (dataUpdate != null)
-				{
-					preg_pregnancy pregnancy = new preg_pregnancy();
-					pregnancy = dao.GetItemByID(Convert.ToInt32(id));
-					pregnancy.user_id = dataUpdate.user_id;
-					pregnancy.baby_gender = dataUpdate.baby_gender;
-					pregnancy.due_date = dataUpdate.due_date;
-					pregnancy.show_week = dataUpdate.show_week;
-					pregnancy.pregnancy_loss = dataUpdate.pregnancy_loss;
-					pregnancy.baby_already_born = dataUpdate.baby_already_born;
-					pregnancy.date_of_birth = dataUpdate.date_of_birth;
-					pregnancy.weeks_pregnant = dataUpdate.weeks_pregnant;
-
-					dao.UpdateData(pregnancy);
-					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
+			return UpdateData(id, dataUpdate);
 		}
 
 		// DELETE api/values/5
@@ -145,6 +116,67 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				dao.DeleteData(Convert.ToInt32(id));
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public HttpResponseMessage UpdateData(string id, [FromBody]preg_pregnancy dataUpdate)
+		{
+			try
+			{
+				if (dataUpdate != null)
+				{
+					preg_pregnancy pregnancy = new preg_pregnancy();
+					pregnancy = dao.GetItemByID(Convert.ToInt32(id));
+					if (pregnancy == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.user_id != null)
+					{
+						pregnancy.user_id = dataUpdate.user_id;
+					}
+					if (dataUpdate.baby_gender != null)
+					{
+						pregnancy.baby_gender = dataUpdate.baby_gender;
+					}
+					if (dataUpdate.due_date != null)
+					{
+						pregnancy.due_date = dataUpdate.due_date;
+					}
+					if (dataUpdate.show_week != null)
+					{
+						pregnancy.show_week = dataUpdate.show_week;
+					}
+					if (dataUpdate.pregnancy_loss != null)
+					{
+						pregnancy.pregnancy_loss = dataUpdate.pregnancy_loss;
+					}
+					if (dataUpdate.baby_already_born != null)
+					{
+						pregnancy.baby_already_born = dataUpdate.baby_already_born;
+					}
+					if (dataUpdate.date_of_birth != null)
+					{
+						pregnancy.date_of_birth = dataUpdate.date_of_birth;
+					}
+					if (dataUpdate.weeks_pregnant != null)
+					{
+						pregnancy.weeks_pregnant = dataUpdate.weeks_pregnant;
+					}
+
+					dao.UpdateData(pregnancy);
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+				}
 			}
 			catch (Exception ex)
 			{

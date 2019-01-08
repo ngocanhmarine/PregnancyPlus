@@ -7,7 +7,7 @@ using System.Web.Http.Controllers;
 
 namespace _01.Pregnacy_API
 {
-	public class AuthorizeAttribute:System.Web.Http.AuthorizeAttribute
+	public class AuthorizeAttribute : System.Web.Http.AuthorizeAttribute
 	{
 		protected override void HandleUnauthorizedRequest(HttpActionContext actionContext)
 		{

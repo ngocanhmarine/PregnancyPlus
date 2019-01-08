@@ -114,9 +114,18 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					kick_result.kick_order = dataUpdate.kick_order;
-					kick_result.kick_time = dataUpdate.kick_time;
-					kick_result.elapsed_time = dataUpdate.elapsed_time;
+					if (dataUpdate.kick_order != 0)
+					{
+						kick_result.kick_order = dataUpdate.kick_order;
+					}
+					if (dataUpdate.kick_time != null)
+					{
+						kick_result.kick_time = dataUpdate.kick_time;
+					}
+					if (dataUpdate.elapsed_time != null)
+					{
+						kick_result.elapsed_time = dataUpdate.elapsed_time;
+					}
 
 					dao.UpdateData(kick_result);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

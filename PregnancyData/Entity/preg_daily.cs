@@ -11,12 +11,11 @@ namespace PregnancyData.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public preg_daily()
         {
-            preg_daily_like = new HashSet<preg_daily_like>();
+            preg_daily_interact = new HashSet<preg_daily_interact>();
+            preg_todo = new HashSet<preg_todo>();
         }
 
         public int id { get; set; }
-
-        public int? daily_type_id { get; set; }
 
         [StringLength(1024)]
         public string title { get; set; }
@@ -30,11 +29,12 @@ namespace PregnancyData.Entity
         public string description { get; set; }
 
         [StringLength(1024)]
-        public string daily_relation { get; set; }
+        public string daily_blog { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_daily_like> preg_daily_like { get; set; }
+        public virtual ICollection<preg_daily_interact> preg_daily_interact { get; set; }
 
-        public virtual preg_daily_type preg_daily_type { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preg_todo> preg_todo { get; set; }
     }
 }

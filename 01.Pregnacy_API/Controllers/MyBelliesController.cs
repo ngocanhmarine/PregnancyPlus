@@ -148,10 +148,6 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						phone.image = dataUpdate.image;
 					}
-					if (dataUpdate.my_belly_type_id != null)
-					{
-						phone.my_belly_type_id = dataUpdate.my_belly_type_id;
-					}
 					if (dataUpdate.month != null)
 					{
 						phone.month = dataUpdate.month;

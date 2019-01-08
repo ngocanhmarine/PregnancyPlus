@@ -1,123 +1,369 @@
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll.config
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.pdb
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe.config
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.rsp
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe.config
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.rsp
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Managed.Core.targets
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.AppContext.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Collections.Immutable.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Console.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Compression.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.AccessControl.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Reflection.Metadata.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.AccessControl.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Claims.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Principal.Windows.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.ValueTuple.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XmlDocument.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe.config
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.rsp
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe.config
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Web.Infrastructure.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Owin.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Cors.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\WebGrease.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.pdb
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll.config
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.pdb
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csprojAssemblyReference.cache
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CoreCompileInputs.cache
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CopyComplete
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.dll
-D:\WSoftPro\PegnancyPlus\Ver2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.pdb
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csprojAssemblyReference.cache
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CoreCompileInputs.cache
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll.config
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.pdb
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe.config
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.rsp
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe.config
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.rsp
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Managed.Core.targets
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.AppContext.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Collections.Immutable.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Console.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Compression.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.AccessControl.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Claims.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Principal.Windows.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.ValueTuple.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XmlDocument.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe.config
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.rsp
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe.config
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Web.Infrastructure.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Owin.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Cors.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\WebGrease.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.pdb
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll.config
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.pdb
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CopyComplete
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.dll
+D:\WSoftPro\PegnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll.config
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.rsp
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.rsp
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Managed.Core.targets
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.AppContext.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Collections.Immutable.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Console.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Compression.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.AccessControl.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Claims.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Principal.Windows.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.ValueTuple.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XmlDocument.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.rsp
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Web.Infrastructure.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Cors.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\WebGrease.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll.config
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csprojAssemblyReference.cache
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CoreCompileInputs.cache
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CopyComplete
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.dll
+D:\WSoftPro\PregnancyPlus\Ver2.2\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll.config
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\01.Pregnacy_API.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csc.rsp
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\csi.rsp
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.Managed.Core.targets
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.AppContext.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Collections.Immutable.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Console.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Compression.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.IO.Pipes.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Reflection.Metadata.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.AccessControl.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Claims.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Security.Principal.Windows.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.ValueTuple.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XmlDocument.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\vbc.rsp
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\roslyn\VBCSCompiler.exe.config
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Web.Infrastructure.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Cors.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\WebGrease.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\PregnancyData.dll.config
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Antlr3.Runtime.pdb
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\EntityFramework.SqlServer.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Core.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Cors.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Newtonsoft.Json.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Net.Http.Formatting.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Helpers.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.Owin.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Http.WebHost.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Mvc.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Optimization.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.Razor.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Deployment.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Web.WebPages.Razor.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Facebook.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Cookies.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Google.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.Twitter.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.Owin.Security.OAuth.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\System.Diagnostics.DiagnosticSource.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csprojAssemblyReference.cache
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CoreCompileInputs.cache
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CopyComplete
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.dll
+D:\WSoftPro\PregnancyPlus\Ver2.3 - New database 20190107\01.Pregnacy_API\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.pdb

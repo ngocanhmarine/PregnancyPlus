@@ -12,26 +12,22 @@ namespace PregnancyData.Entity
         public preg_todo()
         {
             preg_user_todo = new HashSet<preg_user_todo>();
-            preg_user_todo1 = new HashSet<preg_user_todo>();
         }
 
         public int id { get; set; }
 
-        public int? week_id { get; set; }
+        public int? day_id { get; set; }
 
         [StringLength(1024)]
         public string title { get; set; }
 
         public int? custom_task_by_user_id { get; set; }
 
-        public virtual preg_user preg_user { get; set; }
+        public virtual preg_daily preg_daily { get; set; }
 
-        public virtual preg_week preg_week { get; set; }
+        public virtual preg_user preg_user { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_user_todo> preg_user_todo { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<preg_user_todo> preg_user_todo1 { get; set; }
     }
 }

@@ -114,7 +114,10 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					image_type.type = dataUpdate.type;
+					if (dataUpdate.type != null)
+					{
+						image_type.type = dataUpdate.type;
+					}
 
 					dao.UpdateData(image_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

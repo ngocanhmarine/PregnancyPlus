@@ -39,10 +39,6 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.image == propertyValue.ToString());
 				}
-				else if (propertyName == "my_belly_type_id" && propertyValue != null)
-				{
-					result = result.Where(c => c.my_belly_type_id == Convert.ToInt32(propertyValue));
-				}
 				else if (propertyName == "month" && propertyValue != null)
 				{
 					result = result.Where(c => c.month == Convert.ToInt32(propertyValue));
@@ -70,6 +66,5 @@ namespace PregnancyData.Dao
 			connect.preg_my_belly.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

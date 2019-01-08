@@ -25,26 +25,26 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-                IEnumerable<preg_my_weight> result;
+				IEnumerable<preg_my_weight> result;
 				if (data != null)
 				{
 					result = dao.GetItemsByParams(data);
-					
+
 				}
 				else
 				{
-					 result = dao.GetListItem();
-					
+					result = dao.GetListItem();
+
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -111,15 +111,34 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_my_weight my_weight = new preg_my_weight();
 					my_weight = dao.GetItemByID(Convert.ToInt32(id));
-                    if (my_weight== null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					my_weight.user_id = dataUpdate.user_id;
-					my_weight.my_weight_type_id = dataUpdate.my_weight_type_id;
-					my_weight.start_date = dataUpdate.start_date;
-					my_weight.pre_pregnancy_weight = dataUpdate.pre_pregnancy_weight;
-					my_weight.current_weight = dataUpdate.current_weight;
+					if (my_weight == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.user_id != null)
+					{
+						my_weight.user_id = dataUpdate.user_id;
+					}
+					if (dataUpdate.my_weight_type_id != null)
+					{
+						my_weight.my_weight_type_id = dataUpdate.my_weight_type_id;
+					}
+					if (dataUpdate.start_date != null)
+					{
+						my_weight.start_date = dataUpdate.start_date;
+					}
+					if (dataUpdate.start_date != null)
+					{
+						my_weight.start_date = dataUpdate.start_date;
+					}
+					if (dataUpdate.pre_pregnancy_weight != null)
+					{
+						my_weight.pre_pregnancy_weight = dataUpdate.pre_pregnancy_weight;
+					}
+					if (dataUpdate.current_weight != null)
+					{
+						my_weight.current_weight = dataUpdate.current_weight;
+					}
 
 					dao.UpdateData(my_weight);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -144,12 +163,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_my_weight item = dao.GetItemByID(Convert.ToInt32(id));
-                if (item == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(item);
+				preg_my_weight item = dao.GetItemByID(Convert.ToInt32(id));
+				if (item == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

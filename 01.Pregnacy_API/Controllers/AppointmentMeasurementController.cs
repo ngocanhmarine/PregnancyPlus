@@ -118,10 +118,22 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					appointment_measurement.appointment_id = dataUpdate.appointment_id;
-					appointment_measurement.bp_dia = dataUpdate.bp_dia;
-					appointment_measurement.bp_sys = dataUpdate.bp_sys;
-					appointment_measurement.baby_heart = dataUpdate.baby_heart;
+					if (dataUpdate.appointment_id != null)
+					{
+						appointment_measurement.appointment_id = dataUpdate.appointment_id;
+					}
+					if (dataUpdate.bp_dia != null)
+					{
+						appointment_measurement.bp_dia = dataUpdate.bp_dia;
+					}
+					if (dataUpdate.bp_sys != null)
+					{
+						appointment_measurement.bp_sys = dataUpdate.bp_sys;
+					}
+					if (dataUpdate.baby_heart != null)
+					{
+						appointment_measurement.baby_heart = dataUpdate.baby_heart;
+					}
 
 					dao.UpdateData(appointment_measurement);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

@@ -25,25 +25,25 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-                IEnumerable<preg_guides_type> result;
+				IEnumerable<preg_guides_type> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
-					
+					result = dao.GetItemsByParams(data);
+
 				}
 				else
 				{
-					 result = dao.GetListItem();
+					result = dao.GetListItem();
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -111,11 +111,14 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_guides_type guides_type = new preg_guides_type();
 					guides_type = dao.GetItemByID(Convert.ToInt32(id));
-                    if (guides_type == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					guides_type.type = dataUpdate.type;
+					if (guides_type == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.type != null)
+					{
+						guides_type.type = dataUpdate.type;
+					}
 
 					dao.UpdateData(guides_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -140,12 +143,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_guides_type item = dao.GetItemByID(Convert.ToInt32(id));
-                if (item == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(item);
+				preg_guides_type item = dao.GetItemByID(Convert.ToInt32(id));
+				if (item == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

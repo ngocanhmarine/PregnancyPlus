@@ -3,6 +3,7 @@ using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -14,30 +15,30 @@ namespace _01.Pregnacy_API.Controllers
 		AuthDao dao = new AuthDao();
 		// GET api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Get([FromBody]preg_auth data)
+		public async Task<HttpResponseMessage> Get([FromBody]preg_auth data)
 		{
 			try
 			{
-                IEnumerable<preg_auth> result;
+				IEnumerable<preg_auth> result;
 				if (data != null)
 				{
-					 result = dao.GetItemsByParams(data);
-					
+					result = dao.GetItemsByParams(data);
+
 				}
 				else
 				{
 					result = dao.GetListItem();
-					
+
 				}
-                if (result.Count() > 0)
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-                else
-                {
-                    HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-                }
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -106,13 +107,22 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					preg_auth auth = new preg_auth();
 					auth = dao.GetItemByID(Convert.ToInt32(id));
-                    if (auth == null)
-                    {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                    }
-					auth.user_id = dataUpdate.user_id;
-					auth.token = dataUpdate.token;
-					auth.valid_to = dataUpdate.valid_to;
+					if (auth == null)
+					{
+						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.user_id != null)
+					{
+						auth.user_id = dataUpdate.user_id;
+					}
+					if (dataUpdate.token != null)
+					{
+						auth.token = dataUpdate.token;
+					}
+					if (dataUpdate.valid_to != null)
+					{
+						auth.valid_to = dataUpdate.valid_to;
+					}
 
 					dao.UpdateData(auth);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -137,12 +147,12 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-                preg_auth auth = dao.GetItemByID(Convert.ToInt32(id));
-                if (auth == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-                }
-                dao.DeleteData(auth);
+				preg_auth auth = dao.GetItemByID(Convert.ToInt32(id));
+				if (auth == null)
+				{
+					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(auth);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

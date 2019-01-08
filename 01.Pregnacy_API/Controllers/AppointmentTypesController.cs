@@ -106,7 +106,10 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					appointment_type.type = dataUpdate.type;
+					if (dataUpdate.type != null)
+					{
+						appointment_type.type = dataUpdate.type;
+					}
 
 					dao.UpdateData(appointment_type);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
