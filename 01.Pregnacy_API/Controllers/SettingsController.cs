@@ -54,6 +54,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/settings/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -103,6 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/settings/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_setting dataUpdate)
 		{
 			return UpdateData(id, dataUpdate);
@@ -110,9 +112,9 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/settings/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				dao.DeleteData(Convert.ToInt32(id));
@@ -124,7 +126,6 @@ namespace _01.Pregnacy_API.Controllers
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 			}
 		}
-
 
 		public HttpResponseMessage UpdateData(string id, [FromBody]preg_setting dataUpdate)
 		{

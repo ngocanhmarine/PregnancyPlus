@@ -144,7 +144,7 @@ namespace _01.Pregnacy_API.Controllers
 		//			my_birth_plan = dao.GetItemByID(Convert.ToInt32(user_id),Convert.ToInt32(my_birth_plan_item_id));
 		//                  if (my_birth_plan == null)
 		//                  {
-		//                      return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+		//                      return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 		//                  }
 		//			my_birth_plan.user_id = dataUpdate.user_id;
 		//			my_birth_plan.my_birth_plan_item_id = dataUpdate.my_birth_plan_item_id;
@@ -176,7 +176,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_my_birth_plan item = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(my_birth_plan_item_id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

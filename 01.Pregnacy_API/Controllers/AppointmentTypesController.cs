@@ -46,6 +46,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/appointmenttypes/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -69,7 +70,7 @@ namespace _01.Pregnacy_API.Controllers
 		}
 
 		// POST api/values
-		[Authorize(Roles = "dev, admin")]
+		[AllowAnonymous]
 		public HttpResponseMessage Post([FromBody]preg_appointment_type data)
 		{
 			try
@@ -94,6 +95,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/appointmenttypes/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_appointment_type dataUpdate)
 		{
 			try
@@ -104,7 +106,7 @@ namespace _01.Pregnacy_API.Controllers
 					appointment_type = dao.GetItemByID(Convert.ToInt32(id));
 					if (appointment_type == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.type != null)
 					{
@@ -129,6 +131,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/appointmenttypes/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
 			//lstStrings[id] = value;
@@ -137,7 +140,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_appointment_type appointment_type = dao.GetItemByID(Convert.ToInt32(id));
 				if (appointment_type == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(appointment_type);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

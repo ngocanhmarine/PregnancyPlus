@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
 using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
@@ -61,6 +55,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/socialtypes/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -109,9 +104,9 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/socialtypes/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_social_type dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				if (dataUpdate != null)
@@ -144,6 +139,7 @@ namespace _01.Pregnacy_API.Controllers
 		}
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/socialtypes/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
 			try

@@ -5,11 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using System.IO;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -51,11 +47,12 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
-		public HttpResponseMessage Get(string id)
+		[Route("api/dailyinteract/{user_id}")]
+		public HttpResponseMessage Get(string user_id)
 		{
 			try
 			{
-				preg_daily_interact data = dao.GetItemByUserID(Convert.ToInt32(id));
+				preg_daily_interact data = dao.GetItemByUserID(Convert.ToInt32(user_id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -99,7 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/{daily_id}/{user_id}")]
+		[Route("api/dailyinteract/{daily_id}/{user_id}")]
 		public HttpResponseMessage Put(string daily_id, string user_id, [FromBody]preg_daily_interact dataUpdate)
 		{
 			return UpdateData(daily_id, user_id, dataUpdate);
@@ -107,18 +104,18 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/{daily_id}/{user_id}")]
+		[Route("api/dailyinteract/{daily_id}/{user_id}")]
 		public HttpResponseMessage Delete(string daily_id, string user_id)
 		{
 			//lstStrings[id] = value;
 			try
 			{
-				preg_daily_interact daily = dao.GetItemByID(Convert.ToInt32(daily_id), Convert.ToInt32(user_id));
-				if (daily == null)
+				preg_daily_interact daily_interact = dao.GetItemByID(Convert.ToInt32(daily_id), Convert.ToInt32(user_id));
+				if (daily_interact == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
-				dao.DeleteData(daily);
+				dao.DeleteData(daily_interact);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
@@ -138,7 +135,7 @@ namespace _01.Pregnacy_API.Controllers
 					daily = dao.GetItemByID(Convert.ToInt32(daily_id), Convert.ToInt32(user_id));
 					if (daily == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.like != null)
 					{

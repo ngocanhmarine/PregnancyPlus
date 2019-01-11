@@ -29,7 +29,6 @@ namespace _01.Pregnacy_API.Controllers
 				if (data != null)
 				{
 					result = dao.GetItemsByParams(data);
-
 				}
 				else
 				{
@@ -55,6 +54,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/images/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -103,6 +103,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/images/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_image dataUpdate)
 		{
 			return UpdateData(id, dataUpdate);
@@ -110,15 +111,15 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/images/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_image image = dao.GetItemByID(Convert.ToInt32(id));
 				if (image == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(image);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
@@ -140,7 +141,7 @@ namespace _01.Pregnacy_API.Controllers
 					image = dao.GetItemByID(Convert.ToInt32(id));
 					if (image == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.image_type_id != null)
 					{

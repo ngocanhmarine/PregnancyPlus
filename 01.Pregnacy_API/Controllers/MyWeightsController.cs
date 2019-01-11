@@ -54,6 +54,7 @@ namespace _01.Pregnacy_API.Controllers
 		}
 		// GET api/values/5
 		[Authorize]
+		[Route("api/myweights/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -102,9 +103,9 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/myweights/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_my_weight dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				if (dataUpdate != null)
@@ -113,7 +114,7 @@ namespace _01.Pregnacy_API.Controllers
 					my_weight = dao.GetItemByID(Convert.ToInt32(id));
 					if (my_weight == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.user_id != null)
 					{
@@ -122,10 +123,6 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.my_weight_type_id != null)
 					{
 						my_weight.my_weight_type_id = dataUpdate.my_weight_type_id;
-					}
-					if (dataUpdate.start_date != null)
-					{
-						my_weight.start_date = dataUpdate.start_date;
 					}
 					if (dataUpdate.start_date != null)
 					{
@@ -158,15 +155,15 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/myweights/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_my_weight item = dao.GetItemByID(Convert.ToInt32(id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

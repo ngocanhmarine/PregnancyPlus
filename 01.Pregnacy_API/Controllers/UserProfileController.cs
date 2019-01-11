@@ -81,31 +81,107 @@ namespace _01.Pregnacy_API.Controllers
 		//	}
 		//}
 
-
-		// POST api/values
+		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Post([FromBody]preg_user data)
+		[HttpPut]
+		public HttpResponseMessage Put([FromBody]preg_user dataUpdate)
+		{
+			return UpdateData(dataUpdate);
+		}
+
+		// DELETE api/values/5
+		[Authorize(Roles = "dev, admin")]
+		[HttpDelete]
+		public HttpResponseMessage Delete()
 		{
 			try
 			{
-				if (data.phone != null && data.password != null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (user_id > 0)
 				{
-					data.password = SysMethod.MD5Hash(data.password);
-					if (userdao.InsertData(data))
+					userdao.DeleteData(Convert.ToInt32(user_id));
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.ADMIN_DONT_HAVE_PROFILE);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public HttpResponseMessage UpdateData([FromBody]preg_user dataUpdate)
+		{
+			try
+			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (user_id > 0)
+				{
+					if (dataUpdate != null && dataUpdate.email == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
+						preg_user user = new preg_user();
+						user = userdao.GetUserByID(user_id);
+						if (user != null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+						if (dataUpdate.password != null)
+						{
+							user.password = SysMethod.MD5Hash(dataUpdate.password);
+						}
+						if (dataUpdate.phone != null)
+						{
+							user.phone = dataUpdate.phone;
+						}
+						if (dataUpdate.social_type_id != null)
+						{
+							user.social_type_id = dataUpdate.social_type_id;
+						}
+						if (dataUpdate.first_name != null)
+						{
+							user.first_name = dataUpdate.first_name;
+						}
+						if (dataUpdate.last_name != null)
+						{
+							user.last_name = dataUpdate.last_name;
+						}
+						if (dataUpdate.you_are_the != null)
+						{
+							user.you_are_the = dataUpdate.you_are_the;
+						}
+						if (dataUpdate.location != null)
+						{
+							user.location = dataUpdate.location;
+						}
+						if (dataUpdate.status != null)
+						{
+							user.status = dataUpdate.status;
+						}
+						if (dataUpdate.avarta != null)
+						{
+							user.avarta = dataUpdate.avarta;
+						}
+
+						userdao.UpdateData(user);
+						return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 					}
 					else
 					{
-						HttpError err = new HttpError(SysConst.PHONE_EXIST);
+						HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 					}
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.PHONE_PASSWORD_NOT_NULL);
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+					HttpError err = new HttpError(SysConst.ADMIN_DONT_HAVE_PROFILE);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 				}
+
 			}
 			catch (Exception ex)
 			{
@@ -114,59 +190,5 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		// PUT api/values/5
-		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_user dataUpdate)
-		{
-			//lstStrings[id] = value;
-			try
-			{
-				if (dataUpdate != null)
-				{
-					preg_user user = new preg_user();
-					user = userdao.GetUserByID(Convert.ToInt32(id));
-					user.password = SysMethod.MD5Hash(dataUpdate.password);
-					user.phone = dataUpdate.phone;
-					user.social_type_id = dataUpdate.social_type_id;
-					user.first_name = dataUpdate.first_name;
-					user.last_name = dataUpdate.last_name;
-					user.you_are_the = dataUpdate.you_are_the;
-					user.location = dataUpdate.location;
-					user.status = dataUpdate.status;
-					user.avarta = dataUpdate.avarta;
-					user.email = dataUpdate.email;
-
-					userdao.UpdateData(user);
-					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
-		}
-
-		// DELETE api/values/5
-		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Delete(string id)
-		{
-			//lstStrings[id] = value;
-			try
-			{
-				userdao.DeleteData(Convert.ToInt32(id));
-				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
-		}
 	}
 }

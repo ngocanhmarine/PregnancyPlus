@@ -46,6 +46,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/faqanswer/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -95,6 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/faqanswer/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_faq_answer dataUpdate)
 		{
 			try
@@ -105,7 +107,7 @@ namespace _01.Pregnacy_API.Controllers
 					faq_answer = dao.GetItemByID(Convert.ToInt32(id));
 					if (faq_answer == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.faq_id != 0)
 					{
@@ -134,6 +136,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/faqanswer/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
 			//lstStrings[id] = value;
@@ -142,7 +145,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_faq_answer item = dao.GetItemByID(Convert.ToInt32(id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

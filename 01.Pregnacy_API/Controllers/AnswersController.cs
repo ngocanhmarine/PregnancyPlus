@@ -139,7 +139,7 @@ namespace _01.Pregnacy_API.Controllers
 					answer = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id));
 					if (answer == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.questiondate != null)
 					{
@@ -181,7 +181,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_answer item = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
 using PregnancyData.Dao;
 using System.IO;
 using System.Web;
@@ -65,11 +59,12 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
-		public HttpResponseMessage Get(string id)
+		[Route("api/weeklyinteract/{user_id}")]
+		public HttpResponseMessage Get(string user_id)
 		{
 			try
 			{
-				IEnumerable<preg_weekly_interact> data = dao.GetItemByUserID(Convert.ToInt32(id));
+				IEnumerable<preg_weekly_interact> data = dao.GetItemByUserID(Convert.ToInt32(user_id));
 				if (data.Count() > 0)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -147,7 +142,7 @@ namespace _01.Pregnacy_API.Controllers
 					weekly_interact = dao.GetItemByID(Convert.ToInt32(week_id), Convert.ToInt32(user_id));
 					if (weekly_interact == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.like != null)
 					{

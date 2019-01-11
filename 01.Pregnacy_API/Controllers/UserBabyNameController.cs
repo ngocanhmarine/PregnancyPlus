@@ -61,7 +61,7 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpGet]
-		[Route("api/userbabynames/{user_id}/{baby_name_id}")]
+		[Route("api/userbabyname/{user_id}/{baby_name_id}")]
 		public HttpResponseMessage Get(string user_id, string baby_name_id)
 		{
 			try
@@ -87,7 +87,7 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpGet]
-		[Route("api/userbabynames/{user_id}")]
+		[Route("api/userbabyname/{user_id}")]
 		public HttpResponseMessage Get(string user_id)
 		{
 			try
@@ -177,7 +177,7 @@ namespace _01.Pregnacy_API.Controllers
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpDelete]
-		[Route("api/userbabynames/{user_id}/{baby_name_id}")]
+		[Route("api/userbabyname/{user_id}/{baby_name_id}")]
 		public HttpResponseMessage Delete(string user_id, string baby_name_id)
 		{
 			try

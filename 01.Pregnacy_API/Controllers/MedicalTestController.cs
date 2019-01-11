@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.IO;
-using System.Security.Claims;
 using PregnancyData.Dao;
-using System.Threading.Tasks;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -54,6 +46,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/medicaltest/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -102,6 +95,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/medicaltest/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_medical_test dataUpdate)
 		{
 			return UpdateData(id, dataUpdate);
@@ -109,15 +103,15 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/medicaltest/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_medical_test item = dao.GetItemByID(Convert.ToInt32(id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
@@ -131,7 +125,6 @@ namespace _01.Pregnacy_API.Controllers
 
 		public HttpResponseMessage UpdateData(string id, preg_medical_test dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				if (dataUpdate != null)
@@ -140,7 +133,7 @@ namespace _01.Pregnacy_API.Controllers
 					medical_service_package = dao.GetItemByID(Convert.ToInt32(id));
 					if (medical_service_package == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.title != null)
 					{

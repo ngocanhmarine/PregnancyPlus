@@ -63,6 +63,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/timelines/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -111,6 +112,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/timelines/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_time_line dataUpdate)
 		{
 			return UpdateData(id, dataUpdate);
@@ -118,9 +120,9 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/timelines/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				dao.DeleteData(Convert.ToInt32(id));
@@ -134,7 +136,6 @@ namespace _01.Pregnacy_API.Controllers
 		}
 		public HttpResponseMessage UpdateData(string id, preg_time_line dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				if (dataUpdate != null)

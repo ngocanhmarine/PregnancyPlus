@@ -27,8 +27,8 @@ public class SysConst
 	public static string DATA_EXIST = "Data already exist.";
 	public static string ID_MUST_INTEGER = "ID must be an integer.";
 	public static string ITEM_ID_NOT_EXIST = "Item with ID={0} not exist.";
-	public static string PHONE_EXIST = "Phone already exist.";
-	public static string PHONE_PASSWORD_NOT_NULL = "Phone and password cannot be null.";
+	public static string EMAIL_EXIST = "Email already exist.";
+	public static string EMAIL_PASSWORD_NOT_NULL = "Email and password cannot be null.";
 	public static string DATA_INSERT_SUCCESS = "Data insert succeed.";
 	public static string DATA_INSERT_FAIL = "Data insert failed.";
 	public static string DATA_UPDATE_SUCCESS = "Data update succeed.";
@@ -36,6 +36,7 @@ public class SysConst
 	public static string DATA_DELETE_SUCCESS = "Data delete succeed.";
 	public static string DATA_DELETE_FAIL = "Data delete failed.";
 	public static string LOGIN_FAILED = "Provided username & password is incorrect.";
+	public static string USER_CREATED = "Your user account has been created. ID = {0}.";
 	public static string INVALID_FILE_TYPE = "Invalid file type.";
 	public static string FILE_NOT_EXIST = "File with path {0} not exist.";
 	public static string FILE_EXIST = "File with name {0} already exist.";

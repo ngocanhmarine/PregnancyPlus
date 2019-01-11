@@ -55,6 +55,7 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values/5
 		[Authorize]
 		[HttpGet]
+		[Route("api/mybirthplanitems/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -105,9 +106,9 @@ namespace _01.Pregnacy_API.Controllers
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpPut]
+		[Route("api/mybirthplanitems/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_my_birth_plan_item dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				if (dataUpdate != null)
@@ -116,7 +117,7 @@ namespace _01.Pregnacy_API.Controllers
 					my_birth_plan_item = dao.GetItemByID(Convert.ToInt32(id));
 					if (my_birth_plan_item == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.my_birth_plan_type_id != null)
 					{
@@ -150,6 +151,7 @@ namespace _01.Pregnacy_API.Controllers
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpDelete]
+		[Route("api/mybirthplanitems/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
 			try
@@ -157,7 +159,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_my_birth_plan_item item = dao.GetItemByID(Convert.ToInt32(id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

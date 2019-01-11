@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.Text;
 using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
@@ -18,18 +12,22 @@ namespace _01.Pregnacy_API.Controllers
 	public class UsersController : ApiController
 	{
 		UserDao dao = new UserDao();
-		// GET api/values
-		//[Authorize(Roles = "dev, admin")]
+		// GET api/users
+		[Authorize(Roles = "dev, admin")]
 		public HttpResponseMessage Get([FromBody]preg_user data)
 		{
 			try
 			{
 				if (data != null && data.password == null)
 				{
-					IEnumerable<preg_user> result = dao.GetUsersByParams(data);
-					if (result.Count() > 0)
+					IEnumerable<preg_user> results = dao.GetUsersByParams(data);
+					if (results.Count() > 0)
 					{
-						return Request.CreateResponse(HttpStatusCode.OK, result);
+						foreach (var result in results)
+						{
+							result.password = null;
+						}
+						return Request.CreateResponse(HttpStatusCode.OK, results);
 					}
 					else
 					{
@@ -60,6 +58,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/users/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -67,6 +66,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_user data = dao.GetUserByID(Convert.ToInt32(id));
 				if (data != null)
 				{
+					data.password = null;
 					return Request.CreateResponse(HttpStatusCode.OK, data);
 				}
 				else
@@ -83,7 +83,7 @@ namespace _01.Pregnacy_API.Controllers
 		}
 
 		// POST api/values
-		[Authorize(Roles = "dev, admin")]
+		[AllowAnonymous]
 		public HttpResponseMessage Post([FromBody]preg_user data)
 		{
 			try
@@ -93,17 +93,19 @@ namespace _01.Pregnacy_API.Controllers
 					data.password = SysMethod.MD5Hash(data.password);
 					if (dao.InsertData(data))
 					{
-						return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
+						preg_user createdUser = dao.GetUsersByParams(data).FirstOrDefault();
+						createdUser.password = null;
+						return Request.CreateResponse(HttpStatusCode.Created, createdUser);
 					}
 					else
 					{
-						HttpError err = new HttpError(SysConst.PHONE_EXIST);
+						HttpError err = new HttpError(SysConst.EMAIL_EXIST);
 						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 					}
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.PHONE_PASSWORD_NOT_NULL);
+					HttpError err = new HttpError(SysConst.EMAIL_PASSWORD_NOT_NULL);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -116,44 +118,15 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/users/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_user dataUpdate)
 		{
-			//lstStrings[id] = value;
-			try
-			{
-				if (dataUpdate != null)
-				{
-					preg_user user = new preg_user();
-					user = dao.GetUserByID(Convert.ToInt32(id));
-					user.password = SysMethod.MD5Hash(dataUpdate.password);
-					user.phone = dataUpdate.phone;
-					user.social_type_id = dataUpdate.social_type_id;
-					user.first_name = dataUpdate.first_name;
-					user.last_name = dataUpdate.last_name;
-					user.you_are_the = dataUpdate.you_are_the;
-					user.location = dataUpdate.location;
-					user.status = dataUpdate.status;
-					user.avarta = dataUpdate.avarta;
-					user.email = dataUpdate.email;
-
-					dao.UpdateData(user);
-					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
+			return UpdateData(id, dataUpdate);
 		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/users/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
 			try
@@ -170,7 +143,6 @@ namespace _01.Pregnacy_API.Controllers
 
 		public HttpResponseMessage UpdateData(string id, [FromBody]preg_user dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				if (dataUpdate != null)
@@ -216,10 +188,6 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.avarta != null)
 					{
 						user.avarta = dataUpdate.avarta;
-					}
-					if (dataUpdate.email != null)
-					{
-						user.email = dataUpdate.email;
 					}
 
 					dao.UpdateData(user);

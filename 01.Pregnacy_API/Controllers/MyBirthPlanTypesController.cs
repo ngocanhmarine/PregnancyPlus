@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class MyBirthPlanTypeController : ApiController
+	public class MyBirthPlanTypesController : ApiController
 	{
 		MyBirthPlanTypeDao dao = new MyBirthPlanTypeDao();
 		// GET api/values
@@ -46,6 +46,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/mybirthplantypes/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -94,6 +95,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/mybirthplantypes/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_my_birth_plan_type dataUpdate)
 		{
 			try
@@ -104,7 +106,7 @@ namespace _01.Pregnacy_API.Controllers
 					MyBirthPlanType = dao.GetItemByID(Convert.ToInt32(id));
 					if (MyBirthPlanType == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.type != null)
 					{
@@ -133,15 +135,15 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/mybirthplantypes/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_my_birth_plan_type item = dao.GetItemByID(Convert.ToInt32(id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

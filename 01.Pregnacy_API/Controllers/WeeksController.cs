@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,13 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.IO;
 using System.Web;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.Threading;
-using System.Text;
-using System.Security.Cryptography;
 using PregnancyData.Dao;
 using System.Threading.Tasks;
 using System.Security.Claims;
@@ -65,6 +58,7 @@ namespace _01.Pregnacy_API.Controllers
 		}
 
 		[Authorize]
+		[Route("api/weeks/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -115,6 +109,7 @@ namespace _01.Pregnacy_API.Controllers
 		// PUT api/values/5
 		[HttpPut]
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/weeks/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_week dataUpdate)
 		{
 			return UpdateData(id, dataUpdate);
@@ -123,6 +118,7 @@ namespace _01.Pregnacy_API.Controllers
 		// DELETE api/values/5
 		[HttpDelete]
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/weeks/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
 			try
@@ -202,6 +198,7 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, id));
 			}
+			
 			// Get current user_id
 			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 			string dir = "~/Files/Weekly/" + id.ToString();

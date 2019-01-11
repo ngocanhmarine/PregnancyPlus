@@ -22,7 +22,6 @@ namespace _01.Pregnacy_API.Controllers
 				if (data != null)
 				{
 					result = dao.GetItemsByParams(data);
-
 				}
 				else
 				{
@@ -48,6 +47,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/hospitalbagitems/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -96,6 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/hospitalbagitems/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_hospital_bag_item dataUpdate)
 		{
 			try
@@ -106,7 +107,7 @@ namespace _01.Pregnacy_API.Controllers
 					HospitalBagItem = dao.GetItemByID(Convert.ToInt32(id));
 					if (HospitalBagItem == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.name != null)
 					{
@@ -139,6 +140,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/hospitalbagitems/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
 			try
@@ -146,7 +148,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_hospital_bag_item item = dao.GetItemByID(Convert.ToInt32(id));
 				if (item == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);

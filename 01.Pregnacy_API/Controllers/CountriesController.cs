@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class CustomerResponseController : ApiController
+	public class CountriesController : ApiController
 	{
 		CountryDao dao = new CountryDao();
 		// GET api/values
@@ -47,6 +47,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
+		[Route("api/countries/{id}")]
 		public HttpResponseMessage Get(string id)
 		{
 			try
@@ -95,6 +96,7 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/countries/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_country dataUpdate)
 		{
 
@@ -106,7 +108,7 @@ namespace _01.Pregnacy_API.Controllers
 					country = dao.GetItemByID(Convert.ToInt32(id));
 					if (country == null)
 					{
-						return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.name != null)
 					{
@@ -131,15 +133,15 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
+		[Route("api/countries/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_country country = dao.GetItemByID(Convert.ToInt32(id));
 				if (country == null)
 				{
-					return Request.CreateResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
 				dao.DeleteData(country);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
