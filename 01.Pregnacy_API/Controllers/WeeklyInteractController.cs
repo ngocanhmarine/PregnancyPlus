@@ -19,7 +19,7 @@ namespace _01.Pregnacy_API.Controllers
 		WeeklyInteractDao dao = new WeeklyInteractDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_weekly_interact data)
+		public HttpResponseMessage Get([FromUri]preg_weekly_interact data)
 		{
 			try
 			{

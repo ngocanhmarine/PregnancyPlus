@@ -21,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 		PhoneDao dao = new PhoneDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_phone data)
+		public HttpResponseMessage Get([FromUri]preg_phone data)
 		{
 			try
 			{

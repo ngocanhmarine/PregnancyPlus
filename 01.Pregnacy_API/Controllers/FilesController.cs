@@ -16,11 +16,9 @@ namespace _01.Pregnacy_API.Controllers
 {
 	public class FilesController : ApiController
 	{
-
-
 		[HttpGet]
 		[Authorize]
-		public async Task<HttpResponseMessage> GetFile([FromBody] Files file)
+		public async Task<HttpResponseMessage> GetFile([FromUri] Files file)
 		{
 			try
 			{

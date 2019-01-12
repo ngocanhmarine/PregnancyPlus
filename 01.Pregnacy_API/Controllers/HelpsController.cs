@@ -18,7 +18,7 @@ namespace _01.Pregnacy_API.Controllers
 		HelpDao dao = new HelpDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_help data)
+		public HttpResponseMessage Get([FromUri]preg_help data)
 		{
 			try
 			{

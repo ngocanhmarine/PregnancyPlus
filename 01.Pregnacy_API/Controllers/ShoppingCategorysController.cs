@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		ShoppingCategoryDao dao = new ShoppingCategoryDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_shopping_category data)
+		public HttpResponseMessage Get([FromUri]preg_shopping_category data)
 		{
 			try
 			{

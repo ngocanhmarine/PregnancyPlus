@@ -12,9 +12,8 @@ namespace _01.Pregnacy_API.Controllers
 	public class CustomerResponsesController : ApiController
 	{
 		CustomerResponseDao dao = new CustomerResponseDao();
-		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_customer_response data)
+		public HttpResponseMessage Get([FromUri]preg_customer_response data)
 		{
 			try
 			{

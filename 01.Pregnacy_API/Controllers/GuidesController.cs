@@ -22,7 +22,7 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values
 
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_guides data)
+		public HttpResponseMessage Get([FromUri]preg_guides data)
 		{
 			try
 			{

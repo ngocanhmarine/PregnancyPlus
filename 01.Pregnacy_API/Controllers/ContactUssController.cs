@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		ContactUsDao dao = new ContactUsDao();
 		// GET api/values
 		[AllowAnonymous]
-		public HttpResponseMessage Get([FromBody]preg_contact_us data)
+		public HttpResponseMessage Get([FromUri]preg_contact_us data)
 		{
 			try
 			{

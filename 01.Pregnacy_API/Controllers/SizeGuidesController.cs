@@ -19,7 +19,7 @@ namespace _01.Pregnacy_API.Controllers
 		SizeGuideDao dao = new SizeGuideDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_size_guide data)
+		public HttpResponseMessage Get([FromUri]preg_size_guide data)
 		{
 			try
 			{

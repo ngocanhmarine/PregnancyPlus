@@ -15,7 +15,7 @@ namespace _01.Pregnacy_API.Controllers
 		AuthDao dao = new AuthDao();
 		// GET api/values
 		[Authorize(Roles = "dev, admin")]
-		public async Task<HttpResponseMessage> Get([FromBody]preg_auth data)
+		public async Task<HttpResponseMessage> Get([FromUri]preg_auth data)
 		{
 			try
 			{

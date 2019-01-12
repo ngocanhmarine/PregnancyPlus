@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		HospitalBagItemDao dao = new HospitalBagItemDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_hospital_bag_item data)
+		public HttpResponseMessage Get([FromUri]preg_hospital_bag_item data)
 		{
 			try
 			{

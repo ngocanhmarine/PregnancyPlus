@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		TodoDao dao = new TodoDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_todo data)
+		public HttpResponseMessage Get([FromUri]preg_todo data)
 		{
 			try
 			{

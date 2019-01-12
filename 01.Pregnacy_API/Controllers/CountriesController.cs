@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		CountryDao dao = new CountryDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_country data)
+		public HttpResponseMessage Get([FromUri]preg_country data)
 		{
 			try
 			{

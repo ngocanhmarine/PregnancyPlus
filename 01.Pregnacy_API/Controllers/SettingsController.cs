@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		SettingDao dao = new SettingDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_setting data)
+		public HttpResponseMessage Get([FromUri]preg_setting data)
 		{
 			try
 			{

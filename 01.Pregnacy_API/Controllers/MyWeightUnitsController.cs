@@ -21,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 		MyWeightUnitDao dao = new MyWeightUnitDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_my_weight_unit data)
+		public HttpResponseMessage Get([FromUri]preg_my_weight_unit data)
 		{
 			try
 			{

@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		UserDao dao = new UserDao();
 		// GET api/users
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Get([FromBody]preg_user data)
+		public HttpResponseMessage Get([FromUri]preg_user data)
 		{
 			try
 			{
@@ -90,6 +90,7 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (data.email != null && data.password != null)
 				{
+
 					data.password = SysMethod.MD5Hash(data.password);
 					if (dao.InsertData(data))
 					{

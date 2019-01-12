@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		MyBirthPlanTypeDao dao = new MyBirthPlanTypeDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_my_birth_plan_type data)
+		public HttpResponseMessage Get([FromUri]preg_my_birth_plan_type data)
 		{
 			try
 			{

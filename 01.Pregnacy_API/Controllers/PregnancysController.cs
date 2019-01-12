@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		PregnancyDao dao = new PregnancyDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_pregnancy data)
+		public HttpResponseMessage Get([FromUri]preg_pregnancy data)
 		{
 			try
 			{

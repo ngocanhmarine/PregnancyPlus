@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		ProfessionDao dao = new ProfessionDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_profession data)
+		public HttpResponseMessage Get([FromUri]preg_profession data)
 		{
 			try
 			{

@@ -18,7 +18,7 @@ namespace _01.Pregnacy_API.Controllers
 		PageDao dao = new PageDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_page data)
+		public HttpResponseMessage Get([FromUri]preg_page data)
 		{
 			try
 			{

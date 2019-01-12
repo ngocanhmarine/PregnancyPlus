@@ -19,7 +19,7 @@ namespace _01.Pregnacy_API.Controllers
 		DailyDao dao = new DailyDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_daily data)
+		public HttpResponseMessage Get([FromUri]preg_daily data)
 		{
 			try
 			{

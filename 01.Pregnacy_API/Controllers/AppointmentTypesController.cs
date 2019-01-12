@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		AppointmentTypeDao dao = new AppointmentTypeDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_appointment_type data)
+		public HttpResponseMessage Get([FromUri]preg_appointment_type data)
 		{
 			try
 			{

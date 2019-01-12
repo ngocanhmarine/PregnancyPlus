@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		ShoppingItemDao dao = new ShoppingItemDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_shopping_item data)
+		public HttpResponseMessage Get([FromUri]preg_shopping_item data)
 		{
 			try
 			{

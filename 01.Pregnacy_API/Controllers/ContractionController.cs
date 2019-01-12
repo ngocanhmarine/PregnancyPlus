@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		ContractionDao dao = new ContractionDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_contraction data)
+		public HttpResponseMessage Get([FromUri]preg_contraction data)
 		{
 			try
 			{

@@ -18,7 +18,7 @@ namespace _01.Pregnacy_API.Controllers
 		MyBellyDao dao = new MyBellyDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_my_belly data)
+		public HttpResponseMessage Get([FromUri]preg_my_belly data)
 		{
 			try
 			{

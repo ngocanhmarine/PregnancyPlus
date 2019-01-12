@@ -15,7 +15,7 @@ namespace _01.Pregnacy_API.Controllers
 		FaqDao dao = new FaqDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_faq data)
+		public HttpResponseMessage Get([FromUri]preg_faq data)
 		{
 			try
 			{

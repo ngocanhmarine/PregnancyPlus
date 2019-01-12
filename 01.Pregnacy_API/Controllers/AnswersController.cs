@@ -16,7 +16,7 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values
 		[Authorize]
 		[HttpGet]
-		public async Task<HttpResponseMessage> Get([FromBody]preg_answer data)
+		public async Task<HttpResponseMessage> Get([FromUri]preg_answer data)
 		{
 			try
 			{

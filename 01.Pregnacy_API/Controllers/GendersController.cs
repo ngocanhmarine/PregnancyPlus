@@ -21,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 		GenderDao dao = new GenderDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_gender data)
+		public HttpResponseMessage Get([FromUri]preg_gender data)
 		{
 			try
 			{

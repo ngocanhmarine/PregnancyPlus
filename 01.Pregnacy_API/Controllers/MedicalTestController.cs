@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		MedicalTestDao dao = new MedicalTestDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_medical_test data)
+		public HttpResponseMessage Get([FromUri]preg_medical_test data)
 		{
 			try
 			{

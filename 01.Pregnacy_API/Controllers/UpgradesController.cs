@@ -14,7 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		UpgradeDao dao = new UpgradeDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_upgrade data)
+		public HttpResponseMessage Get([FromUri]preg_upgrade data)
 		{
 			try
 			{

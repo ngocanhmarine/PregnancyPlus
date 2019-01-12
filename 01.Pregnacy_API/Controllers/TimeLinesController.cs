@@ -23,7 +23,7 @@ namespace _01.Pregnacy_API.Controllers
 		TimeLineDao dao = new TimeLineDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_time_line data)
+		public HttpResponseMessage Get([FromUri]preg_time_line data)
 		{
 			try
 			{

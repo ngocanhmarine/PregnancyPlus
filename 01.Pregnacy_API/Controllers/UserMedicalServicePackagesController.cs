@@ -20,7 +20,7 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values
 		[Authorize(Roles = "dev, admin")]
 		[HttpGet]
-		public HttpResponseMessage Get([FromBody]preg_user_medical_service_package data)
+		public HttpResponseMessage Get([FromUri]preg_user_medical_service_package data)
 		{
 			try
 			{

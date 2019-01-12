@@ -21,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 		ImageTypeDao dao = new ImageTypeDao();
 		// GET api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Get([FromBody]preg_image_type data)
+		public HttpResponseMessage Get([FromUri]preg_image_type data)
 		{
 			try
 			{

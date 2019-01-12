@@ -15,7 +15,7 @@ namespace _01.Pregnacy_API.Controllers
 		SocialTypeDao dao = new SocialTypeDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_social_type data)
+		public HttpResponseMessage Get([FromUri]preg_social_type data)
 		{
 			try
 			{

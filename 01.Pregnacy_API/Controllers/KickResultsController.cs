@@ -21,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 		KickResultDao dao = new KickResultDao();
 		// GET api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Get([FromBody]preg_kick_result data)
+		public HttpResponseMessage Get([FromUri]preg_kick_result data)
 		{
 			try
 			{

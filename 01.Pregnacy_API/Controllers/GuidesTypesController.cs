@@ -21,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 		GuidesTypeDao dao = new GuidesTypeDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromBody]preg_guides_type data)
+		public HttpResponseMessage Get([FromUri]preg_guides_type data)
 		{
 			try
 			{
