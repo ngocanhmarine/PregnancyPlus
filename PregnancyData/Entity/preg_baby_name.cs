@@ -26,6 +26,8 @@ namespace PregnancyData.Entity
 
         public int? custom_baby_name_by_user_id { get; set; }
 
+        public int? order { get; set; }
+
         public virtual preg_gender preg_gender { get; set; }
 
         public virtual preg_country preg_country { get; set; }

@@ -20,9 +20,9 @@ namespace PregnancyData.Dao
 			return connect.preg_my_belly;
 		}
 
-		public preg_my_belly GetItemByID(int id)
+		public preg_my_belly GetItemByMonthID(int month)
 		{
-			return connect.preg_my_belly.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_my_belly.Where(c => c.month == month && c.user_id == null).FirstOrDefault();
 		}
 		public IEnumerable<preg_my_belly> GetItemsByParams(preg_my_belly data)
 		{
@@ -61,7 +61,7 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-        public void DeleteData(preg_my_belly item)
+		public void DeleteData(preg_my_belly item)
 		{
 			connect.preg_my_belly.Remove(item);
 			connect.SaveChanges();

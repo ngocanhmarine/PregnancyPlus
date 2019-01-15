@@ -200,7 +200,7 @@ namespace _01.Pregnacy_API.Controllers
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, week_id));
 			}
 
-			string dir = "~/Files/WeeklyInteract/" + week_id.ToString() + "/" + user_id.ToString();
+			string dir = "/Files/WeeklyInteract/" + week_id.ToString() + "/" + user_id.ToString();
 			string dirRoot = HttpContext.Current.Server.MapPath(dir);
 			// Check if request contains multipart/form-data
 			if (!Request.Content.IsMimeMultipartContent())
@@ -239,7 +239,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_weekly_interact updateRow = new preg_weekly_interact();
 				foreach (MultipartFileData file in provider.FileData)
 				{
-					string path = dir + "/" + Path.GetFileName(file.LocalFileName);
+					string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
 					files.Add(path);
 					updateRow.photo = path;
 				}

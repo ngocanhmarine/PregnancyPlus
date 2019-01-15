@@ -26,12 +26,10 @@ namespace _01.Pregnacy_API.Controllers
 				if (data != null)
 				{
 					result = dao.GetItemsByParams(data);
-
 				}
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -52,12 +50,12 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
-		[Route("api/mybellies/{id}")]
-		public HttpResponseMessage Get(string id)
+		[Route("api/mybellies/{month_id}")]
+		public HttpResponseMessage Get(string month_id)
 		{
 			try
 			{
-				preg_my_belly data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_my_belly data = dao.GetItemByMonthID(Convert.ToInt32(month_id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -114,7 +112,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_my_belly item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_my_belly item = dao.GetItemByMonthID(Convert.ToInt32(id));
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -136,7 +134,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (dataUpdate != null)
 				{
 					preg_my_belly phone = new preg_my_belly();
-					phone = dao.GetItemByID(Convert.ToInt32(id));
+					phone = dao.GetItemByMonthID(Convert.ToInt32(id));
 					if (phone == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -178,7 +176,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			// Get current user_id
 			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-			string dir = "~/Files/Uploads/Users/" + user_id.ToString() + "/MyBellies/" + month.ToString();
+			string dir = "/Files/Uploads/Users/" + user_id.ToString() + "/MyBellies/" + month.ToString();
 			string dirRoot = HttpContext.Current.Server.MapPath(dir);
 			// Check if request contains multipart/form-data
 			if (!Request.Content.IsMimeMultipartContent())
@@ -224,7 +222,71 @@ namespace _01.Pregnacy_API.Controllers
 				updateRow = dao.GetItemsByParams(updateRow).FirstOrDefault();
 				foreach (MultipartFileData file in provider.FileData)
 				{
-					string path = dir + "/" + Path.GetFileName(file.LocalFileName);
+					string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
+					files.Add(path);
+					updateRow.image = path;
+				}
+				UpdateData(updateRow.id.ToString(), updateRow);
+				return Request.CreateResponse(HttpStatusCode.Created, files);
+			}
+			catch (System.Exception ex)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+			}
+		}
+
+		[Authorize]
+		[Route("api/mybellies/{month}")]
+		[HttpPost]
+		public async Task<HttpResponseMessage> UploadRoot(int month)
+		{
+			string dir = "/Files/MyBellies/" + month.ToString();
+			string dirRoot = HttpContext.Current.Server.MapPath(dir);
+			// Check if request contains multipart/form-data
+			if (!Request.Content.IsMimeMultipartContent())
+			{
+				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+			}
+			// Check if directory folder created
+			if (!Directory.Exists(dirRoot))
+			{
+				Directory.CreateDirectory(dirRoot);
+			}
+			// Check if image and html filetype
+			for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
+			{
+				HttpPostedFile file = HttpContext.Current.Request.Files[i];
+				if (!SysConst.imgOnlyExtensions.Any(x => x.Equals(Path.GetExtension(file.FileName.ToLower()), StringComparison.OrdinalIgnoreCase)))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.INVALID_FILE_TYPE);
+				}
+				else if (File.Exists(dirRoot + "/" + file.FileName))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+				}
+			}
+
+			CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(dirRoot);
+
+			List<string> files = new List<string>();
+
+			try
+			{
+				// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+				await Request.Content.ReadAsMultipartAsync(provider);
+
+				// Update to database
+				preg_my_belly updateRow = new preg_my_belly();
+				updateRow.month = month;
+				updateRow.user_id = null;
+				if (dao.GetItemsByParams(updateRow).Where(c => c.user_id == null).Count() == 0)
+				{
+					dao.InsertData(updateRow);
+				}
+				updateRow = dao.GetItemsByParams(updateRow).FirstOrDefault();
+				foreach (MultipartFileData file in provider.FileData)
+				{
+					string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
 					files.Add(path);
 					updateRow.image = path;
 				}

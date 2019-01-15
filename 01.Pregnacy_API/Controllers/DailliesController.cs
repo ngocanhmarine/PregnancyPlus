@@ -191,7 +191,7 @@ namespace _01.Pregnacy_API.Controllers
 			}
 			// Get current user_id
 			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-			string dir = "~/Files/Daillies/" + daily_id.ToString();
+			string dir = "/Files/Daillies/" + daily_id.ToString();
 			string dirRoot = HttpContext.Current.Server.MapPath(dir);
 			// Check if request contains multipart/form-data
 			if (!Request.Content.IsMimeMultipartContent())
@@ -230,7 +230,7 @@ namespace _01.Pregnacy_API.Controllers
 				preg_daily updateRow = new preg_daily();
 				foreach (MultipartFileData file in provider.FileData)
 				{
-					string path = dir + "/" + Path.GetFileName(file.LocalFileName);
+					string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
 					files.Add(path);
 					if (Path.GetExtension(file.LocalFileName).ToLower().Equals(".html"))
 					{

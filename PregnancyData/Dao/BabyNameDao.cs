@@ -24,6 +24,12 @@ namespace PregnancyData.Dao
 		{
 			return connect.preg_baby_name.Where(c => c.id == id).FirstOrDefault();
 		}
+
+		//public preg_baby_name GetItemJoinByID(int id)
+		//{
+		//	return connect.preg_baby_name.Where(c => c.id == id).Join(connect.preg_user_baby_name,a=>a.id,b=>b.baby_name_id,(a,b)=>new { a.*});
+		//}
+
 		public IEnumerable<preg_baby_name> GetItemsByParams(preg_baby_name data)
 		{
 			IEnumerable<preg_baby_name> result = connect.preg_baby_name;
@@ -51,9 +57,14 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.custom_baby_name_by_user_id == Convert.ToInt32(propertyValue));
 				}
+				else if (propertyName == "order" && propertyValue != null)
+				{
+					result = result.Where(c => c.order == Convert.ToInt32(propertyValue));
+				}
 			}
 			return result;
 		}
+
 		public void InsertData(preg_baby_name item)
 		{
 			connect.preg_baby_name.Add(item);

@@ -73,33 +73,13 @@ namespace PregnancyData.Entity
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<preg_answer>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_answer>()
 				.Property(e => e.content)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_appointment>()
-				.Property(e => e.name)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_appointment>()
-				.Property(e => e.contact_name)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_appointment>()
-				.Property(e => e.note)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_appointment>()
 				.HasMany(e => e.preg_appointment_measurement)
 				.WithOptional(e => e.preg_appointment)
 				.HasForeignKey(e => e.appointment_id);
-
-			modelBuilder.Entity<preg_appointment_type>()
-				.Property(e => e.type)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_appointment_type>()
 				.HasMany(e => e.preg_appointment)
@@ -112,10 +92,6 @@ namespace PregnancyData.Entity
 
 			modelBuilder.Entity<preg_auth>()
 				.Property(e => e.valid_to)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_baby_name>()
-				.Property(e => e.name)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_baby_name>()
@@ -134,45 +110,13 @@ namespace PregnancyData.Entity
 				.Property(e => e.email)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_contact_us>()
-				.Property(e => e.message)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_country>()
-				.Property(e => e.name)
-				.IsUnicode(false);
-
 			modelBuilder.Entity<preg_country>()
 				.HasMany(e => e.preg_baby_name)
 				.WithOptional(e => e.preg_country)
 				.HasForeignKey(e => e.country_id);
 
-			modelBuilder.Entity<preg_customer_response>()
-				.Property(e => e.content)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_customer_response>()
-				.Property(e => e.answer_content)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_daily>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
 			modelBuilder.Entity<preg_daily>()
 				.Property(e => e.highline_image)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_daily>()
-				.Property(e => e.short_description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_daily>()
-				.Property(e => e.description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_daily>()
-				.Property(e => e.daily_blog)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_daily>()
@@ -186,36 +130,16 @@ namespace PregnancyData.Entity
 				.WithOptional(e => e.preg_daily)
 				.HasForeignKey(e => e.day_id);
 
-			modelBuilder.Entity<preg_daily_interact>()
-				.Property(e => e.comment)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_faq>()
-				.Property(e => e.question)
-				.IsUnicode(false);
-
 			modelBuilder.Entity<preg_faq>()
 				.HasMany(e => e.preg_faq_answer)
 				.WithRequired(e => e.preg_faq)
 				.HasForeignKey(e => e.faq_id)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<preg_faq_answer>()
-				.Property(e => e.answer_content)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_gender>()
-				.Property(e => e.gender)
-				.IsUnicode(false);
-
 			modelBuilder.Entity<preg_gender>()
 				.HasMany(e => e.preg_baby_name)
 				.WithOptional(e => e.preg_gender)
 				.HasForeignKey(e => e.gender_id);
-
-			modelBuilder.Entity<preg_guides_type>()
-				.Property(e => e.type)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_guides_type>()
 				.HasMany(e => e.preg_guides)
@@ -224,14 +148,6 @@ namespace PregnancyData.Entity
 
 			modelBuilder.Entity<preg_help>()
 				.Property(e => e.image)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_help>()
-				.Property(e => e.description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_help_category>()
-				.Property(e => e.name)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_help_category>()
@@ -244,10 +160,6 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.help_category_id);
 
 			modelBuilder.Entity<preg_hospital_bag_item>()
-				.Property(e => e.name)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_hospital_bag_item>()
 				.HasMany(e => e.preg_user_hospital_bag_item)
 				.WithRequired(e => e.preg_hospital_bag_item)
 				.HasForeignKey(e => e.hospital_bag_item_id)
@@ -255,10 +167,6 @@ namespace PregnancyData.Entity
 
 			modelBuilder.Entity<preg_image>()
 				.Property(e => e.image)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_image_type>()
-				.Property(e => e.type)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_image_type>()
@@ -271,26 +179,6 @@ namespace PregnancyData.Entity
 				.WithRequired(e => e.preg_kick_result)
 				.HasForeignKey(e => e.kick_result_id)
 				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<preg_medical_service_package>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_medical_service_package>()
-				.Property(e => e.description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_medical_service_package>()
-				.Property(e => e.content)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_medical_service_package>()
-				.Property(e => e.execution_department)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_medical_service_package>()
-				.Property(e => e.address)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_medical_service_package>()
 				.HasMany(e => e.preg_medical_package_test)
@@ -311,14 +199,6 @@ namespace PregnancyData.Entity
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_medical_test>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_medical_test>()
-				.Property(e => e.type)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_medical_test>()
 				.HasMany(e => e.preg_medical_package_test)
 				.WithRequired(e => e.preg_medical_test)
 				.HasForeignKey(e => e.medical_test_id)
@@ -326,10 +206,6 @@ namespace PregnancyData.Entity
 
 			modelBuilder.Entity<preg_my_belly>()
 				.Property(e => e.image)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_my_birth_plan_item>()
-				.Property(e => e.item_content)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_my_birth_plan_item>()
@@ -345,21 +221,9 @@ namespace PregnancyData.Entity
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_my_birth_plan_type>()
-				.Property(e => e.type)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_my_birth_plan_type>()
-				.Property(e => e.type_icon)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_my_birth_plan_type>()
 				.HasMany(e => e.preg_my_birth_plan_item)
 				.WithOptional(e => e.preg_my_birth_plan_type)
 				.HasForeignKey(e => e.my_birth_plan_type_id);
-
-			modelBuilder.Entity<preg_my_weight_unit>()
-				.Property(e => e.unit)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_my_weight_unit>()
 				.HasMany(e => e.preg_appointment)
@@ -372,28 +236,12 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.my_weight_type_id);
 
 			modelBuilder.Entity<preg_page>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_page>()
-				.Property(e => e.content)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_page>()
-				.Property(e => e.page_image)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_page>()
 				.HasMany(e => e.preg_guides)
 				.WithOptional(e => e.preg_page)
 				.HasForeignKey(e => e.page_id);
 
 			modelBuilder.Entity<preg_phone>()
 				.Property(e => e.phone_number)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_profession_type>()
-				.Property(e => e.profession_type)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_profession_type>()
@@ -413,18 +261,10 @@ namespace PregnancyData.Entity
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_question>()
-				.Property(e => e.content)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_question>()
 				.HasMany(e => e.preg_answer)
 				.WithRequired(e => e.preg_question)
 				.HasForeignKey(e => e.question_id)
 				.WillCascadeOnDelete(false);
-
-			modelBuilder.Entity<preg_question_type>()
-				.Property(e => e.type)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_question_type>()
 				.HasMany(e => e.preg_question)
@@ -432,17 +272,9 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.question_type_id);
 
 			modelBuilder.Entity<preg_shopping_category>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_shopping_category>()
 				.HasMany(e => e.preg_shopping_item)
 				.WithOptional(e => e.preg_shopping_category)
 				.HasForeignKey(e => e.category_id);
-
-			modelBuilder.Entity<preg_shopping_item>()
-				.Property(e => e.item_name)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_shopping_item>()
 				.HasMany(e => e.preg_user_shopping_cart)
@@ -454,26 +286,10 @@ namespace PregnancyData.Entity
 				.Property(e => e.image)
 				.IsUnicode(false);
 
-			modelBuilder.Entity<preg_size_guide>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_size_guide>()
-				.Property(e => e.description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_social_type>()
-				.Property(e => e.type)
-				.IsUnicode(false);
-
 			modelBuilder.Entity<preg_social_type>()
 				.HasMany(e => e.preg_user)
 				.WithOptional(e => e.preg_social_type)
 				.HasForeignKey(e => e.social_type_id);
-
-			modelBuilder.Entity<preg_time_frame>()
-				.Property(e => e.frame_title)
-				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_time_frame>()
 				.HasMany(e => e.preg_time_line)
@@ -481,19 +297,7 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.time_frame_id);
 
 			modelBuilder.Entity<preg_time_line>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_time_line>()
 				.Property(e => e.image)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_time_line>()
-				.Property(e => e.position)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_todo>()
-				.Property(e => e.title)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_todo>()
@@ -512,34 +316,6 @@ namespace PregnancyData.Entity
 
 			modelBuilder.Entity<preg_user>()
 				.Property(e => e.phone)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user>()
-				.Property(e => e.first_name)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user>()
-				.Property(e => e.last_name)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user>()
-				.Property(e => e.you_are_the)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user>()
-				.Property(e => e.location)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user>()
-				.Property(e => e.status)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user>()
-				.Property(e => e.avarta)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user>()
-				.Property(e => e.email)
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_user>()
@@ -692,30 +468,6 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.user_id)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<preg_user_medical_service_package>()
-				.Property(e => e.description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_user_medical_service_package>()
-				.Property(e => e.payment_method)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_week>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_week>()
-				.Property(e => e.short_description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_week>()
-				.Property(e => e.description)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_week>()
-				.Property(e => e.daily_relation)
-				.IsUnicode(false);
-
 			modelBuilder.Entity<preg_week>()
 				.HasMany(e => e.preg_image)
 				.WithOptional(e => e.preg_week)
@@ -738,15 +490,7 @@ namespace PregnancyData.Entity
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_weekly_interact>()
-				.Property(e => e.comment)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_weekly_interact>()
 				.Property(e => e.photo)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_weekly_interact>()
-				.Property(e => e.share)
 				.IsUnicode(false);
 		}
 	}

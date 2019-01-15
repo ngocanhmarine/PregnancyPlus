@@ -15,7 +15,6 @@ namespace PregnancyData.Entity
         [StringLength(300)]
         public string email { get; set; }
 
-        [StringLength(1024)]
         public string message { get; set; }
 
         public virtual preg_user preg_user { get; set; }

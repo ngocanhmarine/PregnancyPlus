@@ -1,0 +1,440 @@
+table preg_answer{
+  user_id int PK
+  question_id int PK
+  questiondate datetime
+  title varchar
+  content text
+}
+
+table preg_appointment{
+  id int PK
+  name varchar
+  contact_name varchar
+  profession_id int
+  appointment_date datetime
+  appointment_time datetime
+  my_weight_type_id int
+  weight_in_st float
+  sync_to_calendar int
+  note text
+  user_id int
+  appointment_type_id int
+}
+
+table preg_appointment_measurement{
+  id int PK
+  appointment_id int
+  bp_dia int
+  bp_sys int
+  baby_heart int
+}
+
+table preg_appointment_type{
+  id int PK
+  type varchar
+}
+
+table preg_auth{
+  id int PK
+  user_id int
+  token varchar
+  valid_to varchar
+}
+
+table preg_baby_name{
+  id int PK
+  country_id int
+  gender_id int
+  name varchar
+  custom_baby_name_by_user_id int
+}
+
+table preg_contact_us{
+id int PK
+user_id int
+email varchar
+message text
+}
+
+table preg_contraction{
+id int PK
+user_id int
+date_time datetime
+duration datetime
+interval datetime
+}
+
+table preg_country{
+  id int PK
+  name varchar
+}
+
+table preg_daily {
+  id int PK
+  daily_type_id int
+  title varchar
+  highline_image varchar
+  short_description text
+  description text
+  daily_relation varchar
+}
+
+table preg_daily_like{
+  id int PK
+  user_id int
+  like_type_id int
+  daily_id int
+}
+
+table preg_daily_type{
+  id int PK
+  type int
+}
+
+table preg_faq{
+  id int PK
+  question varchar
+  status int
+}
+
+table preg_faq_answer{
+  id int PK
+  faq_id int
+  answer_content varchar
+}
+
+table preg_gender{
+  id int PK
+  gender varchar
+}
+
+table preg_guides{
+  id int PK
+  page_id int
+  guides_type_id int
+}
+
+table preg_guides_type{
+  id int PK
+  type varchar
+}
+
+table preg_help {
+  id int PK
+  help_category_id int
+  image varchar
+  description text
+}
+
+table preg_help_category {
+  id int PK
+  name varchar
+  highline_image varchar
+  order int
+}
+
+table preg_hospital_bag_item{
+  id int PK
+  name varchar
+  type int
+  custom_item_by_user_id int
+}
+
+table preg_image{
+  id int PK
+  image_type_id int
+  image varchar
+  week_id int
+}
+
+table preg_image_type{
+  id int PK
+  type varchar
+}
+
+table preg_kick_result{
+  id int PK
+  kick_order int
+  kick_time datetime
+  elapsed_time datetime
+}
+
+table preg_like_type{
+  id int PK
+  type varchar
+}
+
+table preg_my_belly{
+  id int PK
+  image varchar
+  my_belly_type_id int
+  month int
+  user_id int
+}
+
+table preg_my_belly_type{
+  id int PK
+  type varchar
+}
+
+table preg_my_birth_plan{
+  my_birth_plan_item_id int PK
+  user_id int PK
+}
+
+table preg_my_birth_plan_item{
+  id int PK
+  my_birth_plan_type_id int
+  item_content varchar
+  custom_item_by_user_id int
+}
+
+table preg_my_birth_plan_type{
+  id int PK
+  type varchar
+  type_icon varchar
+}
+
+table preg_my_weight{
+  id int PK
+  user_id int
+  my_weight_type_id int
+  start_date datetime
+  pre_pregnancy_weight float
+  current_weight float
+}
+
+table preg_my_weight_in_st{
+  id int PK
+  position int
+  value int
+}
+
+table preg_my_weight_type{
+  id int PK
+  type varchar
+}
+
+table preg_page{
+  id int PK
+  title varchar
+  content text
+  page_image varchar
+}
+
+table preg_phone{
+  id int PK
+  profession_id int
+  phone_number varchar
+  user_id int
+}
+
+table preg_pregnancy{
+  id int PK
+  user_id int
+  baby_gender int
+  due_date datetime
+  show_week int
+  pregnancy_loss int
+  baby_already_born int
+  date_of_birth datetime
+  weeks_pregnant int
+}
+
+table preg_profession{
+  id int PK
+  profession_type varchar
+}
+
+table preg_question {
+  id int PK
+  question_type_id int
+  content text
+  custom_question_by_user_id int
+}
+
+table preg_question_type {
+  id int PK
+  type varchar
+}
+
+table preg_setting{
+id int PK
+reminders boolean
+length_units boolean
+weight_unit int
+user_id int
+revoke_consent int
+}
+
+table preg_shopping_category{
+  id int PK
+  title varchar
+  status int
+}
+
+table preg_shopping_item{
+  id int PK
+  item_name varchar
+  custom_item_by_user_id int
+  category_id int
+  status int
+}
+
+table preg_size_guide{
+  id int PK
+  image varchar
+  title varchar
+  description text
+}
+
+table preg_social_type{
+  id int PK
+  type varchar
+}
+
+table preg_time_frame{
+  id int PK
+  frame_title varchar
+}
+
+table preg_time_line{
+  id int PK
+  week_id int
+  title varchar
+  image varchar
+  position varchar
+  time_frame_id int
+}
+
+table preg_todo{
+  id int PK
+  week_id int
+  title varchar
+  custom_task_by_user_id int
+}
+
+table preg_upgrade{
+  id int PK
+  user_id int
+  version varchar
+}
+
+table preg_user {
+  id int PK
+  password varchar
+  phone varchar
+  social_type_id varchar
+  first_name varchar
+  last_name varchar
+  you_are_the varchar
+  location varchar
+  status varchar
+  avarta varchar
+  email varchar
+}
+
+table preg_user_baby_name{
+  user_id int PK
+  baby_name_id int PK
+}
+
+table preg_user_hospital_bag_item{
+  user_id int PK
+  hospital_bag_item_id int PK
+  status int
+}
+table preg_user_kick_history{
+  user_id int PK
+  kick_result_id int PK
+  kick_date datetime
+  duration datetime
+}
+
+table preg_user_shopping_cart{
+  user_id int PK
+  shopping_item_id int PK
+  status int
+}
+
+table preg_user_todo{
+  user_id int PK
+  todo_id int PK
+}
+
+table preg_week{
+  id int PK
+  length float
+  weight float
+  title varchar
+  short_description text
+  description text
+  daily_relation varchar
+}
+
+table preg_weekly_note{
+  id int PK
+  week_id int
+  user_id int
+  photo varchar
+  note text
+  like int
+}
+
+Ref: preg_answer.question_id > preg_question.id
+Ref: preg_answer.user_id > preg_user.id
+Ref: preg_appointment.appointment_type_id > preg_appointment_type.id
+Ref: preg_appointment.my_weight_type_id > preg_my_weight_type.id
+Ref: preg_appointment.profession_id > preg_profession.id
+Ref: preg_appointment.user_id > preg_user.id
+Ref: preg_appointment_measurement.appointment_id > preg_appointment.id
+Ref: preg_auth.user_id > preg_user.id
+Ref: preg_baby_name.gender_id > preg_gender.id
+Ref: preg_baby_name.country_id > preg_country.id
+Ref: preg_contact_us.user_id > preg_user.id
+Ref: preg_contraction.user_id > preg_user.id
+Ref: preg_daily.daily_type_id > preg_daily_type.id
+Ref: preg_daily_like.daily_id > preg_daily.id
+Ref: preg_daily_like.like_type_id > preg_like_type.id
+Ref: preg_daily_like.user_id > preg_user.id
+Ref: preg_faq_answer.faq_id > preg_faq.id
+Ref: preg_guides.guides_type_id > preg_guides_type.id
+Ref: preg_guides.page_id > preg_page.id
+Ref: preg_help.help_category_id > preg_help_category.id
+Ref: preg_hospital_bag_item.custom_item_by_user_id > preg_user.id
+Ref: preg_image.image_type_id > preg_image_type.id
+Ref: preg_image.week_id > preg_week.id
+Ref: preg_my_belly.my_belly_type_id > preg_my_belly_type.id
+Ref: preg_my_belly.user_id > preg_user.id
+Ref: preg_my_birth_plan.my_birth_plan_item_id > preg_my_birth_plan_item.id
+Ref: preg_my_birth_plan.user_id > preg_user.id
+Ref: preg_my_birth_plan_item.my_birth_plan_type_id > preg_my_birth_plan_type.id
+Ref: preg_my_birth_plan_item.custom_item_by_user_id > preg_user.id
+Ref: preg_my_weight.my_weight_type_id > preg_my_weight_type.id
+Ref: preg_my_weight.user_id > preg_user.id
+Ref: preg_phone.profession_id > preg_profession.id
+Ref: preg_phone.user_id > preg_user.id
+Ref: preg_pregnancy.user_id > preg_user.id
+Ref: preg_question.question_type_id > preg_question_type.id
+Ref: preg_question.custom_question_by_user_id > preg_user.id
+Ref: preg_setting.user_id > preg_user.id
+Ref: preg_shopping_item.category_id > preg_shopping_category.id
+Ref: preg_shopping_item.custom_item_by_user_id > preg_user.id
+Ref: preg_time_line.time_frame_id > preg_time_frame.id
+Ref: preg_time_line.week_id > preg_week.id
+Ref: preg_todo.custom_task_by_user_id > preg_user.id
+Ref: preg_todo.week_id > preg_week.id
+Ref: preg_upgrade.user_id > preg_user.id
+Ref: preg_user.social_type_id > preg_social_type.id
+Ref: preg_user_baby_name.baby_name_id > preg_baby_name.id
+Ref: preg_user_baby_name.user_id > preg_user.id
+Ref: preg_user_hospital_bag_item.hospital_bag_item_id > preg_hospital_bag_item.id
+Ref: preg_user_hospital_bag_item.user_id > preg_user.id
+Ref: preg_user_kick_history.user_id > preg_user.id
+Ref: preg_user_kick_history.kick_result_id > preg_kick_result.id
+Ref: preg_user_shopping_cart.shopping_item_id > preg_shopping_item.id
+Ref: preg_user_shopping_cart.user_id > preg_user.id
+Ref: preg_user_todo.todo_id > preg_todo.id
+Ref: preg_user_todo.user_id > preg_user.id
+Ref: preg_weekly_note.user_id > preg_user.id
+Ref: preg_weekly_note.week_id > preg_week.id

@@ -52,7 +52,7 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize]
 		public async Task<HttpResponseMessage> Upload()
 		{
-			string dir = "~/Files/Uploads";
+			string dir = "/Files/Uploads";
 			string dirRoot = HttpContext.Current.Server.MapPath(dir);
 			//Get  current user_id
 			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
@@ -92,7 +92,7 @@ namespace _01.Pregnacy_API.Controllers
 
 				foreach (MultipartFileData file in provider.FileData)
 				{
-					files.Add(dir + "/" + Path.GetFileName(file.LocalFileName));
+					files.Add(dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName)));
 				}
 				return Request.CreateResponse(HttpStatusCode.Created, files);
 			}

@@ -1,0 +1,521 @@
+table "preg_answer" {
+  "user_id" int PK
+  "question_id" int PK
+  "questiondate" datetime
+  "title" nvarchar
+  "content" text
+}
+
+table "preg_appointment" {
+  "id" int PK
+  "name" nvarchar
+  "contact_name" nvarchar
+  "profession_id" int
+  "appointment_date" datetime
+  "appointment_time" datetime
+  "my_weight_type_id" int
+  "sync_to_calendar" int
+  "note" nvarchar
+  "user_id" int
+  "appointment_type_id" int
+}
+
+table "preg_appointment_measurement" {
+  "id" int PK
+  "appointment_id" int
+  "bp_dia" int
+  "bp_sys" int
+  "baby_heart" int
+}
+
+table "preg_appointment_type" {
+  "id" int PK
+  "type" nvarchar
+}
+
+table "preg_auth" {
+  "id" int PK
+  "user_id" int
+}
+
+table "preg_baby_name" {
+  "id" int PK
+  "country_id" int
+  "gender_id" int
+  "name" nvarchar
+  "custom_baby_name_by_user_id" int
+  "order" int
+}
+
+table "preg_contact_us" {
+  "id" int PK
+  "user_id" int
+  "message" nvarchar
+}
+
+table "preg_contraction" {
+  "id" int PK
+  "user_id" int
+  "date_time" datetime
+  "duration" datetime
+  "interval" datetime
+}
+
+table "preg_country" {
+  "id" int PK
+  "name" nvarchar
+}
+
+table "preg_customer_response" {
+  "user_id" int PK
+  "content" nvarchar
+  "time" datetime
+  "answer_user_id" int
+  "answer_date" datetime
+  "answer_content" nvarchar
+}
+
+table "preg_daily" {
+  "id" int PK
+  "title" nvarchar
+  "short_description" nvarchar
+  "description" nvarchar
+  "daily_blog" nvarchar
+}
+
+table "preg_daily_interact" {
+  "daily_id" int PK
+  "user_id" int PK
+  "like" int
+  "comment" nvarchar
+  "share" int
+  "notification" int
+  "status" int
+}
+
+table "preg_faq" {
+  "id" int PK
+  "question" nvarchar
+  "status" int
+}
+
+table "preg_faq_answer" {
+  "id" int PK
+  "faq_id" int
+  "answer_content" nvarchar
+}
+
+table "preg_gender" {
+  "id" int PK
+  "gender" nvarchar
+}
+
+table "preg_guides" {
+  "id" int PK
+  "page_id" int
+  "guides_type_id" int
+}
+
+table "preg_guides_type" {
+  "id" int PK
+  "type" nvarchar
+}
+
+table "preg_help" {
+  "id" int PK
+  "help_category_id" int
+  "description" nvarchar
+}
+
+table "preg_help_category" {
+  "id" int PK
+  "name" nvarchar
+  "order" int
+}
+
+table "preg_hospital_bag_item" {
+  "id" int PK
+  "name" nvarchar
+  "type" int
+  "custom_item_by_user_id" int
+}
+
+table "preg_image" {
+  "id" int PK
+  "image_type_id" int
+  "week_id" int
+}
+
+table "preg_image_type" {
+  "id" int PK
+  "type" nvarchar
+}
+
+table "preg_kick_result" {
+  "id" int PK
+  "kick_order" int
+  "kick_time" datetime
+  "elapsed_time" datetime
+}
+
+table "preg_medical_package_test" {
+  "medical_service_package_id" int PK
+  "medical_test_id" int PK
+}
+
+table "preg_medical_service_package" {
+  "id" int PK
+  "title" nvarchar
+  "description" nvarchar
+  "content" nvarchar
+  "execution_department" nvarchar
+  "address" nvarchar
+  "execution_time" datetime
+  "place" int
+}
+
+table "preg_medical_test" {
+  "id" int PK
+  "title" nvarchar
+  "type" nvarchar
+}
+
+table "preg_my_belly" {
+  "id" int PK
+  "month" int
+  "user_id" int
+}
+
+table "preg_my_birth_plan" {
+  "my_birth_plan_item_id" int PK
+  "user_id" int PK
+}
+
+table "preg_my_birth_plan_item" {
+  "id" int PK
+  "my_birth_plan_type_id" int
+  "item_content" nvarchar
+  "custom_item_by_user_id" int
+}
+
+table "preg_my_birth_plan_type" {
+  "id" int PK
+  "type" nvarchar
+  "type_icon" nvarchar
+}
+
+table "preg_my_weight" {
+  "id" int PK
+  "user_id" int
+  "my_weight_type_id" int
+  "start_date" datetime
+}
+
+table "preg_my_weight_unit" {
+  "id" int PK
+  "unit" nvarchar
+}
+
+table "preg_page" {
+  "id" int PK
+  "title" nvarchar
+  "content" nvarchar
+  "page_image" nvarchar
+}
+
+table "preg_phone" {
+  "id" int PK
+  "profession_id" int
+  "user_id" int
+}
+
+table "preg_pregnancy" {
+  "id" int PK
+  "user_id" int
+  "baby_gender" int
+  "due_date" datetime
+  "show_week" int
+  "pregnancy_loss" int
+  "baby_already_born" int
+  "date_of_birth" datetime
+  "weeks_pregnant" int
+}
+
+table "preg_profession" {
+  "user_id" int PK
+  "profession_type_id" int PK
+  "status" int
+}
+
+table "preg_profession_type" {
+  "id" int PK
+  "profession_type" nvarchar
+}
+
+table "preg_question" {
+  "id" int PK
+  "question_type_id" int
+  "content" nvarchar
+  "custom_question_by_user_id" int
+}
+
+table "preg_question_type" {
+  "id" int PK
+  "type" nvarchar
+}
+
+table "preg_setting" {
+  "id" int PK
+  "weight_unit" int
+  "user_id" int
+  "revoke_consent" int
+}
+
+table "preg_shopping_category" {
+  "id" int PK
+  "title" nvarchar
+  "status" int
+}
+
+table "preg_shopping_item" {
+  "id" int PK
+  "item_name" nvarchar
+  "custom_item_by_user_id" int
+  "category_id" int
+  "status" int
+}
+
+table "preg_size_guide" {
+  "id" int PK
+  "title" nvarchar
+  "description" nvarchar
+  "week_id" int
+  "type" int
+}
+
+table "preg_social_type" {
+  "id" int PK
+  "type" nvarchar
+}
+
+table "preg_time_frame" {
+  "id" int PK
+  "frame_title" nvarchar
+}
+
+table "preg_time_line" {
+  "id" int PK
+  "week_id" int
+  "title" nvarchar
+  "position" nvarchar
+  "time_frame_id" int
+}
+
+table "preg_todo" {
+  "id" int PK
+  "day_id" int
+  "title" nvarchar
+  "custom_task_by_user_id" int
+}
+
+table "preg_upgrade" {
+  "id" int PK
+  "user_id" int
+  "version" varchar
+}
+
+table "preg_user" {
+  "id" int PK
+  "social_type_id" int
+  "first_name" nvarchar
+  "last_name" nvarchar
+  "you_are_the" nvarchar
+  "location" nvarchar
+  "status" nvarchar
+  "avarta" nvarchar
+  "email" nvarchar
+}
+
+table "preg_user_baby_name" {
+  "user_id" int PK
+  "baby_name_id" int PK
+}
+
+table "preg_user_hospital_bag_item" {
+  "user_id" int PK
+  "hospital_bag_item_id" int PK
+  "status" int
+}
+
+table "preg_user_kick_history" {
+  "user_id" int PK
+  "kick_result_id" int PK
+  "kick_date" datetime
+  "duration" datetime
+}
+
+table "preg_user_medical_service_package" {
+  "user_id" int PK
+  "medical_service_package_id" int PK
+  "time" datetime
+  "description" nvarchar
+  "status" int
+  "payment_method" nvarchar
+  "already_paid" int
+}
+
+table "preg_user_shopping_cart" {
+  "user_id" int PK
+  "shopping_item_id" int PK
+  "status" int
+}
+
+table "preg_user_todo" {
+  "user_id" int PK
+  "todo_id" int PK
+  "status" int
+}
+
+table "preg_week" {
+  "id" int PK
+  "title" nvarchar
+  "short_description" nvarchar
+  "description" nvarchar
+  "daily_relation" nvarchar
+}
+
+table "preg_weekly_interact" {
+  "week_id" int PK
+  "user_id" int PK
+  "like" int
+  "comment" nvarchar
+  "share" nvarchar
+  "notification" int
+  "status" int
+}
+
+Ref:"preg_question"."id" < "preg_answer"."question_id"
+
+Ref:"preg_user"."id" < "preg_answer"."user_id"
+
+Ref:"preg_appointment_type"."id" < "preg_appointment"."appointment_type_id"
+
+Ref:"preg_my_weight_unit"."id" < "preg_appointment"."my_weight_type_id"
+
+Ref:"preg_profession_type"."id" < "preg_appointment"."profession_id"
+
+Ref:"preg_user"."id" < "preg_appointment"."user_id"
+
+Ref:"preg_appointment"."id" < "preg_appointment_measurement"."appointment_id"
+
+Ref:"preg_user"."id" < "preg_auth"."user_id"
+
+Ref:"preg_gender"."id" < "preg_baby_name"."gender_id"
+
+Ref:"preg_country"."id" < "preg_baby_name"."country_id"
+
+Ref:"preg_user"."id" < "preg_contact_us"."user_id"
+
+Ref:"preg_user"."id" < "preg_contraction"."user_id"
+
+Ref:"preg_user"."id" < "preg_customer_response"."user_id"
+
+Ref:"preg_user"."id" < "preg_customer_response"."answer_user_id"
+
+Ref:"preg_daily"."id" < "preg_daily_interact"."daily_id"
+
+Ref:"preg_user"."id" < "preg_daily_interact"."user_id"
+
+Ref:"preg_faq"."id" < "preg_faq_answer"."faq_id"
+
+Ref:"preg_guides_type"."id" < "preg_guides"."guides_type_id"
+
+Ref:"preg_page"."id" < "preg_guides"."page_id"
+
+Ref:"preg_help_category"."id" < "preg_help"."help_category_id"
+
+Ref:"preg_user"."id" < "preg_hospital_bag_item"."custom_item_by_user_id"
+
+Ref:"preg_image_type"."id" < "preg_image"."image_type_id"
+
+Ref:"preg_week"."id" < "preg_image"."week_id"
+
+Ref:"preg_medical_service_package"."id" < "preg_medical_package_test"."medical_service_package_id"
+
+Ref:"preg_medical_test"."id" < "preg_medical_package_test"."medical_test_id"
+
+Ref:"preg_user"."id" < "preg_my_belly"."user_id"
+
+Ref:"preg_my_birth_plan_item"."id" < "preg_my_birth_plan"."my_birth_plan_item_id"
+
+Ref:"preg_user"."id" < "preg_my_birth_plan"."user_id"
+
+Ref:"preg_my_birth_plan_type"."id" < "preg_my_birth_plan_item"."my_birth_plan_type_id"
+
+Ref:"preg_user"."id" < "preg_my_birth_plan_item"."custom_item_by_user_id"
+
+Ref:"preg_my_weight_unit"."id" < "preg_my_weight"."my_weight_type_id"
+
+Ref:"preg_user"."id" < "preg_my_weight"."user_id"
+
+Ref:"preg_profession_type"."id" < "preg_phone"."profession_id"
+
+Ref:"preg_user"."id" < "preg_phone"."user_id"
+
+Ref:"preg_user"."id" < "preg_pregnancy"."user_id"
+
+Ref:"preg_profession_type"."id" < "preg_profession"."profession_type_id"
+
+Ref:"preg_user"."id" < "preg_profession"."user_id"
+
+Ref:"preg_question_type"."id" < "preg_question"."question_type_id"
+
+Ref:"preg_user"."id" < "preg_question"."custom_question_by_user_id"
+
+Ref:"preg_user"."id" < "preg_setting"."user_id"
+
+Ref:"preg_shopping_category"."id" < "preg_shopping_item"."category_id"
+
+Ref:"preg_user"."id" < "preg_shopping_item"."custom_item_by_user_id"
+
+Ref:"preg_week"."id" < "preg_size_guide"."week_id"
+
+Ref:"preg_time_frame"."id" < "preg_time_line"."time_frame_id"
+
+Ref:"preg_week"."id" < "preg_time_line"."week_id"
+
+Ref:"preg_user"."id" < "preg_todo"."custom_task_by_user_id"
+
+Ref:"preg_daily"."id" < "preg_todo"."day_id"
+
+Ref:"preg_user"."id" < "preg_upgrade"."user_id"
+
+Ref:"preg_social_type"."id" < "preg_user"."social_type_id"
+
+Ref:"preg_baby_name"."id" < "preg_user_baby_name"."baby_name_id"
+
+Ref:"preg_user"."id" < "preg_user_baby_name"."user_id"
+
+Ref:"preg_hospital_bag_item"."id" < "preg_user_hospital_bag_item"."hospital_bag_item_id"
+
+Ref:"preg_user"."id" < "preg_user_hospital_bag_item"."user_id"
+
+Ref:"preg_user"."id" < "preg_user_kick_history"."user_id"
+
+Ref:"preg_kick_result"."id" < "preg_user_kick_history"."kick_result_id"
+
+Ref:"preg_medical_service_package"."id" < "preg_user_medical_service_package"."medical_service_package_id"
+
+Ref:"preg_user"."id" < "preg_user_medical_service_package"."user_id"
+
+Ref:"preg_shopping_item"."id" < "preg_user_shopping_cart"."shopping_item_id"
+
+Ref:"preg_user"."id" < "preg_user_shopping_cart"."user_id"
+
+Ref:"preg_todo"."id" < "preg_user_todo"."todo_id"
+
+Ref:"preg_user"."id" < "preg_user_todo"."user_id"
+
+Ref:"preg_user"."id" < "preg_weekly_interact"."user_id"
+
+Ref:"preg_week"."id" < "preg_weekly_interact"."week_id"

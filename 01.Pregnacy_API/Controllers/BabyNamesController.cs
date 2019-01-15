@@ -43,6 +43,39 @@ namespace _01.Pregnacy_API.Controllers
 				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 			}
 		}
+		// GET api/values
+		[Authorize]
+		[HttpGet]
+		[Route("api/babynames/join")]
+		public HttpResponseMessage GetJoin([FromUri]preg_baby_name data)
+		{
+			try
+			{
+				IEnumerable<preg_baby_name> result;
+				if (data != null)
+				{
+					result = dao.GetItemsByParams(data);
+				}
+				else
+				{
+					result = dao.GetListItem();
+				}
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+			}
+		}
 
 		// GET api/values/5
 		[Authorize]
@@ -124,6 +157,10 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.custom_baby_name_by_user_id != null)
 					{
 						baby_name.custom_baby_name_by_user_id = dataUpdate.custom_baby_name_by_user_id;
+					}
+					if (dataUpdate.order != null)
+					{
+						baby_name.order = dataUpdate.order;
 					}
 
 					dao.UpdateData(baby_name);
