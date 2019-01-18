@@ -24,7 +24,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_medical_package_test()))
 				{
 					IEnumerable<preg_medical_package_test> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)

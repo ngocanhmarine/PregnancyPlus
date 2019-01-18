@@ -18,7 +18,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_profession()))
 				{
 					IEnumerable<preg_profession> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
@@ -154,7 +154,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_profession()))
 				{
 					preg_profession profession = new preg_profession();
 					profession = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id));

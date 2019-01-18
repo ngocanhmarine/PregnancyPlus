@@ -19,7 +19,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_appointment_type> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_appointment_type()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -100,7 +100,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_appointment_type()))
 				{
 					preg_appointment_type appointment_type = new preg_appointment_type();
 					appointment_type = dao.GetItemByID(Convert.ToInt32(id));
@@ -134,7 +134,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/appointmenttypes/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_appointment_type appointment_type = dao.GetItemByID(Convert.ToInt32(id));

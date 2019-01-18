@@ -19,7 +19,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_my_birth_plan_type> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_my_birth_plan_type()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -75,7 +75,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_my_birth_plan_type()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -100,24 +100,24 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_my_birth_plan_type()))
 				{
-					preg_my_birth_plan_type MyBirthPlanType = new preg_my_birth_plan_type();
-					MyBirthPlanType = dao.GetItemByID(Convert.ToInt32(id));
-					if (MyBirthPlanType == null)
+					preg_my_birth_plan_type myBirthPlanType = new preg_my_birth_plan_type();
+					myBirthPlanType = dao.GetItemByID(Convert.ToInt32(id));
+					if (myBirthPlanType == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.type != null)
 					{
-						MyBirthPlanType.type = dataUpdate.type;
+						myBirthPlanType.type = dataUpdate.type;
 					}
 					if (dataUpdate.type_icon != null)
 					{
-						MyBirthPlanType.type_icon = dataUpdate.type_icon;
+						myBirthPlanType.type_icon = dataUpdate.type_icon;
 					}
 
-					dao.UpdateData(MyBirthPlanType);
+					dao.UpdateData(myBirthPlanType);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else

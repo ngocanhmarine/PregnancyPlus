@@ -14,7 +14,7 @@ using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class UserBabyNamesController : ApiController
+	public class UserBabyNameController : ApiController
 	{
 		UserBabyNameDao dao = new UserBabyNameDao();
 		// GET api/values
@@ -24,7 +24,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_user_baby_name()))
 				{
 					IEnumerable<preg_user_baby_name> result = dao.GetItemByParams(data);
 					if (result.Count() > 0)

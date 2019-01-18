@@ -20,7 +20,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_daily_interact> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_daily_interact()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -76,7 +76,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_daily_interact()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -129,7 +129,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_daily_interact()))
 				{
 					preg_daily_interact daily = new preg_daily_interact();
 					daily = dao.GetItemByID(Convert.ToInt32(daily_id), Convert.ToInt32(user_id));

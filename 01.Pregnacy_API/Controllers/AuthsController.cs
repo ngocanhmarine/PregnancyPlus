@@ -20,7 +20,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_auth> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_auth()))
 				{
 					result = dao.GetItemsByParams(data);
 
@@ -78,7 +78,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_auth()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -105,7 +105,7 @@ namespace _01.Pregnacy_API.Controllers
 
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_auth()))
 				{
 					preg_auth auth = new preg_auth();
 					auth = dao.GetItemByID(Convert.ToInt32(id));
@@ -147,7 +147,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/auths/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_auth auth = dao.GetItemByID(Convert.ToInt32(id));

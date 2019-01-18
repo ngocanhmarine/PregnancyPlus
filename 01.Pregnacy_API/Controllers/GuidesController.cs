@@ -27,15 +27,13 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_guides> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_guides()))
 				{
 					result = dao.GetItemsByParams(data);
-
 				}
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -86,7 +84,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_guides()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -109,10 +107,9 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/guides/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_guides dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_guides()))
 				{
 					preg_guides guides = new preg_guides();
 					guides = dao.GetItemByID(Convert.ToInt32(id));
@@ -150,7 +147,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/guides/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_guides item = dao.GetItemByID(Convert.ToInt32(id));

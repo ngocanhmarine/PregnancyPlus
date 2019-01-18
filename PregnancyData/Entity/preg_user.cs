@@ -71,6 +71,9 @@ namespace PregnancyData.Entity
         [StringLength(1024)]
         public string email { get; set; }
 
+        [StringLength(50)]
+        public string uid { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_answer> preg_answer { get; set; }
 

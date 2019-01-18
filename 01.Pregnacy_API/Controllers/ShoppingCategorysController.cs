@@ -18,7 +18,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_shopping_category()))
 				{
 					IEnumerable<preg_shopping_category> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
@@ -83,7 +83,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_shopping_category()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -131,7 +131,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_shopping_category()))
 				{
 					preg_shopping_category shopping_category = new preg_shopping_category();
 					shopping_category = dao.GetItemByID(Convert.ToInt32(id));

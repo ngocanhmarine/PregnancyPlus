@@ -22,9 +22,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IEnumerable<preg_my_belly> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_my_belly()))
 				{
+					data.user_id = user_id;
 					result = dao.GetItemsByParams(data);
 				}
 				else
@@ -50,13 +52,65 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
-		[Route("api/mybellies/{month_id}")]
-		public HttpResponseMessage Get(string month_id)
+		[Route("api/mybellies/{month}")]
+		public HttpResponseMessage Get(string month)
 		{
 			try
 			{
-				preg_my_belly data = dao.GetItemByMonthID(Convert.ToInt32(month_id));
-				if (data != null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				IEnumerable<preg_my_belly> data = dao.GetItemsByParams(new preg_my_belly() { user_id = user_id, month = Convert.ToInt32(month) });
+				if (data.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, data);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+			}
+		}
+
+		// GET api/values/5
+		[Authorize]
+		[HttpGet]
+		[Route("api/mybellies/template")]
+		public HttpResponseMessage GetTemplates()
+		{
+			try
+			{
+				IEnumerable<preg_my_belly> data = dao.GetListItem().Where(c => c.user_id == null);
+				if (data.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, data);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+			}
+		}
+		// GET api/values/5
+		[Authorize]
+		[HttpGet]
+		[Route("api/mybellies/template/{month}")]
+		public HttpResponseMessage GetTemplate(string month)
+		{
+			try
+			{
+				IEnumerable<preg_my_belly> data = dao.GetItemsByParams(new preg_my_belly() { month = Convert.ToInt32(month) }).Where(c => c.user_id == null);
+				if (data.Count() > 0)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
 				}
@@ -79,8 +133,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (data.month != null)
 				{
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -99,26 +155,28 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/mybellies/{id}")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_my_belly dataUpdate)
+		[Route("api/mybellies/{month}")]
+		public HttpResponseMessage Put(string month, [FromBody]preg_my_belly dataUpdate)
 		{
-			return UpdateData(id, dataUpdate);
+			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+			return UpdateData(user_id, month, dataUpdate);
 		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/mybellies/{id}")]
-		public HttpResponseMessage Delete(string id)
+		[Route("api/mybellies/{month}")]
+		public HttpResponseMessage Delete(int month)
 		{
 			try
 			{
-				preg_my_belly item = dao.GetItemByMonthID(Convert.ToInt32(id));
-				if (item == null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_my_belly item = dao.GetItemsByParams(new preg_my_belly { user_id = user_id, month = month }).FirstOrDefault();
+				if (item != null)
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					dao.DeleteData(item);
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 				}
-				dao.DeleteData(item);
-				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 			}
 			catch (Exception ex)
 			{
@@ -127,32 +185,24 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		public HttpResponseMessage UpdateData(string id, preg_my_belly dataUpdate)
+		public HttpResponseMessage UpdateData(int user_id, string month, preg_my_belly dataUpdate)
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_my_belly()))
 				{
-					preg_my_belly phone = new preg_my_belly();
-					phone = dao.GetItemByMonthID(Convert.ToInt32(id));
-					if (phone == null)
+					preg_my_belly my_belly = new preg_my_belly() { user_id = user_id, month = Convert.ToInt32(month) };
+					my_belly = dao.GetItemsByParams(my_belly).FirstOrDefault();
+					if (my_belly == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.image != null)
 					{
-						phone.image = dataUpdate.image;
-					}
-					if (dataUpdate.month != null)
-					{
-						phone.month = dataUpdate.month;
-					}
-					if (dataUpdate.user_id != null)
-					{
-						phone.user_id = dataUpdate.user_id;
+						my_belly.image = dataUpdate.image;
 					}
 
-					dao.UpdateData(phone);
+					dao.UpdateData(my_belly);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else
@@ -170,13 +220,14 @@ namespace _01.Pregnacy_API.Controllers
 
 		#region Upload files
 		[Authorize]
-		[Route("api/mybellies/{month}/upload")]
+		[Route("api/mybellies/{month}")]
 		[HttpPost]
-		public async Task<HttpResponseMessage> Upload(int month)
+		public async Task<HttpResponseMessage> Upload(string month)
 		{
 			// Get current user_id
 			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-			string dir = "/Files/Uploads/Users/" + user_id.ToString() + "/MyBellies/" + month.ToString();
+
+			string dir = "/Files/Uploads/Users/" + user_id.ToString() + "/MyBellies/" + month;
 			string dirRoot = HttpContext.Current.Server.MapPath(dir);
 			// Check if request contains multipart/form-data
 			if (!Request.Content.IsMimeMultipartContent())
@@ -213,7 +264,7 @@ namespace _01.Pregnacy_API.Controllers
 
 				// Update to database
 				preg_my_belly updateRow = new preg_my_belly();
-				updateRow.month = month;
+				updateRow.month = Convert.ToInt32(month);
 				updateRow.user_id = user_id;
 				if (dao.GetItemsByParams(updateRow).Count() == 0)
 				{
@@ -226,7 +277,7 @@ namespace _01.Pregnacy_API.Controllers
 					files.Add(path);
 					updateRow.image = path;
 				}
-				UpdateData(updateRow.id.ToString(), updateRow);
+				UpdateData(user_id, month, updateRow);
 				return Request.CreateResponse(HttpStatusCode.Created, files);
 			}
 			catch (System.Exception ex)
@@ -236,7 +287,7 @@ namespace _01.Pregnacy_API.Controllers
 		}
 
 		[Authorize]
-		[Route("api/mybellies/{month}")]
+		[Route("api/mybellies/{month}/template")]
 		[HttpPost]
 		public async Task<HttpResponseMessage> UploadRoot(int month)
 		{
@@ -279,10 +330,15 @@ namespace _01.Pregnacy_API.Controllers
 				preg_my_belly updateRow = new preg_my_belly();
 				updateRow.month = month;
 				updateRow.user_id = null;
-				if (dao.GetItemsByParams(updateRow).Where(c => c.user_id == null).Count() == 0)
+				using (PregnancyEntity connect = new PregnancyEntity())
 				{
-					dao.InsertData(updateRow);
+					preg_my_belly chkRowExist = connect.preg_my_belly.Where(c => c.month == month).FirstOrDefault();
+					if (chkRowExist == null)
+					{
+						dao.InsertData(updateRow);
+					}
 				}
+
 				updateRow = dao.GetItemsByParams(updateRow).FirstOrDefault();
 				foreach (MultipartFileData file in provider.FileData)
 				{
@@ -290,7 +346,8 @@ namespace _01.Pregnacy_API.Controllers
 					files.Add(path);
 					updateRow.image = path;
 				}
-				UpdateData(updateRow.id.ToString(), updateRow);
+				dao.UpdateData(updateRow);
+				//UpdateData(updateRow.id, updateRow.month.ToString(), updateRow);
 				return Request.CreateResponse(HttpStatusCode.Created, files);
 			}
 			catch (System.Exception ex)

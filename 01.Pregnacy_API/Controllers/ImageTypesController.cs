@@ -26,7 +26,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_image_type> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_image_type()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -82,7 +82,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_image_type()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -107,7 +107,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_image_type()))
 				{
 					preg_image_type image_type = new preg_image_type();
 					image_type = dao.GetItemByID(Convert.ToInt32(id));

@@ -490,3 +490,5 @@ D:\WSoftPro\PregnancyPlus\GitRepo\My git\Pregnancy\01.Pregnacy_API\obj\Debug\01.
 D:\WSoftPro\PregnancyPlus\GitRepo\My git\Pregnancy\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.csproj.CopyComplete
 D:\WSoftPro\PregnancyPlus\GitRepo\My git\Pregnancy\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.dll
 D:\WSoftPro\PregnancyPlus\GitRepo\My git\Pregnancy\01.Pregnacy_API\obj\Debug\01.Pregnacy_API.pdb
+D:\WSoftPro\PregnancyPlus\GitRepo\My git\Pregnancy\01.Pregnacy_API\bin\RestSharp.dll
+D:\WSoftPro\PregnancyPlus\GitRepo\My git\Pregnancy\01.Pregnacy_API\bin\RestSharp.xml

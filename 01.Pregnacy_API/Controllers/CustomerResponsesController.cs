@@ -18,14 +18,13 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_customer_response> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_customer_response()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -75,7 +74,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_customer_response()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -101,7 +100,7 @@ namespace _01.Pregnacy_API.Controllers
 
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_customer_response()))
 				{
 					preg_customer_response customer_response = new preg_customer_response();
 					customer_response = dao.GetItemByID(Convert.ToInt32(id));
@@ -151,7 +150,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/customerresponses/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				preg_customer_response customer_response = dao.GetItemByID(Convert.ToInt32(id));

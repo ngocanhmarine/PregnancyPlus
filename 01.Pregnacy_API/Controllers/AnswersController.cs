@@ -21,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_answer> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_answer()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -106,7 +106,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_answer()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -133,7 +133,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_answer()))
 				{
 					preg_answer answer = new preg_answer();
 					answer = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id));

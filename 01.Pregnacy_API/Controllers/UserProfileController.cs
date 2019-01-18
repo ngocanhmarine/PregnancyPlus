@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Web;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.Text;
 using PregnancyData.Dao;
-
 using System.Security.Claims;
-using Microsoft.Owin.Security.OAuth;
 
 namespace _01.Pregnacy_API.Controllers
 {

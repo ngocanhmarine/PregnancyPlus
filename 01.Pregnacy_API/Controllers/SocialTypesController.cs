@@ -19,7 +19,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_social_type()))
 				{
 					IEnumerable<preg_social_type> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
@@ -84,7 +84,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_social_type()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -109,7 +109,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_social_type()))
 				{
 					preg_social_type social_type = new preg_social_type();
 					social_type = dao.GetItemByID(Convert.ToInt32(id));

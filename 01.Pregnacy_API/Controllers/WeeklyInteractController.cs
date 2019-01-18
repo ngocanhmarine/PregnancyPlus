@@ -23,7 +23,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_weekly_interact()))
 				{
 					IEnumerable<preg_weekly_interact> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
@@ -135,7 +135,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_weekly_interact()))
 				{
 
 					preg_weekly_interact weekly_interact = new preg_weekly_interact();

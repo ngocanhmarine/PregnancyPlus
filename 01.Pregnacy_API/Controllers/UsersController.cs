@@ -18,7 +18,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null && data.password == null)
+				if (!data.DeepEquals(new preg_user()) && data.password == null)
 				{
 					IEnumerable<preg_user> results = dao.GetUsersByParams(data);
 					if (results.Count() > 0)
@@ -146,7 +146,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_user()))
 				{
 					preg_user user = new preg_user();
 					user = dao.GetUserByID(Convert.ToInt32(id));

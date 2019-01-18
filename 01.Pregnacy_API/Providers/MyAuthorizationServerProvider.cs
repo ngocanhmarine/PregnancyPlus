@@ -9,6 +9,9 @@ using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
 using PregnancyData.Entity;
 using PregnancyData.Dao;
+using RestSharp;
+using Newtonsoft.Json.Linq;
+using _01.Pregnacy_API.Social.Models;
 
 namespace _01.Pregnacy_API
 {
@@ -33,7 +36,49 @@ namespace _01.Pregnacy_API
 		{
 			if (context.OwinContext.Request.Headers["Provider"] != null)
 			{
-
+				if (context.OwinContext.Request.Headers["Provider"].ToLower() == "facebook" && context.OwinContext.Request.Headers["access_token"] != null)
+				{
+					var accessToken = context.OwinContext.Request.Headers["access_token"];
+					var client = new RestClient("https://graph.facebook.com/");
+					var request = new RestRequest("me", Method.GET);
+					request.AddQueryParameter("fields", "id,name,email");
+					request.AddQueryParameter("access_token", accessToken);
+					var response = client.Execute(request);
+					if (response.StatusCode == HttpStatusCode.OK)
+					{
+						var content = JObject.Parse(response.Content);
+						var userInfo = new FacebookUserInfo() { id = content["id"].ToString(), name = content["name"].ToString(), email = content["email"].ToString() };
+						PregnancyEntity connect = new PregnancyEntity();
+						preg_user user = connect.preg_user.Where(c => c.uid == userInfo.id && c.social_type_id == (int)SysConst.SocialTypes.facebook).FirstOrDefault();
+						if (user != null)
+						{
+							user.email = userInfo.email;
+							user.first_name = userInfo.name;
+							connect.SaveChanges();
+						}
+						else
+						{
+							user = new preg_user();
+							user.uid = userInfo.id;
+							user.email = userInfo.email;
+							user.first_name = userInfo.name;
+							user.social_type_id = (int)SysConst.SocialTypes.facebook;
+							connect.preg_user.Add(user);
+							connect.SaveChanges();
+							user = connect.preg_user.Where(c => c.uid == userInfo.id && c.social_type_id == (int)SysConst.SocialTypes.facebook).FirstOrDefault();
+						}
+						var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
+						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
+						identity.AddClaim(new Claim("id", user.id.ToString()));
+						context.Validated(identity);
+					}
+					else
+					{
+						context.SetError("Invalid grant", SysConst.LOGIN_SOCIAL_FAILED);
+						return;
+					}
+				}
 			}
 			else
 			{
@@ -49,6 +94,7 @@ namespace _01.Pregnacy_API
 				{
 					preg_user currentUser = result.FirstOrDefault();
 					identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
+					identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.user.ToString()));
 					identity.AddClaim(new Claim("id", currentUser.id.ToString()));
 					context.Validated(identity);
 				}
@@ -64,7 +110,6 @@ namespace _01.Pregnacy_API
 					return;
 				}
 			}
-
 		}
 	}
 }

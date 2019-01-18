@@ -19,14 +19,13 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_hospital_bag_item> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_hospital_bag_item()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -76,7 +75,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_hospital_bag_item()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -101,7 +100,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_hospital_bag_item()))
 				{
 					preg_hospital_bag_item HospitalBagItem = new preg_hospital_bag_item();
 					HospitalBagItem = dao.GetItemByID(Convert.ToInt32(id));

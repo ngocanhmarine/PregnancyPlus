@@ -25,7 +25,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_my_weight_unit()))
 				{
 					IEnumerable<preg_my_weight_unit> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
@@ -90,7 +90,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_my_weight_unit()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -115,7 +115,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_my_weight_unit()))
 				{
 					preg_my_weight_unit my_weight_type = new preg_my_weight_unit();
 					my_weight_type = dao.GetItemByID(Convert.ToInt32(id));

@@ -18,7 +18,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_profession_type()))
 				{
 					IEnumerable<preg_profession_type> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
@@ -83,7 +83,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data.id != 0)
+				if (!data.DeepEquals(new preg_profession_type()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -130,7 +130,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_profession_type()))
 				{
 					preg_profession_type profession_type = new preg_profession_type();
 					profession_type = dao.GetItemByID(Convert.ToInt32(id));

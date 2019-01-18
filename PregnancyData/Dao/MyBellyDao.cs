@@ -24,6 +24,7 @@ namespace PregnancyData.Dao
 		{
 			return connect.preg_my_belly.Where(c => c.month == month && c.user_id == null).FirstOrDefault();
 		}
+
 		public IEnumerable<preg_my_belly> GetItemsByParams(preg_my_belly data)
 		{
 			IEnumerable<preg_my_belly> result = connect.preg_my_belly;

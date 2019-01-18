@@ -24,7 +24,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_daily> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_daily()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -56,7 +56,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_daily data = dao.GetItemByID(Convert.ToInt32(id));
+				IQueryable<preg_daily> data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -80,7 +80,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_daily()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -113,7 +113,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_daily daily = dao.GetItemByID(Convert.ToInt32(id));
+				preg_daily daily = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
 				if (daily == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -132,10 +132,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_daily()))
 				{
 					preg_daily daily = new preg_daily();
-					daily = dao.GetItemByID(Convert.ToInt32(id));
+					daily = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
 					if (daily == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -184,7 +184,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string daily_id)
 		{
 			// Check daily_id exist
-			preg_daily checkItem = dao.GetItemByID(Convert.ToInt32(daily_id));
+			preg_daily checkItem = dao.GetItemByID(Convert.ToInt32(daily_id)).ToList()[0];
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, daily_id));

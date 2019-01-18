@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
 using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
 using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
@@ -27,7 +21,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_my_birth_plan> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_my_birth_plan()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -111,7 +105,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_my_birth_plan()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);

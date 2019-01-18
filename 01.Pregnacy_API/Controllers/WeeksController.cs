@@ -23,7 +23,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_week()))
 				{
 					IEnumerable<preg_week> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
@@ -88,7 +88,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_week()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -137,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_week()))
 				{
 					preg_week week = new preg_week();
 					week = dao.GetItemByID(Convert.ToInt32(id));

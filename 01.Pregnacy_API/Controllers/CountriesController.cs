@@ -19,7 +19,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_country> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_country()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -76,7 +76,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_country()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -102,7 +102,7 @@ namespace _01.Pregnacy_API.Controllers
 
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_country()))
 				{
 					preg_country country = new preg_country();
 					country = dao.GetItemByID(Convert.ToInt32(id));

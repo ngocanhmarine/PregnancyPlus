@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Data;
 using PregnancyData.Entity;
 using System.IO;
 using System.Security.Claims;
@@ -26,14 +24,13 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				IEnumerable<preg_image> result;
-				if (data != null)
+				if (!data.DeepEquals(new preg_image()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -83,7 +80,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_image()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -135,7 +132,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_image()))
 				{
 					preg_image image = new preg_image();
 					image = dao.GetItemByID(Convert.ToInt32(id));

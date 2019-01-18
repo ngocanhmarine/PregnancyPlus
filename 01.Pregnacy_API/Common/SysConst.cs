@@ -10,11 +10,15 @@ public class SysConst
 	public static TimeSpan AccessTokenExpiredTimeSpan = TimeSpan.FromHours(4);
 	public enum UserType
 	{
-		admin = 0, dev, user
+		admin = 0, dev, user, social
 	}
 	public enum UserStatus
 	{
 		noactive = 0, active
+	}
+	public enum SocialTypes
+	{
+		facebook = 1, google
 	}
 	public static string[] imgOnlyExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".webp" };
 	public static string[] imgHtmlExtensions = { ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".webp", ".html" };
@@ -36,6 +40,7 @@ public class SysConst
 	public static string DATA_DELETE_SUCCESS = "Data delete succeed.";
 	public static string DATA_DELETE_FAIL = "Data delete failed.";
 	public static string LOGIN_FAILED = "Provided username & password is incorrect.";
+	public static string LOGIN_SOCIAL_FAILED = "Provided access token is invalid.";
 	public static string USER_CREATED = "Your user account has been created. ID = {0}.";
 	public static string INVALID_FILE_TYPE = "Invalid file type.";
 	public static string FILE_NOT_EXIST = "File with path {0} not exist.";

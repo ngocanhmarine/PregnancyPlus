@@ -319,6 +319,10 @@ namespace PregnancyData.Entity
 				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_user>()
+				.Property(e => e.uid)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_user>()
 				.HasMany(e => e.preg_answer)
 				.WithRequired(e => e.preg_user)
 				.HasForeignKey(e => e.user_id)

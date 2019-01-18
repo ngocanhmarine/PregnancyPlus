@@ -1,10 +1,10 @@
 ﻿using PregnancyData.Dao;
 using PregnancyData.Entity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -18,8 +18,9 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				IEnumerable<preg_baby_name> result;
-				if (data != null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				IQueryable<preg_baby_name> result;
+				if (!data.DeepEquals(new preg_baby_name()))
 				{
 					result = dao.GetItemsByParams(data);
 				}
@@ -27,42 +28,9 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					result = dao.GetListItem();
 				}
-				if (result.Count() > 0)
+				if (result.Any())
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, result);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-		// GET api/values
-		[Authorize]
-		[HttpGet]
-		[Route("api/babynames/join")]
-		public HttpResponseMessage GetJoin([FromUri]preg_baby_name data)
-		{
-			try
-			{
-				IEnumerable<preg_baby_name> result;
-				if (data != null)
-				{
-					result = dao.GetItemsByParams(data);
-				}
-				else
-				{
-					result = dao.GetListItem();
-				}
-				if (result.Count() > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, result);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterUserID(result, user_id));
 				}
 				else
 				{
@@ -84,10 +52,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_baby_name data = dao.GetItemByID(Convert.ToInt32(id));
-				if (data != null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
+				IQueryable<preg_baby_name> data = dao.GetItemByID(Convert.ToInt32(id));
+				if (data.Any())
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterUserID(data, user_id));
 				}
 				else
 				{
@@ -108,7 +77,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_baby_name()))
 				{
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -131,13 +100,12 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/babynames/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_baby_name dataUpdate)
 		{
-
 			try
 			{
-				if (dataUpdate != null)
+				if (!dataUpdate.DeepEquals(new preg_baby_name()))
 				{
 					preg_baby_name baby_name = new preg_baby_name();
-					baby_name = dao.GetItemByID(Convert.ToInt32(id));
+					baby_name = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
 					if (baby_name == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -184,10 +152,9 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/babynames/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
-				preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

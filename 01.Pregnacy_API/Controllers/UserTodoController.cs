@@ -24,7 +24,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data != null)
+				if (!data.DeepEquals(new preg_user_todo()))
 				{
 					IEnumerable<preg_user_todo> result = dao.GetItemByParams(data);
 					if (result.Count() > 0)
