@@ -20,8 +20,14 @@ namespace PregnancyData.Entity
 
         public double? current_weight { get; set; }
 
+        public int? week_id { get; set; }
+
+        public DateTime? current_date { get; set; }
+
         public virtual preg_my_weight_unit preg_my_weight_unit { get; set; }
 
         public virtual preg_user preg_user { get; set; }
+
+        public virtual preg_week preg_week { get; set; }
     }
 }

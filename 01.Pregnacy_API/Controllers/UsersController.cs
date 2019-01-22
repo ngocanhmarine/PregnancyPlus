@@ -63,11 +63,42 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_user data = dao.GetUserByID(Convert.ToInt32(id));
+				preg_user data = dao.GetUserByID(Convert.ToInt32(id)).ToList()[0];
 				if (data != null)
 				{
 					data.password = null;
 					return Request.CreateResponse(HttpStatusCode.OK, data);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+			}
+		}
+
+		// GET api/values/5
+		[AllowAnonymous]
+		[Route("api/users/checkphone")]
+		[HttpGet]
+		public HttpResponseMessage CheckPhone([FromUri]preg_user data)
+		{
+			try
+			{
+				if (data.phone != null)
+				{
+					preg_user dataCheck = new preg_user() { phone = data.phone };
+					dataCheck = dao.GetUsersByParams(dataCheck).FirstOrDefault();
+					if (dataCheck == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					return Request.CreateResponse(HttpStatusCode.OK, SysConst.DATA_EXIST);
 				}
 				else
 				{
@@ -88,9 +119,8 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data.email != null && data.password != null)
+				if (data.phone != null && data.password != null)
 				{
-
 					data.password = SysMethod.MD5Hash(data.password);
 					if (dao.InsertData(data))
 					{
@@ -100,13 +130,13 @@ namespace _01.Pregnacy_API.Controllers
 					}
 					else
 					{
-						HttpError err = new HttpError(SysConst.EMAIL_EXIST);
+						HttpError err = new HttpError(SysConst.PHONE_EXIST);
 						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 					}
 				}
 				else
 				{
-					HttpError err = new HttpError(SysConst.EMAIL_PASSWORD_NOT_NULL);
+					HttpError err = new HttpError(SysConst.PHONE_PASSWORD_NOT_NULL);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
 			}
@@ -149,7 +179,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_user()))
 				{
 					preg_user user = new preg_user();
-					user = dao.GetUserByID(Convert.ToInt32(id));
+					user = dao.GetUserByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (user == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -158,9 +188,9 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						user.password = SysMethod.MD5Hash(dataUpdate.password);
 					}
-					if (dataUpdate.phone != null)
+					if (dataUpdate.email != null)
 					{
-						user.phone = dataUpdate.phone;
+						user.email = dataUpdate.email;
 					}
 					if (dataUpdate.social_type_id != null)
 					{

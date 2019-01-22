@@ -31,17 +31,17 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "page_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.page_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.page_id == (int)(propertyValue));
 				}
 				else if (propertyName == "guides_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.guides_type_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.guides_type_id == (int)(propertyValue));
 				}
 			}
 			return result;

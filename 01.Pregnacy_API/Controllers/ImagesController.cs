@@ -51,12 +51,12 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
-		[Route("api/images/{id}")]
-		public HttpResponseMessage Get(string id)
+		[Route("api/images/{week}/{image_type_id}")]
+		public HttpResponseMessage Get(string week, string image_type_id)
 		{
 			try
 			{
-				preg_image data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_image data = dao.GetItemsByParams(new preg_image() { week_id = Convert.ToInt32(week), image_type_id = Convert.ToInt32(image_type_id) }).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -100,10 +100,10 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/images/{id}")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_image dataUpdate)
+		[Route("api/images/{week}/{image_type_id}")]
+		public HttpResponseMessage Put(string week, string image_type_id, [FromBody]preg_image dataUpdate)
 		{
-			return UpdateData(id, dataUpdate);
+			return UpdateData(week, image_type_id, dataUpdate);
 		}
 
 		// DELETE api/values/5
@@ -128,14 +128,14 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		public HttpResponseMessage UpdateData(string id, preg_image dataUpdate)
+		public HttpResponseMessage UpdateData(string week_id, string image_type_id, preg_image dataUpdate)
 		{
 			try
 			{
 				if (!dataUpdate.DeepEquals(new preg_image()))
 				{
 					preg_image image = new preg_image();
-					image = dao.GetItemByID(Convert.ToInt32(id));
+					image = dao.GetItemsByParams(new preg_image() { week_id = Convert.ToInt32(week_id), image_type_id = Convert.ToInt32(image_type_id) }).FirstOrDefault();
 					if (image == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -171,19 +171,17 @@ namespace _01.Pregnacy_API.Controllers
 
 		#region Upload files
 		[Authorize]
-		[Route("api/images/{image_id}/upload")]
+		[Route("api/images/{week}/{image_type_id}/upload")]
 		[HttpPost]
-		public async Task<HttpResponseMessage> Upload(string image_id)
+		public async Task<HttpResponseMessage> Upload(string week, string image_type_id)
 		{
-			// Check daily_id exist
-			preg_image checkItem = dao.GetItemByID(Convert.ToInt32(image_id));
+			// Check data exist
+			preg_image checkItem = dao.GetItemsByParams(new preg_image() { week_id = Convert.ToInt32(week), image_type_id = Convert.ToInt32(image_type_id) }).FirstOrDefault();
 			if (checkItem == null)
 			{
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, image_id));
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_NOT_FOUND);
 			}
-			// Get current user_id
-			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-			string dir = "/Files/Images/" + image_id.ToString();
+			string dir = "/Files/Images/" + week + "/" + image_type_id;
 			string dirRoot = HttpContext.Current.Server.MapPath(dir);
 			// Check if request contains multipart/form-data
 			if (!Request.Content.IsMimeMultipartContent())
@@ -226,7 +224,8 @@ namespace _01.Pregnacy_API.Controllers
 					files.Add(path);
 					updateRow.image = path;
 				}
-				UpdateData(image_id, updateRow);
+
+				UpdateData(week, image_type_id, updateRow);
 
 				return Request.CreateResponse(HttpStatusCode.Created, files);
 			}

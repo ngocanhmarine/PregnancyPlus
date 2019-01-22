@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -31,41 +32,41 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "title" && propertyValue != null)
 				{
-					result = result.Where(c => c.title == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.title) > 0);
 				}
 				else if (propertyName == "description" && propertyValue != null)
 				{
-					result = result.Where(c => c.description == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.description) > 0);
 				}
 				else if (propertyName == "content" && propertyValue != null)
 				{
-					result = result.Where(c => c.content == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.content) > 0);
 				}
 				else if (propertyName == "discount" && propertyValue != null)
 				{
-					result = result.Where(c => c.discount == Convert.ToDouble(propertyValue));
+					result = result.Where(c => c.discount == (double)(propertyValue));
 				}
 				else if (propertyName == "execution_department" && propertyValue != null)
 				{
-					result = result.Where(c => c.execution_department == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.execution_department) > 0);
 				}
 				else if (propertyName == "address" && propertyValue != null)
 				{
-					result = result.Where(c => c.address == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.address) > 0);
 				}
 				else if (propertyName == "execution_time" && propertyValue != null)
 				{
-					result = result.Where(c => c.execution_time == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.execution_time == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "place" && propertyValue != null)
 				{
-					result = result.Where(c => c.place == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.place == (int)(propertyValue));
 				}
 			}
 			return result;

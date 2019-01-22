@@ -20,7 +20,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				IEnumerable<preg_answer> result;
+				IQueryable<preg_answer> result;
 				if (!data.DeepEquals(new preg_answer()))
 				{
 					result = dao.GetItemsByParams(data);
@@ -29,8 +29,7 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					result = dao.GetListItem();
 				}
-
-				if (result.Count() > 0)
+				if (result.ToList().Any())
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, result);
 				}
@@ -55,7 +54,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_answer data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id));
+				preg_answer data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id)).ToList()[0];
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -135,8 +134,7 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (!dataUpdate.DeepEquals(new preg_answer()))
 				{
-					preg_answer answer = new preg_answer();
-					answer = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id));
+					preg_answer answer = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id)).ToList()[0];
 					if (answer == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -178,7 +176,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_answer item = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id));
+				preg_answer item = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id)).ToList()[0];
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

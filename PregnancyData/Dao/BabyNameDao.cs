@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
@@ -33,30 +34,29 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					results = results.Where(c => c.id == Convert.ToInt32(propertyValue));
+					results = results.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "country_id" && propertyValue != null)
 				{
-					results = results.Where(c => c.country_id == Convert.ToInt32(propertyValue));
+					results = results.Where(c => c.country_id == (int)(propertyValue));
 				}
 				else if (propertyName == "gender_id" && propertyValue != null)
 				{
-					var temp = Convert.ToInt32(propertyValue);
-					results = results.Where(c => c.gender_id == temp);
+					results = results.Where(c => c.gender_id == (int)(propertyValue));
 				}
 				else if (propertyName == "name" && propertyValue != null)
 				{
-					results = results.Where(c => c.name == propertyValue.ToString());
+					results = results.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.name) > 0);
 				}
 				else if (propertyName == "custom_baby_name_by_user_id" && propertyValue != null)
 				{
-					results = results.Where(c => c.custom_baby_name_by_user_id == Convert.ToInt32(propertyValue));
+					results = results.Where(c => c.custom_baby_name_by_user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "order" && propertyValue != null)
 				{
-					results = results.Where(c => c.order == Convert.ToInt32(propertyValue));
+					results = results.Where(c => c.order == (int)(propertyValue));
 				}
 			}
 

@@ -31,25 +31,25 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "appointment_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.appointment_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.appointment_id == (int)(propertyValue));
 				}
 				else if (propertyName == "bp_dia" && propertyValue != null)
 				{
-					result = result.Where(c => c.bp_dia == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.bp_dia == (int)(propertyValue));
 				}
 				else if (propertyName == "bp_sys" && propertyValue != null)
 				{
-					result = result.Where(c => c.bp_sys == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.bp_sys == (int)(propertyValue));
 				}
 				else if (propertyName == "baby_heart" && propertyValue != null)
 				{
-					result = result.Where(c => c.baby_heart == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.baby_heart == (int)(propertyValue));
 				}
 			}
 			return result;

@@ -31,41 +31,41 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "user_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "baby_gender" && propertyValue != null)
 				{
-					result = result.Where(c => c.baby_gender == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.baby_gender == (int)(propertyValue));
 				}
 				else if (propertyName == "due_date" && propertyValue != null)
 				{
-					result = result.Where(c => c.due_date == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.due_date == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "show_week" && propertyValue != null)
 				{
-					result = result.Where(c => c.show_week == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.show_week == (int)(propertyValue));
 				}
 				else if (propertyName == "pregnancy_loss" && propertyValue != null)
 				{
-					result = result.Where(c => c.pregnancy_loss == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.pregnancy_loss == (int)(propertyValue));
 				}
 				else if (propertyName == "baby_already_born" && propertyValue != null)
 				{
-					result = result.Where(c => c.baby_already_born == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.baby_already_born == (int)(propertyValue));
 				}
 				else if (propertyName == "date_of_birth" && propertyValue != null)
 				{
-					result = result.Where(c => c.date_of_birth == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.date_of_birth == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "weeks_pregnant" && propertyValue != null)
 				{
-					result = result.Where(c => c.weeks_pregnant == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.weeks_pregnant == (int)(propertyValue));
 				}
 			}
 			return result;

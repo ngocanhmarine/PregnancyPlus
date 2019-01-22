@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -37,37 +38,37 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "week_id" && propertyValue != null)
+				if (propertyName == "week_id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.week_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.week_id == (int)(propertyValue));
 				}
-				else if (propertyName == "user_id" && propertyValue != null)
+				else if (propertyName == "user_id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "like" && propertyValue != null)
 				{
-					result = result.Where(c => c.like == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.like == (int)(propertyValue));
 				}
 				else if (propertyName == "comment" && propertyValue != null)
 				{
-					result = result.Where(c => c.comment == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.comment) > 0);
 				}
 				else if (propertyName == "photo" && propertyValue != null)
 				{
-					result = result.Where(c => c.photo == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.photo) > 0);
 				}
 				else if (propertyName == "share" && propertyValue != null)
 				{
-					result = result.Where(c => c.share == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.share) > 0);
 				}
 				else if (propertyName == "notification" && propertyValue != null)
 				{
-					result = result.Where(c => c.notification == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.notification == (int)(propertyValue));
 				}
 				else if (propertyName == "status" && propertyValue != null)
 				{
-					result = result.Where(c => c.status == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.status == (int)(propertyValue));
 				}
 			}
 			return result;

@@ -31,21 +31,21 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "kick_order" && propertyValue != null)
 				{
-					result = result.Where(c => c.kick_order == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.kick_order == (int)(propertyValue));
 				}
 				else if (propertyName == "kick_time" && propertyValue != null)
 				{
-					result = result.Where(c => c.kick_time == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.kick_time == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "elapsed_time" && propertyValue != null)
 				{
-					result = result.Where(c => c.elapsed_time == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.elapsed_time == (DateTime)(propertyValue));
 				}
 			}
 			return result;

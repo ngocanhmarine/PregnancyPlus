@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -31,53 +32,53 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "name" && propertyValue != null)
 				{
-					result = result.Where(c => c.name == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.name) > 0);
 				}
 				else if (propertyName == "contact_name" && propertyValue != null)
 				{
-					result = result.Where(c => c.contact_name == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.contact_name) > 0);
 				}
 				else if (propertyName == "profession_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.profession_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.profession_id == (int)(propertyValue));
 				}
 				else if (propertyName == "appointment_date" && propertyValue != null)
 				{
-					result = result.Where(c => c.appointment_date == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.appointment_date == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "appointment_time" && propertyValue != null)
 				{
-					result = result.Where(c => c.appointment_time == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.appointment_time == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "my_weight_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.my_weight_type_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.my_weight_type_id == (int)(propertyValue));
 				}
 				else if (propertyName == "weight_in_st" && propertyValue != null)
 				{
-					result = result.Where(c => c.weight_in_st == Convert.ToDouble(propertyValue));
+					result = result.Where(c => c.weight_in_st == (double)(propertyValue));
 				}
 				else if (propertyName == "sync_to_calendar" && propertyValue != null)
 				{
-					result = result.Where(c => c.sync_to_calendar == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.sync_to_calendar == (int)(propertyValue));
 				}
 				else if (propertyName == "note" && propertyValue != null)
 				{
-					result = result.Where(c => c.note == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.note) > 0);
 				}
 				else if (propertyName == "user_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "appointment_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.appointment_type_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.appointment_type_id == (int)(propertyValue));
 				}
 			}
 			return result;
@@ -93,9 +94,9 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-        public void DeleteData(preg_appointment item)
+		public void DeleteData(preg_appointment item)
 		{
-			
+
 			connect.preg_appointment.Remove(item);
 			connect.SaveChanges();
 		}

@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -32,29 +33,29 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "user_id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "user_id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "content" && propertyValue != null)
 				{
-					result = result.Where(c => c.content == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.content) > 0);
 				}
 				else if (propertyName == "time" && propertyValue != null)
 				{
-					result = result.Where(c => c.time == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.time == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "answer_user_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.answer_user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.answer_user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "answer_date" && propertyValue != null)
 				{
-					result = result.Where(c => c.answer_date == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.answer_date == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "answer_content" && propertyValue != null)
 				{
-					result = result.Where(c => c.answer_content == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.answer_content) > 0);
 				}
 			}
 			return result;

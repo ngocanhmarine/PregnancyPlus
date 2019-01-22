@@ -15,7 +15,6 @@ namespace _01.Pregnacy_API.Controllers
 {
 	public class DailliesController : ApiController
 	{
-
 		DailyDao dao = new DailyDao();
 		// GET api/values
 		[Authorize]
@@ -23,7 +22,8 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				IEnumerable<preg_daily> result;
+				IQueryable<preg_daily> result;
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_daily()))
 				{
 					result = dao.GetItemsByParams(data);
@@ -34,7 +34,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				if (result.Count() > 0)
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, result);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result, user_id));
 				}
 				else
 				{
@@ -56,10 +56,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IQueryable<preg_daily> data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
+					return Request.CreateResponse(HttpStatusCode.OK,dao.FilterJoin( data,user_id));
 				}
 				else
 				{

@@ -5,12 +5,14 @@ using System.Web.Http;
 using PregnancyData.Entity;
 using PregnancyData.Dao;
 using System.Security.Claims;
+using System.Linq;
 
 namespace _01.Pregnacy_API.Controllers
 {
 	public class UserProfileController : ApiController
 	{
 		UserDao userdao = new UserDao();
+		PregnancyEntity connect = null;
 		// GET api/values
 		[Authorize]
 		[HttpGet]
@@ -21,8 +23,8 @@ namespace _01.Pregnacy_API.Controllers
 				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (user_id > 0)
 				{
-					preg_user result = userdao.GetUserByID(user_id);
-					return Request.CreateResponse(HttpStatusCode.OK, result);
+					IQueryable<preg_user> result = userdao.GetUserByID(user_id);
+					return Request.CreateResponse(HttpStatusCode.OK, userdao.FilterJoin(result, user_id));
 				}
 				else
 				{
@@ -115,7 +117,7 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate != null && dataUpdate.email == null)
 					{
 						preg_user user = new preg_user();
-						user = userdao.GetUserByID(user_id);
+						user = userdao.GetUserByID(user_id).ToList()[0];
 						if (user != null)
 						{
 							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -124,9 +126,9 @@ namespace _01.Pregnacy_API.Controllers
 						{
 							user.password = SysMethod.MD5Hash(dataUpdate.password);
 						}
-						if (dataUpdate.phone != null)
+						if (dataUpdate.email != null)
 						{
-							user.phone = dataUpdate.phone;
+							user.email = dataUpdate.email;
 						}
 						if (dataUpdate.social_type_id != null)
 						{

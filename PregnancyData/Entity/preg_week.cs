@@ -12,6 +12,7 @@ namespace PregnancyData.Entity
         public preg_week()
         {
             preg_image = new HashSet<preg_image>();
+            preg_my_weight = new HashSet<preg_my_weight>();
             preg_size_guide = new HashSet<preg_size_guide>();
             preg_time_line = new HashSet<preg_time_line>();
             preg_weekly_interact = new HashSet<preg_weekly_interact>();
@@ -37,6 +38,9 @@ namespace PregnancyData.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_image> preg_image { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preg_my_weight> preg_my_weight { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_size_guide> preg_size_guide { get; set; }

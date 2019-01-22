@@ -24,36 +24,47 @@ namespace PregnancyData.Dao
 		{
 			return connect.preg_my_weight.Where(c => c.id == id).FirstOrDefault();
 		}
+
 		public IEnumerable<preg_my_weight> GetItemsByParams(preg_my_weight data)
 		{
 			IEnumerable<preg_my_weight> result = connect.preg_my_weight;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
+
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+
+				if (propertyName == "id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "user_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "my_weight_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.my_weight_type_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.my_weight_type_id == (int)(propertyValue));
 				}
 				else if (propertyName == "start_date" && propertyValue != null)
 				{
-					result = result.Where(c => c.start_date == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.start_date == (DateTime)(propertyValue));
 				}
 				else if (propertyName == "pre_pregnancy_weight" && propertyValue != null)
 				{
-					result = result.Where(c => c.pre_pregnancy_weight == Convert.ToDouble(propertyValue));
+					result = result.Where(c => c.pre_pregnancy_weight == (double)(propertyValue));
 				}
 				else if (propertyName == "current_weight" && propertyValue != null)
 				{
-					result = result.Where(c => c.current_weight == Convert.ToDouble(propertyValue));
+					result = result.Where(c => c.current_weight == (double)(propertyValue));
+				}
+				else if (propertyName == "week_id" && propertyValue != null)
+				{
+					result = result.Where(c => c.week_id == (int)(propertyValue));
+				}
+				else if (propertyName == "current_date" && propertyValue != null)
+				{
+					result = result.Where(c => c.current_date == (DateTime)(propertyValue));
 				}
 			}
 			return result;
@@ -69,11 +80,10 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-        public void DeleteData(preg_my_weight item)
+		public void DeleteData(preg_my_weight item)
 		{
 			connect.preg_my_weight.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

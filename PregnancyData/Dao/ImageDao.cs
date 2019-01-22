@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -31,21 +32,21 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "image_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.image_type_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.image_type_id == (int)(propertyValue));
 				}
 				else if (propertyName == "image" && propertyValue != null)
 				{
-					result = result.Where(c => c.image == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.image) > 0);
 				}
 				else if (propertyName == "week_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.week_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.week_id == (int)(propertyValue));
 				}
 			}
 			return result;

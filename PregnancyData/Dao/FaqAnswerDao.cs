@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -31,17 +32,17 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "faq_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.faq_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.faq_id == (int)(propertyValue));
 				}
 				else if (propertyName == "answer_content" && propertyValue != null)
 				{
-					result = result.Where(c => c.answer_content == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.answer_content) > 0);
 				}
 			}
 			return result;

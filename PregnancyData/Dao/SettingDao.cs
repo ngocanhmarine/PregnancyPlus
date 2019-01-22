@@ -31,9 +31,9 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "reminders" && propertyValue != null)
 				{
@@ -45,15 +45,15 @@ namespace PregnancyData.Dao
 				}
 				else if (propertyName == "weight_unit" && propertyValue != null)
 				{
-					result = result.Where(c => c.weight_unit == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.weight_unit == (int)(propertyValue));
 				}
 				else if (propertyName == "user_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
 				else if (propertyName == "revoke_consent" && propertyValue != null)
 				{
-					result = result.Where(c => c.revoke_consent == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.revoke_consent == (int)(propertyValue));
 				}
 			}
 			return result;

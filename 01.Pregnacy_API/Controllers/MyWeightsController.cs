@@ -129,6 +129,14 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						my_weight.current_weight = dataUpdate.current_weight;
 					}
+					if (dataUpdate.week_id != null)
+					{
+						my_weight.week_id = dataUpdate.week_id;
+					}
+					if (dataUpdate.current_date != null)
+					{
+						my_weight.current_date = dataUpdate.current_date;
+					}
 
 					dao.UpdateData(my_weight);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

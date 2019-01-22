@@ -12,6 +12,7 @@ namespace PregnancyData.Entity
         public preg_gender()
         {
             preg_baby_name = new HashSet<preg_baby_name>();
+            preg_pregnancy = new HashSet<preg_pregnancy>();
         }
 
         public int id { get; set; }
@@ -21,5 +22,8 @@ namespace PregnancyData.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_baby_name> preg_baby_name { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<preg_pregnancy> preg_pregnancy { get; set; }
     }
 }

@@ -37,21 +37,21 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "user_id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "user_id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
-				else if (propertyName == "kick_result_id" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "kick_result_id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.kick_result_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.kick_result_id == (int)(propertyValue));
 				}
-				else if (propertyName == "kick_date" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "kick_date" && propertyValue != null)
 				{
-					result = result.Where(c => c.kick_date == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.kick_date == (DateTime)(propertyValue));
 				}
-				else if (propertyName == "duration" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "duration" && propertyValue != null)
 				{
-					result = result.Where(c => c.duration == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.duration == (DateTime)(propertyValue));
 				}
 			}
 			return result;

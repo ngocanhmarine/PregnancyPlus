@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -31,21 +32,21 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.id == (int)(propertyValue));
 				}
 				else if (propertyName == "question_type_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.question_type_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.question_type_id == (int)(propertyValue));
 				}
 				else if (propertyName == "content" && propertyValue != null)
 				{
-					result = result.Where(c => c.content == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.content) > 0);
 				}
 				else if (propertyName == "custom_question_by_user_id" && propertyValue != null)
 				{
-					result = result.Where(c => c.custom_question_by_user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.custom_question_by_user_id == (int)(propertyValue));
 				}
 			}
 			return result;

@@ -1,6 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Web;
 
@@ -37,37 +38,37 @@ namespace PregnancyData.Dao
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "user_id" && Convert.ToInt32(propertyValue) != 0)
+				if (propertyName == "user_id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.user_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
-				else if (propertyName == "medical_service_package_id" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "medical_service_package_id" && (int)propertyValue != 0)
 				{
-					result = result.Where(c => c.medical_service_package_id == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.medical_service_package_id == (int)(propertyValue));
 				}
-				else if (propertyName == "time" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "time" && propertyValue != null)
 				{
-					result = result.Where(c => c.time == Convert.ToDateTime(propertyValue));
+					result = result.Where(c => c.time == (DateTime)(propertyValue));
 				}
-				else if (propertyName == "description" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "description" && propertyValue != null)
 				{
-					result = result.Where(c => c.description == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.description) > 0);
 				}
-				else if (propertyName == "total_cost" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "total_cost" && propertyValue != null)
 				{
-					result = result.Where(c => c.total_cost == Convert.ToDouble(propertyValue));
+					result = result.Where(c => c.total_cost == (double)(propertyValue));
 				}
-				else if (propertyName == "status" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "status" && propertyValue != null)
 				{
-					result = result.Where(c => c.status == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.status == (int)(propertyValue));
 				}
-				else if (propertyName == "payment_method" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "payment_method" && propertyValue != null)
 				{
-					result = result.Where(c => c.payment_method == propertyValue.ToString());
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.payment_method) > 0);
 				}
-				else if (propertyName == "already_paid" && Convert.ToInt32(propertyValue) != 0)
+				else if (propertyName == "already_paid" && propertyValue != null)
 				{
-					result = result.Where(c => c.already_paid == Convert.ToInt32(propertyValue));
+					result = result.Where(c => c.already_paid == (int)(propertyValue));
 				}
 			}
 			return result;

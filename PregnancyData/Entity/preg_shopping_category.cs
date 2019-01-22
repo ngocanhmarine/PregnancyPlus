@@ -21,6 +21,9 @@ namespace PregnancyData.Entity
 
         public int? status { get; set; }
 
+        [StringLength(1024)]
+        public string icon { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_shopping_item> preg_shopping_item { get; set; }
     }

@@ -79,13 +79,58 @@ namespace _01.Pregnacy_API
 						return;
 					}
 				}
+				else if (context.OwinContext.Request.Headers["Provider"].ToLower() == "google" && context.OwinContext.Request.Headers["access_token"] != null)
+				{
+					var accessToken = context.OwinContext.Request.Headers["access_token"];
+					var client = new RestClient("https://www.googleapis.com/oauth2/v3/");
+					var request = new RestRequest("tokeninfo", Method.GET);
+					request.AddQueryParameter("id_token", accessToken);
+					var response = client.Execute(request);
+					if (response.StatusCode == HttpStatusCode.OK)
+					{
+						var content = JObject.Parse(response.Content);
+						var userInfo = new GoogleUserInfo() { sub = content["sub"].ToString(), name = content["name"].ToString(), email = content["email"].ToString(), picture = content["picture"].ToString(), given_name = content["given_name"].ToString(), family_name = content["family_name"].ToString() };
+						PregnancyEntity connect = new PregnancyEntity();
+						preg_user user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
+						if (user != null)
+						{
+							user.email = userInfo.email;
+							user.first_name = userInfo.name;
+							user.avarta = userInfo.picture;
+							connect.SaveChanges();
+						}
+						else
+						{
+							user = new preg_user();
+							user.uid = userInfo.sub;
+							user.email = userInfo.email;
+							user.first_name = userInfo.name;
+							user.avarta = userInfo.picture;
+							user.social_type_id = (int)SysConst.SocialTypes.google;
+							connect.preg_user.Add(user);
+							connect.SaveChanges();
+							user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
+						}
+						var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
+						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
+						identity.AddClaim(new Claim("id", user.id.ToString()));
+						context.Validated(identity);
+					}
+					else
+					{
+						context.SetError("Invalid grant", SysConst.LOGIN_SOCIAL_FAILED);
+						return;
+					}
+				}
 			}
+
 			else
 			{
 				var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 				//Check username & password
 				preg_user user = new preg_user();
-				user.email = context.UserName;
+				user.phone = context.UserName;
 				user.password = SysMethod.MD5Hash(context.Password);
 				UserDao dao = new UserDao();
 				IEnumerable<preg_user> result = dao.GetUsersByParams(user);

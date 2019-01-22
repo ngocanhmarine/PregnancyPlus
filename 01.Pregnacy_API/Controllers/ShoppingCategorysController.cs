@@ -2,9 +2,12 @@
 using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -147,6 +150,10 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						shopping_category.status = dataUpdate.status;
 					}
+					if (dataUpdate.icon != null)
+					{
+						shopping_category.icon = dataUpdate.icon;
+					}
 
 					dao.UpdateData(shopping_category);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
@@ -163,5 +170,72 @@ namespace _01.Pregnacy_API.Controllers
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 			}
 		}
+
+		#region Upload files
+		[Authorize(Roles = "dev, admin")]
+		[Route("api/shoppingcategorys/{id}/upload")]
+		[HttpPost]
+		public async Task<HttpResponseMessage> Upload(string id)
+		{
+			// Check preg_shopping_category exist
+			preg_shopping_category checkItem = dao.GetItemByID(Convert.ToInt32(id));
+			if (checkItem == null)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, id));
+			}
+
+			string dir = "/Files/ShoppingCategories/" + id.ToString();
+			string dirRoot = HttpContext.Current.Server.MapPath(dir);
+			// Check if request contains multipart/form-data
+			if (!Request.Content.IsMimeMultipartContent())
+			{
+				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+			}
+			// Check if directory folder created
+			if (!Directory.Exists(dirRoot))
+			{
+				Directory.CreateDirectory(dirRoot);
+			}
+			// Check if image filetype
+			for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
+			{
+				HttpPostedFile file = HttpContext.Current.Request.Files[i];
+				if (!SysConst.imgOnlyExtensions.Any(x => x.Equals(Path.GetExtension(file.FileName.ToLower()), StringComparison.OrdinalIgnoreCase)))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.INVALID_FILE_TYPE);
+				}
+				else if (File.Exists(dirRoot + "/" + file.FileName))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+				}
+			}
+
+			CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(dirRoot);
+
+			List<string> files = new List<string>();
+
+			try
+			{
+				// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+				await Request.Content.ReadAsMultipartAsync(provider);
+
+				// Update to database
+				preg_shopping_category updateRow = new preg_shopping_category();
+				foreach (MultipartFileData file in provider.FileData)
+				{
+					string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
+					files.Add(path);
+					updateRow.icon = path;
+				}
+				UpdateData(id, updateRow);
+
+				return Request.CreateResponse(HttpStatusCode.Created, files);
+			}
+			catch (System.Exception ex)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+			}
+		}
+		#endregion
 	}
 }

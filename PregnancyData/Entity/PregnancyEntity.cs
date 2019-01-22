@@ -141,6 +141,11 @@ namespace PregnancyData.Entity
 				.WithOptional(e => e.preg_gender)
 				.HasForeignKey(e => e.gender_id);
 
+			modelBuilder.Entity<preg_gender>()
+				.HasMany(e => e.preg_pregnancy)
+				.WithOptional(e => e.preg_gender)
+				.HasForeignKey(e => e.baby_gender);
+
 			modelBuilder.Entity<preg_guides_type>()
 				.HasMany(e => e.preg_guides)
 				.WithOptional(e => e.preg_guides_type)
@@ -270,6 +275,10 @@ namespace PregnancyData.Entity
 				.HasMany(e => e.preg_question)
 				.WithOptional(e => e.preg_question_type)
 				.HasForeignKey(e => e.question_type_id);
+
+			modelBuilder.Entity<preg_shopping_category>()
+				.Property(e => e.icon)
+				.IsUnicode(false);
 
 			modelBuilder.Entity<preg_shopping_category>()
 				.HasMany(e => e.preg_shopping_item)
@@ -474,6 +483,11 @@ namespace PregnancyData.Entity
 
 			modelBuilder.Entity<preg_week>()
 				.HasMany(e => e.preg_image)
+				.WithOptional(e => e.preg_week)
+				.HasForeignKey(e => e.week_id);
+
+			modelBuilder.Entity<preg_week>()
+				.HasMany(e => e.preg_my_weight)
 				.WithOptional(e => e.preg_week)
 				.HasForeignKey(e => e.week_id);
 

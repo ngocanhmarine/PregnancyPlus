@@ -2,9 +2,13 @@
 using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -98,6 +102,33 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/mybirthplantypes/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_my_birth_plan_type dataUpdate)
 		{
+			return UpdateData(id, dataUpdate);
+		}
+
+		// DELETE api/values/5
+		[Authorize(Roles = "dev, admin")]
+		[Route("api/mybirthplantypes/{id}")]
+		public HttpResponseMessage Delete(string id)
+		{
+			try
+			{
+				preg_my_birth_plan_type item = dao.GetItemByID(Convert.ToInt32(id));
+				if (item == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(item);
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public HttpResponseMessage UpdateData(string id, [FromBody]preg_my_birth_plan_type dataUpdate)
+		{
 			try
 			{
 				if (!dataUpdate.DeepEquals(new preg_my_birth_plan_type()))
@@ -133,26 +164,72 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		// DELETE api/values/5
+		#region Upload files
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/mybirthplantypes/{id}")]
-		public HttpResponseMessage Delete(string id)
+		[Route("api/mybirthplantypes/{id}/upload")]
+		[HttpPost]
+		public async Task<HttpResponseMessage> Upload(string id)
 		{
+			// Check my_birth_plan_type exist
+			preg_my_birth_plan_type checkItem = dao.GetItemByID(Convert.ToInt32(id));
+			if (checkItem == null)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, id));
+			}
+
+			string dir = "/Files/MyBirthPlanTypes/" + id.ToString();
+			string dirRoot = HttpContext.Current.Server.MapPath(dir);
+			// Check if request contains multipart/form-data
+			if (!Request.Content.IsMimeMultipartContent())
+			{
+				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+			}
+			// Check if directory folder created
+			if (!Directory.Exists(dirRoot))
+			{
+				Directory.CreateDirectory(dirRoot);
+			}
+			// Check if image filetype
+			for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
+			{
+				HttpPostedFile file = HttpContext.Current.Request.Files[i];
+				if (!SysConst.imgOnlyExtensions.Any(x => x.Equals(Path.GetExtension(file.FileName.ToLower()), StringComparison.OrdinalIgnoreCase)))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.INVALID_FILE_TYPE);
+				}
+				else if (File.Exists(dirRoot + "/" + file.FileName))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+				}
+			}
+
+			CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(dirRoot);
+
+			List<string> files = new List<string>();
+
 			try
 			{
-				preg_my_birth_plan_type item = dao.GetItemByID(Convert.ToInt32(id));
-				if (item == null)
+				// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+				await Request.Content.ReadAsMultipartAsync(provider);
+
+				// Update to database
+				preg_my_birth_plan_type updateRow = new preg_my_birth_plan_type();
+				foreach (MultipartFileData file in provider.FileData)
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
+					files.Add(path);
+					updateRow.type_icon = path;
 				}
-				dao.DeleteData(item);
-				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+				UpdateData(id, updateRow);
+
+				return Request.CreateResponse(HttpStatusCode.Created, files);
 			}
-			catch (Exception ex)
+			catch (System.Exception ex)
 			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
 			}
 		}
+		#endregion
+
 	}
 }
