@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -20,70 +21,20 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IEnumerable<preg_my_birth_plan> result;
 				if (!data.DeepEquals(new preg_my_birth_plan()))
 				{
+					data.user_id = user_id;
 					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					result = dao.GetListItem();
+					result = dao.GetListItem().Where(c => c.user_id == user_id);
 				}
 				if (result.Count() > 0)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, result);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[HttpGet]
-		[Route("api/mybirthplans/{user_id}/{my_birth_plan_item_id}")]
-		public HttpResponseMessage Get(string user_id, string my_birth_plan_item_id)
-		{
-			try
-			{
-				preg_my_birth_plan data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(my_birth_plan_item_id));
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[HttpGet]
-		[Route("api/mybirthplans/{user_id}")]
-		public HttpResponseMessage Get(string user_id)
-		{
-			try
-			{
-				IEnumerable<preg_my_birth_plan> data = dao.GetItemByUserID(Convert.ToInt32(user_id));
-				if (data.Count() > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
 				}
 				else
 				{
@@ -105,8 +56,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_my_birth_plan()))
 				{
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -162,12 +115,13 @@ namespace _01.Pregnacy_API.Controllers
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpDelete]
-		[Route("api/mybirthplans/{user_id}/{my_birth_plan_item_id}")]
-		public HttpResponseMessage Delete(string user_id, string my_birth_plan_item_id)
+		[Route("api/mybirthplans/{my_birth_plan_item_id}")]
+		public HttpResponseMessage Delete(string my_birth_plan_item_id)
 		{
 			try
 			{
-				preg_my_birth_plan item = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(my_birth_plan_item_id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_my_birth_plan item = dao.GetItemByID(user_id, Convert.ToInt32(my_birth_plan_item_id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

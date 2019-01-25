@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
-using PregnancyData.Entity;
-using System.Text;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -24,8 +20,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_user_hospital_bag_item()))
 				{
+					data.user_id = user_id;
 					IEnumerable<preg_user_hospital_bag_item> result = dao.GetItemByParams(data);
 					if (result.Count() > 0)
 					{
@@ -39,7 +37,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_user_hospital_bag_item> result = dao.GetListItem();
+					IEnumerable<preg_user_hospital_bag_item> result = dao.GetListItem().Where(c => c.user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -49,58 +47,6 @@ namespace _01.Pregnacy_API.Controllers
 						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 					}
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize(Roles = "dev, admin")]
-		[HttpGet]
-		[Route("api/userhospitalbagitems/{user_id}/{hospital_bag_item_id}")]
-		public HttpResponseMessage Get(string user_id, string hospital_bag_item_id)
-		{
-			try
-			{
-				preg_user_hospital_bag_item data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(hospital_bag_item_id));
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize(Roles = "dev, admin")]
-		[HttpGet]
-		[Route("api/userhospitalbagitems/{user_id}")]
-		public HttpResponseMessage Get(string user_id)
-		{
-			try
-			{
-				IEnumerable<preg_user_hospital_bag_item> data = dao.GetItemByUserID(Convert.ToInt32(user_id));
-				if (data.Count() > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 				}
 			}
 			catch (Exception ex)
@@ -117,8 +63,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data.user_id != 0 && data.hospital_bag_item_id != 0)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (!data.DeepEquals(new preg_user_hospital_bag_item()))
 				{
+					data.user_id = user_id;
 					if (dao.InsertData(data))
 					{
 						return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -142,47 +90,60 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		//// PUT api/values/5
-		//[Authorize(Roles = "dev, admin")]
-		//[HttpPut]
-		//[Route("api/userbabyname/{user_id}/{hospital_bag_item_id}")]
-		//public HttpResponseMessage Put(string user_id, string hospital_bag_item_id, [FromBody]preg_user_hospital_bag_item dataUpdate)
-		//{
-		//	//lstStrings[id] = value;
-		//	try
-		//	{
-		//		if (dataUpdate != null)
-		//		{
-		//			preg_user_hospital_bag_item user = new preg_user_hospital_bag_item();
-		//			user = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(hospital_bag_item_id));
-		//			user.user_id = dataUpdate.user_id;
-		//			user.hospital_bag_item_id = dataUpdate.hospital_bag_item_id;
+		// PUT api/values/5
+		[Authorize(Roles = "dev, admin")]
+		[HttpPut]
+		[Route("api/userhospitalbagitems/{hospital_bag_item_id}")]
+		public HttpResponseMessage Put(string hospital_bag_item_id, [FromBody]preg_user_hospital_bag_item dataUpdate)
+		{
+			try
+			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (!dataUpdate.DeepEquals(new preg_user_hospital_bag_item()))
+				{
+					preg_user_hospital_bag_item user_hospital_bag_item = new preg_user_hospital_bag_item();
+					user_hospital_bag_item = dao.GetItemByID(user_id, Convert.ToInt32(hospital_bag_item_id)).FirstOrDefault();
+					if (user_hospital_bag_item == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (dataUpdate.status != null)
+					{
+						user_hospital_bag_item.status = dataUpdate.status;
+					}
 
-		//			dao.UpdateData(user);
-		//			return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-		//		}
-		//		else
-		//		{
-		//			HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
-		//			return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		HttpError err = new HttpError(ex.Message);
-		//		return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-		//	}
-		//}
+					dao.UpdateData(user_hospital_bag_item);
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpDelete]
-		[Route("api/userhospitalbagitems/{user_id}/{hospital_bag_item_id}")]
-		public HttpResponseMessage Delete(string user_id, string hospital_bag_item_id)
+		[Route("api/userhospitalbagitems/{hospital_bag_item_id}")]
+		public HttpResponseMessage Delete(string hospital_bag_item_id)
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(user_id), Convert.ToInt32(hospital_bag_item_id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_user_hospital_bag_item item = dao.GetItemByID(user_id, Convert.ToInt32(hospital_bag_item_id)).FirstOrDefault();
+				if (item == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

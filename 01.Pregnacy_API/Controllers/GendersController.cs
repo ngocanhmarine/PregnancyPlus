@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
-using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -29,12 +23,10 @@ namespace _01.Pregnacy_API.Controllers
 				if (!data.DeepEquals(new preg_gender()))
 				{
 					result = dao.GetItemsByParams(data);
-
 				}
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -60,7 +52,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_gender data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_gender data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -112,7 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_gender()))
 				{
 					preg_gender gender = new preg_gender();
-					gender = dao.GetItemByID(Convert.ToInt32(id));
+					gender = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (gender == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -145,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_gender gender = dao.GetItemByID(Convert.ToInt32(id));
+				preg_gender gender = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (gender == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

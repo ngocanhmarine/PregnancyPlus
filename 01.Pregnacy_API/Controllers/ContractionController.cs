@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -18,43 +19,20 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IEnumerable<preg_contraction> result;
 				if (!data.DeepEquals(new preg_contraction()))
 				{
+					data.user_id = user_id;
 					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					result = dao.GetListItem();
+					result = dao.GetListItem().Where(c => c.user_id == user_id);
 				}
 				if (result.Count() > 0)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, result);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[Route("api/contraction/{id}")]
-		public HttpResponseMessage Get(string id)
-		{
-			try
-			{
-				preg_contraction data = dao.GetItemByID(Convert.ToInt32(id));
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
 				}
 				else
 				{
@@ -75,8 +53,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_contraction()))
 				{
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -100,17 +80,14 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_contraction()))
 				{
 					preg_contraction contraction = new preg_contraction();
-					contraction = dao.GetItemByID(Convert.ToInt32(id));
+					contraction = dao.GetItemsByParams(new preg_contraction() { id = Convert.ToInt32(id), user_id = user_id }).FirstOrDefault();
 					if (contraction == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-					}
-					if (dataUpdate.user_id != null)
-					{
-						contraction.user_id = dataUpdate.user_id;
 					}
 					if (dataUpdate.date_time != null)
 					{
@@ -146,10 +123,10 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/contraction/{id}")]
 		public HttpResponseMessage Delete(string id)
 		{
-			//lstStrings[id] = value;
 			try
 			{
-				preg_contraction contraction = dao.GetItemByID(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_contraction contraction = dao.GetItemsByParams(new preg_contraction() { id = Convert.ToInt32(id), user_id = user_id }).FirstOrDefault();
 				if (contraction == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

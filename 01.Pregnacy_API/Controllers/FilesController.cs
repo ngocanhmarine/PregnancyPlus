@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Text;
-using System.Security.Claims;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -22,7 +19,6 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-
 				string FullPath = HttpContext.Current.Server.MapPath(file.file_path);
 				//Check file exist
 				if (!File.Exists(FullPath))

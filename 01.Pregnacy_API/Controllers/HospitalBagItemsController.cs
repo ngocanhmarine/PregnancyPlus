@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -18,14 +19,15 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IEnumerable<preg_hospital_bag_item> result;
 				if (!data.DeepEquals(new preg_hospital_bag_item()))
 				{
-					result = dao.GetItemsByParams(data);
+					result = dao.GetItemsByParams(data).Where(c => c.custom_item_by_user_id == null || c.custom_item_by_user_id == user_id);
 				}
 				else
 				{
-					result = dao.GetListItem();
+					result = dao.GetListItem().Where(c => c.custom_item_by_user_id == null || c.custom_item_by_user_id == user_id);
 				}
 				if (result.Count() > 0)
 				{
@@ -51,7 +53,8 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_hospital_bag_item data = dao.GetItemByID(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_hospital_bag_item data = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_item_by_user_id == null || c.custom_item_by_user_id == user_id).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -75,8 +78,13 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_hospital_bag_item()))
 				{
+					if (data.custom_item_by_user_id != null)
+					{
+						data.custom_item_by_user_id = user_id;
+					}
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -100,10 +108,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_hospital_bag_item()))
 				{
 					preg_hospital_bag_item HospitalBagItem = new preg_hospital_bag_item();
-					HospitalBagItem = dao.GetItemByID(Convert.ToInt32(id));
+					HospitalBagItem = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_item_by_user_id == null || c.custom_item_by_user_id == user_id).FirstOrDefault();
 					if (HospitalBagItem == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -118,7 +127,7 @@ namespace _01.Pregnacy_API.Controllers
 					}
 					if (dataUpdate.custom_item_by_user_id != null)
 					{
-						HospitalBagItem.custom_item_by_user_id = dataUpdate.custom_item_by_user_id;
+						HospitalBagItem.custom_item_by_user_id = user_id;
 					}
 
 					dao.UpdateData(HospitalBagItem);
@@ -144,7 +153,8 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_hospital_bag_item item = dao.GetItemByID(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_hospital_bag_item item = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_item_by_user_id == null || c.custom_item_by_user_id == user_id).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

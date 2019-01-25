@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
-using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -66,7 +61,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_phone data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_phone data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -140,7 +135,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_phone()))
 				{
 					preg_phone phone = new preg_phone();
-					phone = dao.GetItemByID(Convert.ToInt32(id));
+					phone = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (phone == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

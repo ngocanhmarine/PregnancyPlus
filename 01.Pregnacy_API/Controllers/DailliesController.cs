@@ -114,7 +114,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_daily daily = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
+				preg_daily daily = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (daily == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -136,7 +136,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_daily()))
 				{
 					preg_daily daily = new preg_daily();
-					daily = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
+					daily = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (daily == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -185,7 +185,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string daily_id)
 		{
 			// Check daily_id exist
-			preg_daily checkItem = dao.GetItemByID(Convert.ToInt32(daily_id)).ToList()[0];
+			preg_daily checkItem = dao.GetItemByID(Convert.ToInt32(daily_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, daily_id));

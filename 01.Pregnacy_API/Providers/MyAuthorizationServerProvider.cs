@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using System.Net;
-using System.Net.Http;
 using Microsoft.Owin.Security.OAuth;
 using PregnancyData.Entity;
 using PregnancyData.Dao;
@@ -54,6 +51,7 @@ namespace _01.Pregnacy_API
 						{
 							user.email = userInfo.email;
 							user.first_name = userInfo.name;
+							user.time_last_login = DateTime.Now;
 							connect.SaveChanges();
 						}
 						else
@@ -63,10 +61,20 @@ namespace _01.Pregnacy_API
 							user.email = userInfo.email;
 							user.first_name = userInfo.name;
 							user.social_type_id = (int)SysConst.SocialTypes.facebook;
+							user.time_created = DateTime.Now;
 							connect.preg_user.Add(user);
 							connect.SaveChanges();
 							user = connect.preg_user.Where(c => c.uid == userInfo.id && c.social_type_id == (int)SysConst.SocialTypes.facebook).FirstOrDefault();
 						}
+						preg_auth auth = connect.preg_auth.Where(c => c.user_id == user.id).FirstOrDefault();
+						if (auth == null)
+						{
+							auth = new preg_auth() { user_id = user.id };
+							connect.preg_auth.Add(auth);
+						}
+						auth.token = context.OwinContext.Request.Headers["access_token"];
+						connect.SaveChanges();
+
 						var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
@@ -96,7 +104,8 @@ namespace _01.Pregnacy_API
 						{
 							user.email = userInfo.email;
 							user.first_name = userInfo.name;
-							user.avarta = userInfo.picture;
+							user.avatar = userInfo.picture;
+							user.time_last_login = DateTime.Now;
 							connect.SaveChanges();
 						}
 						else
@@ -105,12 +114,22 @@ namespace _01.Pregnacy_API
 							user.uid = userInfo.sub;
 							user.email = userInfo.email;
 							user.first_name = userInfo.name;
-							user.avarta = userInfo.picture;
+							user.avatar = userInfo.picture;
 							user.social_type_id = (int)SysConst.SocialTypes.google;
+							user.time_created = DateTime.Now;
 							connect.preg_user.Add(user);
 							connect.SaveChanges();
 							user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
 						}
+						preg_auth auth = connect.preg_auth.Where(c => c.user_id == user.id).FirstOrDefault();
+						if (auth == null)
+						{
+							auth = new preg_auth() { user_id = user.id };
+							connect.preg_auth.Add(auth);
+						}
+						auth.token = context.OwinContext.Request.Headers["access_token"];
+						connect.SaveChanges();
+
 						var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
@@ -125,22 +144,23 @@ namespace _01.Pregnacy_API
 				}
 			}
 
-			else
+			else if (context.UserName != null && context.Password != null)
 			{
 				var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-				//Check username & password
-				preg_user user = new preg_user();
-				user.phone = context.UserName;
-				user.password = SysMethod.MD5Hash(context.Password);
+				PregnancyEntity connect = new PregnancyEntity();
 				UserDao dao = new UserDao();
-				IEnumerable<preg_user> result = dao.GetUsersByParams(user);
+				//Check username & password
+				string phone = context.UserName;
+				string password = SysMethod.MD5Hash(context.Password);
+				preg_user user = connect.preg_user.Where(c => c.phone == phone && c.password == password).FirstOrDefault();
 
-				if (result.Count() > 0)
+				if (user != null)
 				{
-					preg_user currentUser = result.FirstOrDefault();
+					user.time_last_login = DateTime.Now;
+					dao.UpdateData(user);
 					identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
 					identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.user.ToString()));
-					identity.AddClaim(new Claim("id", currentUser.id.ToString()));
+					identity.AddClaim(new Claim("id", user.id.ToString()));
 					context.Validated(identity);
 				}
 				else if (context.UserName == "WSPadmin" && context.Password == "WSPadmin")

@@ -15,18 +15,18 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_pregnancy> GetListItem()
+		public IQueryable<preg_pregnancy> GetListItem()
 		{
 			return connect.preg_pregnancy;
 		}
 
-		public preg_pregnancy GetItemByID(int id)
+		public IQueryable<preg_pregnancy> GetItemByID(int id)
 		{
-			return connect.preg_pregnancy.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_pregnancy.Where(c => c.id == id);
 		}
-		public IEnumerable<preg_pregnancy> GetItemsByParams(preg_pregnancy data)
+		public IQueryable<preg_pregnancy> GetItemsByParams(preg_pregnancy data)
 		{
-			IEnumerable<preg_pregnancy> result = connect.preg_pregnancy;
+			IQueryable<preg_pregnancy> result = connect.preg_pregnancy;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -67,6 +67,10 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.weeks_pregnant == (int)(propertyValue));
 				}
+				else if (propertyName == "start_date" && propertyValue != null)
+				{
+					result = result.Where(c => c.start_date == (DateTime)(propertyValue));
+				}
 			}
 			return result;
 		}
@@ -82,9 +86,9 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-		public void DeleteData(int id)
+		public void DeleteData(int user_id)
 		{
-			preg_pregnancy item = GetItemByID(id);
+			preg_pregnancy item = GetItemsByParams(new preg_pregnancy() { user_id = user_id }).FirstOrDefault();
 			connect.preg_pregnancy.Remove(item);
 			connect.SaveChanges();
 		}

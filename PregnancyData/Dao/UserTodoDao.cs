@@ -15,24 +15,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_user_todo> GetListItem()
+		public IQueryable<preg_user_todo> GetListItem()
 		{
 			return connect.preg_user_todo;
 		}
 
-		public preg_user_todo GetItemByID(int user_id, int todo_id)
+		public IQueryable<preg_user_todo> GetItemByID(int user_id, int todo_id)
 		{
-			return connect.preg_user_todo.Where(c => c.user_id == user_id && c.todo_id == todo_id).FirstOrDefault();
+			return connect.preg_user_todo.Where(c => c.user_id == user_id && c.todo_id == todo_id);
 		}
 
-		public IEnumerable<preg_user_todo> GetItemByUserID(int user_id)
+		public IQueryable<preg_user_todo> GetItemByUserID(int user_id)
 		{
 			return connect.preg_user_todo.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_user_todo> GetItemByParams(preg_user_todo data)
+		public IQueryable<preg_user_todo> GetItemByParams(preg_user_todo data)
 		{
-			IEnumerable<preg_user_todo> result = connect.preg_user_todo;
+			IQueryable<preg_user_todo> result = connect.preg_user_todo;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -73,9 +73,8 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-		public void DeleteData(int user_id, int todo_id)
+		public void DeleteData(preg_user_todo item)
 		{
-			preg_user_todo item = GetItemByID(user_id, todo_id);
 			connect.preg_user_todo.Remove(item);
 			connect.SaveChanges();
 		}

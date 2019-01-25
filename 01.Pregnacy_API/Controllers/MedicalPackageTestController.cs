@@ -66,7 +66,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_medical_package_test data = dao.GetItemByPackageID(Convert.ToInt32(medical_service_package_id));
+				preg_medical_package_test data = dao.GetItemByPackageID(Convert.ToInt32(medical_service_package_id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -92,7 +92,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_medical_package_test data = dao.GetItemByID(Convert.ToInt32(medical_service_package_id), Convert.ToInt32(medical_test_id));
+				preg_medical_package_test data = dao.GetItemByID(Convert.ToInt32(medical_service_package_id), Convert.ToInt32(medical_test_id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -152,7 +152,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_medical_package_test data = dao.GetItemByID(Convert.ToInt32(medical_service_package_id), Convert.ToInt32(medical_test_id));
+				preg_medical_package_test data = dao.GetItemByID(Convert.ToInt32(medical_service_package_id), Convert.ToInt32(medical_test_id)).FirstOrDefault();
 				dao.DeleteData(data);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}

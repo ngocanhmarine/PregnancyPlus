@@ -6,17 +6,19 @@ namespace PregnancyData.Entity
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class preg_my_belly
+    public partial class preg_other_app
     {
         public int id { get; set; }
 
         [StringLength(1024)]
-        public string image { get; set; }
+        public string name { get; set; }
 
-        public int month { get; set; }
+        public string google_play { get; set; }
 
-        public int? user_id { get; set; }
+        public string app_store { get; set; }
 
-        public virtual preg_user preg_user { get; set; }
+        public DateTime? time_created { get; set; }
+
+        public DateTime? time_last_update { get; set; }
     }
 }

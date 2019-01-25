@@ -16,18 +16,18 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_time_frame> GetListItem()
+		public IQueryable<preg_time_frame> GetListItem()
 		{
 			return connect.preg_time_frame;
 		}
 
-		public preg_time_frame GetItemByID(int id)
+		public IQueryable<preg_time_frame> GetItemByID(int id)
 		{
-			return connect.preg_time_frame.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_time_frame.Where(c => c.id == id);
 		}
-		public IEnumerable<preg_time_frame> GetItemsByParams(preg_time_frame data)
+		public IQueryable<preg_time_frame> GetItemsByParams(preg_time_frame data)
 		{
-			IEnumerable<preg_time_frame> result = connect.preg_time_frame;
+			IQueryable<preg_time_frame> result = connect.preg_time_frame;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -56,7 +56,7 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int id)
 		{
-			preg_time_frame item = GetItemByID(id);
+			preg_time_frame item = GetItemByID(id).FirstOrDefault();
 			connect.preg_time_frame.Remove(item);
 			connect.SaveChanges();
 		}

@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -20,14 +21,16 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IQueryable<preg_answer> result;
 				if (!data.DeepEquals(new preg_answer()))
 				{
+					data.user_id = user_id;
 					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					result = dao.GetListItem();
+					result = dao.GetListItem().Where(c => c.user_id == user_id);
 				}
 				if (result.ToList().Any())
 				{
@@ -48,40 +51,15 @@ namespace _01.Pregnacy_API.Controllers
 
 		// GET api/values/5
 		[Authorize]
-		[Route("api/answers/{user_id}/{question_id}")]
+		[Route("api/answers/{question_id}")]
 		[HttpGet]
-		public HttpResponseMessage Get(string user_id, string question_id)
+		public HttpResponseMessage Get(string question_id)
 		{
 			try
 			{
-				preg_answer data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id)).ToList()[0];
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_answer data = dao.GetItemByID(user_id, Convert.ToInt32(question_id)).FirstOrDefault();
 				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[Route("api/answers/{user_id}")]
-		[HttpGet]
-		public HttpResponseMessage Get(string user_id)
-		{
-			try
-			{
-				IEnumerable<preg_answer> data = dao.GetItemByUserID(Convert.ToInt32(user_id));
-				if (data.Count() > 0)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
 				}
@@ -107,6 +85,8 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (!data.DeepEquals(new preg_answer()))
 				{
+					int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -126,15 +106,16 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/answers/{user_id}/{question_id}")]
+		[Route("api/answers/{question_id}")]
 		[HttpPut]
-		public HttpResponseMessage Put(string user_id, string question_id, [FromBody]preg_answer dataUpdate)
+		public HttpResponseMessage Put(string question_id, [FromBody]preg_answer dataUpdate)
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_answer()))
 				{
-					preg_answer answer = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id)).ToList()[0];
+					preg_answer answer = dao.GetItemByID(user_id, Convert.ToInt32(question_id)).FirstOrDefault();
 					if (answer == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -170,13 +151,14 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/answers/{user_id}/{question_id}")]
+		[Route("api/answers/{question_id}")]
 		[HttpDelete]
-		public HttpResponseMessage Delete(string user_id, string question_id)
+		public HttpResponseMessage Delete(string question_id)
 		{
 			try
 			{
-				preg_answer item = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(question_id)).ToList()[0];
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_answer item = dao.GetItemByID(user_id, Convert.ToInt32(question_id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

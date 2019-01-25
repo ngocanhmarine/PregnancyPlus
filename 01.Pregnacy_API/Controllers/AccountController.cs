@@ -1,16 +1,13 @@
-﻿using System;
-using System.Globalization;
+﻿using _01.Pregnacy_API.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Net;
-using System.Net.Http;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using _01.Pregnacy_API.Models;
 
 namespace _01.Pregnacy_API.Controllers
 {

@@ -1,9 +1,6 @@
 ﻿using PregnancyData.Entity;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -16,18 +13,18 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_my_weight_unit> GetListItem()
+		public IQueryable<preg_my_weight_unit> GetListItem()
 		{
 			return connect.preg_my_weight_unit;
 		}
 
-		public preg_my_weight_unit GetItemByID(int id)
+		public IQueryable<preg_my_weight_unit> GetItemByID(int id)
 		{
-			return connect.preg_my_weight_unit.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_my_weight_unit.Where(c => c.id == id);
 		}
-		public IEnumerable<preg_my_weight_unit> GetItemsByParams(preg_my_weight_unit data)
+		public IQueryable<preg_my_weight_unit> GetItemsByParams(preg_my_weight_unit data)
 		{
-			IEnumerable<preg_my_weight_unit> result = connect.preg_my_weight_unit;
+			IQueryable<preg_my_weight_unit> result = connect.preg_my_weight_unit;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -56,7 +53,7 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int id)
 		{
-			preg_my_weight_unit item = GetItemByID(id);
+			preg_my_weight_unit item = GetItemByID(id).FirstOrDefault();
 			connect.preg_my_weight_unit.Remove(item);
 			connect.SaveChanges();
 		}

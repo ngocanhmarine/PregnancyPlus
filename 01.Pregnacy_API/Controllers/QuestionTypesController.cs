@@ -59,7 +59,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_question_type data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_question_type data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -111,7 +111,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_question_type()))
 				{
 					preg_question_type question_type = new preg_question_type();
-					question_type = dao.GetItemByID(Convert.ToInt32(id));
+					question_type = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (question_type == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

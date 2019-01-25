@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -19,8 +20,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_user_kick_history()))
 				{
+					data.user_id = user_id;
 					IEnumerable<preg_user_kick_history> result = dao.GetItemByParams(data);
 					if (result.Count() > 0)
 					{
@@ -34,7 +37,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_user_kick_history> result = dao.GetListItem();
+					IEnumerable<preg_user_kick_history> result = dao.GetListItem().Where(c => c.user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -44,58 +47,6 @@ namespace _01.Pregnacy_API.Controllers
 						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 					}
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize(Roles = "dev, admin")]
-		[HttpGet]
-		[Route("api/userkickhistories/{user_id}/{kick_result_id}")]
-		public HttpResponseMessage Get(string user_id, string kick_result_id)
-		{
-			try
-			{
-				preg_user_kick_history data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(kick_result_id));
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize(Roles = "dev, admin")]
-		[HttpGet]
-		[Route("api/userkickhistories/{user_id}")]
-		public HttpResponseMessage Get(string user_id)
-		{
-			try
-			{
-				IEnumerable<preg_user_kick_history> data = dao.GetItemByUserID(Convert.ToInt32(user_id));
-				if (data.Count() > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 				}
 			}
 			catch (Exception ex)
@@ -112,8 +63,17 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data.user_id != 0 && data.kick_result_id != 0)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (data.kick_result_id != 0)
 				{
+					data.user_id = user_id;
+					//Check exist
+					preg_user_kick_history checkExist = dao.GetItemByParams(new preg_user_kick_history() { user_id = data.user_id, kick_result_id = data.kick_result_id }).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
 					if (dao.InsertData(data))
 					{
 						return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -137,47 +97,65 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		//// PUT api/values/5
-		//[Authorize(Roles = "dev, admin")]
-		//[HttpPut]
-		//[Route("api/userbabyname/{user_id}/{kick_result_id}")]
-		//public HttpResponseMessage Put(string user_id, string kick_result_id, [FromBody]preg_user_kick_history dataUpdate)
-		//{
-		//	//lstStrings[id] = value;
-		//	try
-		//	{
-		//		if (dataUpdate != null)
-		//		{
-		//			preg_user_kick_history user = new preg_user_kick_history();
-		//			user = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(kick_result_id));
-		//			user.user_id = dataUpdate.user_id;
-		//			user.kick_result_id = dataUpdate.kick_result_id;
+		// PUT api/values/5
+		[Authorize(Roles = "dev, admin")]
+		[HttpPut]
+		[Route("api/userbabyname/{kick_result_id}")]
+		public HttpResponseMessage Put(string kick_result_id, [FromBody]preg_user_kick_history dataUpdate)
+		{
+			try
+			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (dataUpdate.kick_result_id != 0)
+				{
+					preg_user_kick_history user = new preg_user_kick_history();
+					user = dao.GetItemByParams(new preg_user_kick_history() { user_id = user_id, kick_result_id = Convert.ToInt32(kick_result_id) }).FirstOrDefault();
+					if (user == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
 
-		//			dao.UpdateData(user);
-		//			return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
-		//		}
-		//		else
-		//		{
-		//			HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
-		//			return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-		//		}
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		HttpError err = new HttpError(ex.Message);
-		//		return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
-		//	}
-		//}
+					if (dataUpdate.kick_date != null)
+					{
+						user.kick_date = dataUpdate.kick_date;
+					}
+					if (dataUpdate.duration != null)
+					{
+						user.duration = dataUpdate.duration;
+					}
+
+					dao.UpdateData(user);
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
+				}
+				else
+				{
+					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpDelete]
-		[Route("api/userkickhistories/{user_id}/{kick_result_id}")]
-		public HttpResponseMessage Delete(string user_id, string kick_result_id)
+		[Route("api/userkickhistories/{kick_result_id}")]
+		public HttpResponseMessage Delete(string kick_result_id)
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(user_id), Convert.ToInt32(kick_result_id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_user_kick_history item = dao.GetItemByParams(new preg_user_kick_history() { user_id = user_id, kick_result_id = Convert.ToInt32(kick_result_id) }).FirstOrDefault();
+				if (item == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

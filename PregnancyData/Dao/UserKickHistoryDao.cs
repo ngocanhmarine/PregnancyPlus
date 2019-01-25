@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -15,24 +14,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_user_kick_history> GetListItem()
+		public IQueryable<preg_user_kick_history> GetListItem()
 		{
 			return connect.preg_user_kick_history;
 		}
 
-		public preg_user_kick_history GetItemByID(int user_id, int kick_result_id)
+		public IQueryable<preg_user_kick_history> GetItemByID(int user_id, int kick_result_id)
 		{
-			return connect.preg_user_kick_history.Where(c => c.user_id == user_id && c.kick_result_id == kick_result_id).FirstOrDefault();
+			return connect.preg_user_kick_history.Where(c => c.user_id == user_id && c.kick_result_id == kick_result_id);
 		}
 
-		public IEnumerable<preg_user_kick_history> GetItemByUserID(int user_id)
+		public IQueryable<preg_user_kick_history> GetItemByUserID(int user_id)
 		{
 			return connect.preg_user_kick_history.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_user_kick_history> GetItemByParams(preg_user_kick_history data)
+		public IQueryable<preg_user_kick_history> GetItemByParams(preg_user_kick_history data)
 		{
-			IEnumerable<preg_user_kick_history> result = connect.preg_user_kick_history;
+			IQueryable<preg_user_kick_history> result = connect.preg_user_kick_history;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -77,9 +76,8 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-		public void DeleteData(int user_id, int kick_result_id)
+		public void DeleteData(preg_user_kick_history item)
 		{
-			preg_user_kick_history item = GetItemByID(user_id, kick_result_id);
 			connect.preg_user_kick_history.Remove(item);
 			connect.SaveChanges();
 		}

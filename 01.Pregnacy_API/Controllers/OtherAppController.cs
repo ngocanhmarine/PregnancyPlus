@@ -5,25 +5,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
-	public class UpgradesController : ApiController
+	public class OtherAppController : ApiController
 	{
-		UpgradeDao dao = new UpgradeDao();
+		OtherAppDao dao = new OtherAppDao();
 		// GET api/values
 		[Authorize]
-		public HttpResponseMessage Get([FromUri]preg_upgrade data)
+		public HttpResponseMessage Get([FromUri]preg_other_app data)
 		{
 			try
 			{
-				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-				if (!data.DeepEquals(new preg_upgrade()))
+				if (!data.DeepEquals(new preg_other_app()))
 				{
-					data.user_id = user_id;
-					IEnumerable<preg_upgrade> result = dao.GetItemsByParams(data);
+					IEnumerable<preg_other_app> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -36,7 +33,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_upgrade> result = dao.GetListItem().Where(c => c.user_id == user_id);
+					IEnumerable<preg_other_app> result = dao.GetListItem();
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -57,21 +54,13 @@ namespace _01.Pregnacy_API.Controllers
 
 		// POST api/values
 		[Authorize(Roles = "dev, admin")]
-		public HttpResponseMessage Post([FromBody]preg_upgrade data)
+		public HttpResponseMessage Post([FromBody]preg_other_app data)
 		{
 			try
 			{
-				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-				//Check if data exist
-				preg_upgrade checkExist = dao.GetListItem().Where(c => c.user_id == user_id).FirstOrDefault();
-				if (checkExist != null)
+				if (!data.DeepEquals(new preg_other_app()))
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
-				}
-
-				if (!data.DeepEquals(new preg_upgrade()))
-				{
-					data.user_id = user_id;
+					data.time_created = DateTime.Now;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -91,22 +80,20 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/upgrades/update")]
-		public HttpResponseMessage Put([FromBody]preg_upgrade dataUpdate)
+		[Route("api/otherapp/{id}")]
+		public HttpResponseMessage Put(string id, [FromBody]preg_other_app dataUpdate)
 		{
-			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-			return UpdateData(user_id, dataUpdate);
+			return UpdateData(id, dataUpdate);
 		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/upgrades/delete")]
-		public HttpResponseMessage Delete()
+		[Route("api/otherapp/{id}")]
+		public HttpResponseMessage Delete(string id)
 		{
 			try
 			{
-				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-				preg_upgrade item = dao.GetListItem().Where(c => c.user_id == user_id).FirstOrDefault();
+				preg_other_app item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -122,24 +109,40 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		public HttpResponseMessage UpdateData(int user_id, [FromBody]preg_upgrade dataUpdate)
+		public HttpResponseMessage UpdateData(string id, preg_other_app dataUpdate)
 		{
 			try
 			{
-				if (!dataUpdate.DeepEquals(new preg_upgrade()))
+				if (!dataUpdate.DeepEquals(new preg_other_app()))
 				{
-					preg_upgrade upgrade = new preg_upgrade();
-					upgrade = dao.GetListItem().Where(c => c.user_id == user_id).FirstOrDefault();
-					if (upgrade == null)
+					preg_other_app other_app = new preg_other_app();
+					other_app = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
+					if (other_app == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					if (dataUpdate.version != null)
+					if (dataUpdate.name != null)
 					{
-						upgrade.version = dataUpdate.version;
+						other_app.name = dataUpdate.name;
+					}
+					if (dataUpdate.google_play != null)
+					{
+						other_app.google_play = dataUpdate.google_play;
+					}
+					if (dataUpdate.app_store != null)
+					{
+						other_app.app_store = dataUpdate.app_store;
+					}
+					if (dataUpdate.time_created != null)
+					{
+						other_app.time_created = dataUpdate.time_created;
+					}
+					if (dataUpdate.time_last_update != null)
+					{
+						other_app.time_last_update = dataUpdate.time_last_update;
 					}
 
-					dao.UpdateData(upgrade);
+					dao.UpdateData(other_app);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else

@@ -1,9 +1,7 @@
 ﻿using PregnancyData.Entity;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -16,24 +14,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_weekly_interact> GetListItem()
+		public IQueryable<preg_weekly_interact> GetListItem()
 		{
 			return connect.preg_weekly_interact;
 		}
 
-		public preg_weekly_interact GetItemByID(int week_id, int user_id)
+		public IQueryable<preg_weekly_interact> GetItemByID(int week_id, int user_id)
 		{
-			return connect.preg_weekly_interact.Where(c => c.week_id == week_id & c.user_id == user_id).FirstOrDefault();
+			return connect.preg_weekly_interact.Where(c => c.week_id == week_id & c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_weekly_interact> GetItemByUserID(int user_id)
+		public IQueryable<preg_weekly_interact> GetItemByUserID(int user_id)
 		{
 			return connect.preg_weekly_interact.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_weekly_interact> GetItemsByParams(preg_weekly_interact data)
+		public IQueryable<preg_weekly_interact> GetItemsByParams(preg_weekly_interact data)
 		{
-			IEnumerable<preg_weekly_interact> result = connect.preg_weekly_interact;
+			IQueryable<preg_weekly_interact> result = connect.preg_weekly_interact;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -85,9 +83,8 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-		public void DeleteData(int week_id, int user_id)
+		public void DeleteData(preg_weekly_interact item)
 		{
-			preg_weekly_interact item = GetItemByID(week_id, user_id);
 			connect.preg_weekly_interact.Remove(item);
 			connect.SaveChanges();
 		}

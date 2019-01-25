@@ -2,14 +2,14 @@
 using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using System.IO;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -55,7 +55,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_help data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_help data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -112,7 +112,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_help item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_help item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -134,7 +134,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_help()))
 				{
 					preg_help help = new preg_help();
-					help = dao.GetItemByID(Convert.ToInt32(id));
+					help = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (help == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -175,7 +175,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string help_id)
 		{
 			// Check help_id exist
-			preg_help checkItem = dao.GetItemByID(Convert.ToInt32(help_id));
+			preg_help checkItem = dao.GetItemByID(Convert.ToInt32(help_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, help_id));

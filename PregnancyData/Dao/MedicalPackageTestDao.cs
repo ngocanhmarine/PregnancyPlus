@@ -1,8 +1,6 @@
 ﻿using PregnancyData.Entity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -15,23 +13,23 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_medical_package_test> GetListItem()
+		public IQueryable<preg_medical_package_test> GetListItem()
 		{
 			return connect.preg_medical_package_test;
 		}
 
-		public preg_medical_package_test GetItemByPackageID(int medical_service_package_id)
+		public IQueryable<preg_medical_package_test> GetItemByPackageID(int medical_service_package_id)
 		{
-			return connect.preg_medical_package_test.Where(c => c.medical_service_package_id == medical_service_package_id).FirstOrDefault();
+			return connect.preg_medical_package_test.Where(c => c.medical_service_package_id == medical_service_package_id);
 		}
 
-		public preg_medical_package_test GetItemByID(int medical_service_package_id, int medical_test_id)
+		public IQueryable<preg_medical_package_test> GetItemByID(int medical_service_package_id, int medical_test_id)
 		{
-			return connect.preg_medical_package_test.Where(c => c.medical_service_package_id == medical_service_package_id & c.medical_test_id == medical_test_id).FirstOrDefault();
+			return connect.preg_medical_package_test.Where(c => c.medical_service_package_id == medical_service_package_id & c.medical_test_id == medical_test_id);
 		}
-		public IEnumerable<preg_medical_package_test> GetItemsByParams(preg_medical_package_test data)
+		public IQueryable<preg_medical_package_test> GetItemsByParams(preg_medical_package_test data)
 		{
-			IEnumerable<preg_medical_package_test> result = connect.preg_medical_package_test;
+			IQueryable<preg_medical_package_test> result = connect.preg_medical_package_test;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;

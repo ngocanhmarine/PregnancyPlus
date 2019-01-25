@@ -51,7 +51,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_appointment_type data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_appointment_type data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -103,7 +103,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_appointment_type()))
 				{
 					preg_appointment_type appointment_type = new preg_appointment_type();
-					appointment_type = dao.GetItemByID(Convert.ToInt32(id));
+					appointment_type = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (appointment_type == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -136,7 +136,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_appointment_type appointment_type = dao.GetItemByID(Convert.ToInt32(id));
+				preg_appointment_type appointment_type = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (appointment_type == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
-using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -58,7 +52,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_image_type data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_image_type data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -110,7 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_image_type()))
 				{
 					preg_image_type image_type = new preg_image_type();
-					image_type = dao.GetItemByID(Convert.ToInt32(id));
+					image_type = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (image_type == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -143,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_image_type item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_image_type item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

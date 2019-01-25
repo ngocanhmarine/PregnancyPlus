@@ -105,7 +105,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_baby_name()))
 				{
 					preg_baby_name baby_name = new preg_baby_name();
-					baby_name = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
+					baby_name = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (baby_name == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -154,7 +154,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id)).ToList()[0];
+				preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

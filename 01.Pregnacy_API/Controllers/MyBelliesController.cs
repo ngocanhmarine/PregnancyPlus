@@ -1,15 +1,15 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using PregnancyData.Entity;
-using System.IO;
-using System.Security.Claims;
-using PregnancyData.Dao;
-using System.Threading.Tasks;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -31,7 +31,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					result = dao.GetListItem();
+					result = dao.GetListItem().Where(c => c.user_id == user_id);
 				}
 				if (result.Count() > 0)
 				{
@@ -137,6 +137,13 @@ namespace _01.Pregnacy_API.Controllers
 				if (data.month != null)
 				{
 					data.user_id = user_id;
+					// Check if exist
+					preg_my_belly checkExist = dao.GetItemsByParams(new preg_my_belly() { user_id = user_id, month = data.month }).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}

@@ -26,12 +26,10 @@ namespace _01.Pregnacy_API.Controllers
 				if (!data.DeepEquals(new preg_help_category()))
 				{
 					result = dao.GetItemsByParams(data);
-
 				}
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -57,7 +55,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_help_category data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_help_category data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -115,7 +113,7 @@ namespace _01.Pregnacy_API.Controllers
 			//lstStrings[id] = value;
 			try
 			{
-				preg_help_category item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_help_category item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -137,7 +135,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_help_category()))
 				{
 					preg_help_category HelpCategory = new preg_help_category();
-					HelpCategory = dao.GetItemByID(Convert.ToInt32(id));
+					HelpCategory = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (HelpCategory == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -179,7 +177,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string help_category_id)
 		{
 			// Check help_category_id exist
-			preg_help_category checkItem = dao.GetItemByID(Convert.ToInt32(help_category_id));
+			preg_help_category checkItem = dao.GetItemByID(Convert.ToInt32(help_category_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, help_category_id));

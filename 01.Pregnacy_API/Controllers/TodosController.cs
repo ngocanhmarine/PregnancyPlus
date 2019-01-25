@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -18,9 +19,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_todo()))
 				{
-					IEnumerable<preg_todo> result = dao.GetItemsByParams(data);
+					IEnumerable<preg_todo> result = dao.GetItemsByParams(data).Where(c => c.custom_task_by_user_id == null || c.custom_task_by_user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -33,7 +35,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_todo> result = dao.GetListItem();
+					IEnumerable<preg_todo> result = dao.GetListItem().Where(c => c.custom_task_by_user_id == null || c.custom_task_by_user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -59,7 +61,8 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_todo data = dao.GetItemByID(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_todo data = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_task_by_user_id == null || c.custom_task_by_user_id == user_id).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -83,8 +86,13 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_todo()))
 				{
+					if (data.custom_task_by_user_id != null)
+					{
+						data.custom_task_by_user_id = user_id;
+					}
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -106,6 +114,7 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/todos/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_todo dataUpdate)
 		{
+
 			return UpdateData(id, dataUpdate);
 		}
 
@@ -116,7 +125,13 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_todo item = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_task_by_user_id == null || c.custom_task_by_user_id == user_id).FirstOrDefault();
+				if (item == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
@@ -130,11 +145,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_todo()))
 				{
-
 					preg_todo todo = new preg_todo();
-					todo = dao.GetItemByID(Convert.ToInt32(id));
+					todo = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_task_by_user_id == null || c.custom_task_by_user_id == user_id).FirstOrDefault();
 					if (todo == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -149,7 +164,7 @@ namespace _01.Pregnacy_API.Controllers
 					}
 					if (dataUpdate.custom_task_by_user_id != null)
 					{
-						todo.custom_task_by_user_id = dataUpdate.custom_task_by_user_id;
+						todo.custom_task_by_user_id = user_id;
 					}
 
 					dao.UpdateData(todo);
@@ -160,7 +175,6 @@ namespace _01.Pregnacy_API.Controllers
 					HttpError err = new HttpError(SysConst.DATA_NOT_EMPTY);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 				}
-
 			}
 			catch (Exception ex)
 			{

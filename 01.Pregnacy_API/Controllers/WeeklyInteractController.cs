@@ -1,15 +1,15 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
-using System.IO;
-using System.Web;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -23,8 +23,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_weekly_interact()))
 				{
+					data.user_id = user_id;
 					IEnumerable<preg_weekly_interact> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
 					{
@@ -38,7 +40,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_weekly_interact> result = dao.GetListItem();
+					IEnumerable<preg_weekly_interact> result = dao.GetListItem().Where(c => c.user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -48,31 +50,6 @@ namespace _01.Pregnacy_API.Controllers
 						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 					}
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[Route("api/weeklyinteract/{user_id}")]
-		public HttpResponseMessage Get(string user_id)
-		{
-			try
-			{
-				IEnumerable<preg_weekly_interact> data = dao.GetItemByUserID(Convert.ToInt32(user_id));
-				if (data.Count() > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateResponse(HttpStatusCode.NotFound);
 				}
 			}
 			catch (Exception ex)
@@ -88,8 +65,16 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data.week_id != 0 && data.user_id != 0)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (data.week_id != 0)
 				{
+					//Check exist
+					preg_weekly_interact checkExist = dao.GetItemsByParams(new preg_weekly_interact() { user_id = user_id, week_id = data.week_id }).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -108,20 +93,28 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/weeklyinteract/{week_id}/{user_id}")]
-		public HttpResponseMessage Put(string week_id, string user_id, [FromBody]preg_weekly_interact dataUpdate)
+		[Route("api/weeklyinteract/{week_id}")]
+		public HttpResponseMessage Put(string week_id, [FromBody]preg_weekly_interact dataUpdate)
 		{
+			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 			return UpdateData(week_id, user_id, dataUpdate);
 		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/weeklyinteract/{week_id}/{user_id}")]
-		public HttpResponseMessage Delete(string week_id, string user_id)
+		[Route("api/weeklyinteract/{week_id}")]
+		public HttpResponseMessage Delete(string week_id)
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(week_id), Convert.ToInt32(user_id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_weekly_interact item = dao.GetItemByID(Convert.ToInt32(week_id), user_id).FirstOrDefault();
+				if (item == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
@@ -131,15 +124,15 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		public HttpResponseMessage UpdateData(string week_id, string user_id, [FromBody]preg_weekly_interact dataUpdate)
+		public HttpResponseMessage UpdateData(string week_id, int user_id, [FromBody]preg_weekly_interact dataUpdate)
 		{
 			try
 			{
 				if (!dataUpdate.DeepEquals(new preg_weekly_interact()))
 				{
-
 					preg_weekly_interact weekly_interact = new preg_weekly_interact();
-					weekly_interact = dao.GetItemByID(Convert.ToInt32(week_id), Convert.ToInt32(user_id));
+					weekly_interact = dao.GetItemByID(Convert.ToInt32(week_id), user_id).FirstOrDefault();
+
 					if (weekly_interact == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -194,7 +187,7 @@ namespace _01.Pregnacy_API.Controllers
 			// Get current user_id
 			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 			// Check preg_weekly_interact exist
-			preg_weekly_interact checkItem = dao.GetItemByID(Convert.ToInt32(week_id), Convert.ToInt32(user_id));
+			preg_weekly_interact checkItem = dao.GetItemByID(Convert.ToInt32(week_id), Convert.ToInt32(user_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, week_id));
@@ -243,7 +236,7 @@ namespace _01.Pregnacy_API.Controllers
 					files.Add(path);
 					updateRow.photo = path;
 				}
-				UpdateData(week_id, user_id.ToString(), updateRow);
+				UpdateData(week_id, user_id, updateRow);
 
 				return Request.CreateResponse(HttpStatusCode.Created, files);
 			}

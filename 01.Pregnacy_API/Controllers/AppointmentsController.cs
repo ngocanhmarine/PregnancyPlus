@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -20,14 +21,16 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IEnumerable<preg_appointment> result;
 				if (!data.DeepEquals(new preg_appointment()))
 				{
+					data.user_id = user_id;
 					result = dao.GetItemsByParams(data);
 				}
 				else
 				{
-					result = dao.GetListItem();
+					result = dao.GetListItem().Where(c => c.user_id == user_id);
 				}
 				if (result.Count() > 0)
 				{
@@ -46,31 +49,6 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		// GET api/values/5
-		[HttpGet]
-		[Authorize]
-		[Route("api/appointments/{id}")]
-		public HttpResponseMessage Get(string id)
-		{
-			try
-			{
-				preg_appointment data = dao.GetItemByID(Convert.ToInt32(id));
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
 
 		// POST api/values
 		[HttpPost]
@@ -79,8 +57,17 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				//Check if user already have pregnancy data
+				preg_appointment checkExist = dao.GetItemsByParams(new preg_appointment() { user_id = user_id }).FirstOrDefault();
+				if (checkExist != null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+				}
+
 				if (!data.DeepEquals(new preg_appointment()))
 				{
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -100,16 +87,16 @@ namespace _01.Pregnacy_API.Controllers
 		// PUT api/values/5
 		[HttpPut]
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/appointments/{id}")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_appointment dataUpdate)
+		[Route("api/appointments/update")]
+		public HttpResponseMessage Put([FromBody]preg_appointment dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_appointment()))
 				{
 					preg_appointment appointment = new preg_appointment();
-					appointment = dao.GetItemByID(Convert.ToInt32(id));
+					appointment = dao.GetItemsByParams(new preg_appointment() { user_id = user_id }).FirstOrDefault();
 					if (appointment == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -150,10 +137,6 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						appointment.note = dataUpdate.note;
 					}
-					if (dataUpdate.user_id != null)
-					{
-						appointment.user_id = dataUpdate.user_id;
-					}
 					if (dataUpdate.appointment_type_id != null)
 					{
 						appointment.appointment_type_id = dataUpdate.appointment_type_id;
@@ -178,13 +161,13 @@ namespace _01.Pregnacy_API.Controllers
 		// DELETE api/values/5
 		[HttpDelete]
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/appointments/{id}")]
-		public HttpResponseMessage Delete(string id)
+		[Route("api/appointments/delete")]
+		public HttpResponseMessage Delete()
 		{
-			//lstStrings[id] = value;
 			try
 			{
-				preg_appointment appointment = dao.GetItemByID(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_appointment appointment = dao.GetItemsByParams(new preg_appointment() { user_id = user_id }).FirstOrDefault();
 				if (appointment == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

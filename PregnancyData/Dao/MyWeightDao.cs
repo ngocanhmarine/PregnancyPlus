@@ -1,8 +1,6 @@
 ﻿using PregnancyData.Entity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -15,19 +13,19 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_my_weight> GetListItem()
+		public IQueryable<preg_my_weight> GetListItem()
 		{
 			return connect.preg_my_weight;
 		}
 
-		public preg_my_weight GetItemByID(int id)
+		public IQueryable<preg_my_weight> GetItemByID(int id)
 		{
-			return connect.preg_my_weight.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_my_weight.Where(c => c.id == id);
 		}
 
-		public IEnumerable<preg_my_weight> GetItemsByParams(preg_my_weight data)
+		public IQueryable<preg_my_weight> GetItemsByParams(preg_my_weight data)
 		{
-			IEnumerable<preg_my_weight> result = connect.preg_my_weight;
+			IQueryable<preg_my_weight> result = connect.preg_my_weight;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;

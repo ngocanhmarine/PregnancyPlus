@@ -1,8 +1,6 @@
 ﻿using PregnancyData.Entity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -15,24 +13,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_profession> GetListItem()
+		public IQueryable<preg_profession> GetListItem()
 		{
 			return connect.preg_profession;
 		}
 
-		public preg_profession GetItemByID(int user_id, int profession_type_id)
+		public IQueryable<preg_profession> GetItemByID(int user_id, int profession_type_id)
 		{
-			return connect.preg_profession.Where(c => c.user_id == user_id & c.profession_type_id == profession_type_id).FirstOrDefault();
+			return connect.preg_profession.Where(c => c.user_id == user_id & c.profession_type_id == profession_type_id);
 		}
 
-		public IEnumerable<preg_profession> GetItemsByUserID(int user_id)
+		public IQueryable<preg_profession> GetItemsByUserID(int user_id)
 		{
 			return connect.preg_profession.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_profession> GetItemsByParams(preg_profession data)
+		public IQueryable<preg_profession> GetItemsByParams(preg_profession data)
 		{
-			IEnumerable<preg_profession> result = connect.preg_profession;
+			IQueryable<preg_profession> result = connect.preg_profession;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -65,10 +63,9 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int user_id, int profession_type_id)
 		{
-			preg_profession item = GetItemByID(user_id, profession_type_id);
+			preg_profession item = GetItemByID(user_id, profession_type_id).FirstOrDefault();
 			connect.preg_profession.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Threading;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -52,7 +51,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_faq data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_faq data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -105,7 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_faq()))
 				{
 					preg_faq faq = new preg_faq();
-					faq = dao.GetItemByID(Convert.ToInt32(id));
+					faq = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (faq == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -142,7 +141,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_faq item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_faq item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

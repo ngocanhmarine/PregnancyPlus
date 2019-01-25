@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -14,6 +14,7 @@ namespace _01.Pregnacy_API.Controllers
 		UserDao dao = new UserDao();
 		// GET api/users
 		[Authorize(Roles = "dev, admin")]
+		[HttpGet]
 		public HttpResponseMessage Get([FromUri]preg_user data)
 		{
 			try
@@ -37,10 +38,14 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_user> result = dao.GetListUser();
-					if (result.Count() > 0)
+					IEnumerable<preg_user> results = dao.GetListUser();
+					if (results.Count() > 0)
 					{
-						return Request.CreateResponse(HttpStatusCode.OK, result);
+						foreach (var result in results)
+						{
+							result.password = null;
+						}
+						return Request.CreateResponse(HttpStatusCode.OK, results);
 					}
 					else
 					{
@@ -59,11 +64,12 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[Route("api/users/{id}")]
+		[HttpGet]
 		public HttpResponseMessage Get(string id)
 		{
 			try
 			{
-				preg_user data = dao.GetUserByID(Convert.ToInt32(id)).ToList()[0];
+				preg_user data = dao.GetUserByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					data.password = null;
@@ -115,23 +121,34 @@ namespace _01.Pregnacy_API.Controllers
 
 		// POST api/values
 		[AllowAnonymous]
+		[HttpPost]
 		public HttpResponseMessage Post([FromBody]preg_user data)
 		{
 			try
 			{
 				if (data.phone != null && data.password != null)
 				{
-					data.password = SysMethod.MD5Hash(data.password);
-					if (dao.InsertData(data))
+					if (data.password.Length >= 6)
 					{
-						preg_user createdUser = dao.GetUsersByParams(data).FirstOrDefault();
-						createdUser.password = null;
-						return Request.CreateResponse(HttpStatusCode.Created, createdUser);
+						data.password = SysMethod.MD5Hash(data.password);
+						data.time_created = DateTime.Now;
+						data.social_type_id = null;
+						data.uid = null;
+						if (dao.InsertData(data))
+						{
+							preg_user createdUser = dao.GetUsersByParams(data).FirstOrDefault();
+							createdUser.password = null;
+							return Request.CreateResponse(HttpStatusCode.Created, createdUser);
+						}
+						else
+						{
+							HttpError err = new HttpError(SysConst.PHONE_EXIST);
+							return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+						}
 					}
 					else
 					{
-						HttpError err = new HttpError(SysConst.PHONE_EXIST);
-						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.PASSWORD_LENGTH);
 					}
 				}
 				else
@@ -148,8 +165,42 @@ namespace _01.Pregnacy_API.Controllers
 		}
 
 		// PUT api/values/5
+		[AllowAnonymous]
+		[Route("api/users/forgotpassword/{phone}")]
+		[HttpPut]
+		public HttpResponseMessage ForgotPassword(string phone, [FromBody]preg_user passwordUpdate)
+		{
+			try
+			{
+				preg_user user = new preg_user() { phone = phone };
+				user = dao.GetUsersByParams(user).FirstOrDefault();
+				if (user == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				if (passwordUpdate.password.Length < 6)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.PASSWORD_LENGTH);
+				}
+
+				string strPass = passwordUpdate.password;
+
+				user.password = SysMethod.MD5Hash(strPass);
+
+				dao.UpdateData(user);
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[Route("api/users/{id}")]
+		[HttpPut]
 		public HttpResponseMessage Put(string id, [FromBody]preg_user dataUpdate)
 		{
 			return UpdateData(id, dataUpdate);
@@ -158,10 +209,16 @@ namespace _01.Pregnacy_API.Controllers
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[Route("api/users/{id}")]
+		[HttpDelete]
 		public HttpResponseMessage Delete(string id)
 		{
 			try
 			{
+				if (!DeleteReferenceData(Convert.ToInt32(id)))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_DELETE_FAIL);
+				}
+
 				dao.DeleteData(Convert.ToInt32(id));
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
@@ -192,10 +249,6 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						user.email = dataUpdate.email;
 					}
-					if (dataUpdate.social_type_id != null)
-					{
-						user.social_type_id = dataUpdate.social_type_id;
-					}
 					if (dataUpdate.first_name != null)
 					{
 						user.first_name = dataUpdate.first_name;
@@ -216,9 +269,9 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						user.status = dataUpdate.status;
 					}
-					if (dataUpdate.avarta != null)
+					if (dataUpdate.avatar != null)
 					{
-						user.avarta = dataUpdate.avarta;
+						user.avatar = dataUpdate.avatar;
 					}
 
 					dao.UpdateData(user);
@@ -234,6 +287,168 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				HttpError err = new HttpError(ex.Message);
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public bool DeleteReferenceData(int user_id)
+		{
+			try
+			{
+				PregnancyEntity connect = new PregnancyEntity();
+				preg_user user = connect.preg_user.Where(c => c.id == user_id).FirstOrDefault();
+
+				while (user.preg_answer.Count() > 0)
+				{
+					connect.preg_answer.Remove(user.preg_answer.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_appointment.Count() > 0)
+				{
+					preg_appointment appointment = user.preg_appointment.FirstOrDefault();
+					while (appointment.preg_appointment_measurement.Count() > 0)
+					{
+						connect.preg_appointment_measurement.Remove(appointment.preg_appointment_measurement.FirstOrDefault());
+						connect.SaveChanges();
+					}
+					connect.preg_appointment.Remove(user.preg_appointment.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_auth.Count() > 0)
+				{
+					connect.preg_auth.Remove(user.preg_auth.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_contact_us.Count() > 0)
+				{
+					connect.preg_contact_us.Remove(user.preg_contact_us.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_contraction.Count() > 0)
+				{
+					connect.preg_contraction.Remove(user.preg_contraction.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_customer_response.Count() > 0)
+				{
+					connect.preg_customer_response.Remove(user.preg_customer_response.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_customer_response1.Count() > 0)
+				{
+					connect.preg_customer_response.Remove(user.preg_customer_response1.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_daily_interact.Count() > 0)
+				{
+					connect.preg_daily_interact.Remove(user.preg_daily_interact.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_my_birth_plan.Count() > 0)
+				{
+					connect.preg_my_birth_plan.Remove(user.preg_my_birth_plan.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_my_birth_plan_item.Count() > 0)
+				{
+					connect.preg_my_birth_plan_item.Remove(user.preg_my_birth_plan_item.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_my_weight.Count() > 0)
+				{
+					connect.preg_my_weight.Remove(user.preg_my_weight.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_phone.Count() > 0)
+				{
+					connect.preg_phone.Remove(user.preg_phone.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_pregnancy.Count() > 0)
+				{
+					connect.preg_pregnancy.Remove(user.preg_pregnancy.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_profession.Count() > 0)
+				{
+					connect.preg_profession.Remove(user.preg_profession.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_question.Count() > 0)
+				{
+					connect.preg_question.Remove(user.preg_question.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_setting.Count() > 0)
+				{
+					connect.preg_setting.Remove(user.preg_setting.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_upgrade.Count() > 0)
+				{
+					connect.preg_upgrade.Remove(user.preg_upgrade.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_weekly_interact.Count() > 0)
+				{
+					connect.preg_weekly_interact.Remove(user.preg_weekly_interact.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_user_baby_name.Count() > 0)
+				{
+					connect.preg_user_baby_name.Remove(user.preg_user_baby_name.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_user_hospital_bag_item.Count() > 0)
+				{
+					connect.preg_user_hospital_bag_item.Remove(user.preg_user_hospital_bag_item.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_hospital_bag_item.Count() > 0)
+				{
+					connect.preg_hospital_bag_item.Remove(user.preg_hospital_bag_item.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_my_belly.Count() > 0)
+				{
+					connect.preg_my_belly.Remove(user.preg_my_belly.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_user_kick_history.Count() > 0)
+				{
+					connect.preg_user_kick_history.Remove(user.preg_user_kick_history.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_user_medical_service_package.Count() > 0)
+				{
+					connect.preg_user_medical_service_package.Remove(user.preg_user_medical_service_package.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_user_shopping_cart.Count() > 0)
+				{
+					connect.preg_user_shopping_cart.Remove(user.preg_user_shopping_cart.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_shopping_item.Count() > 0)
+				{
+					connect.preg_shopping_item.Remove(user.preg_shopping_item.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_user_todo.Count() > 0)
+				{
+					connect.preg_user_todo.Remove(user.preg_user_todo.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				while (user.preg_todo.Count() > 0)
+				{
+					connect.preg_todo.Remove(user.preg_todo.FirstOrDefault());
+					connect.SaveChanges();
+				}
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
 			}
 		}
 	}

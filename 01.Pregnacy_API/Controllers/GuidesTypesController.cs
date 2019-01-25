@@ -52,7 +52,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_guides_type data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_guides_type data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -104,7 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_guides()))
 				{
 					preg_guides_type guides_type = new preg_guides_type();
-					guides_type = dao.GetItemByID(Convert.ToInt32(id));
+					guides_type = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (guides_type == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -137,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_guides_type item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_guides_type item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

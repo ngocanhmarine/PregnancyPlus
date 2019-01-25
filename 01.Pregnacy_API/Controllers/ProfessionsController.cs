@@ -83,7 +83,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_profession data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id));
+				preg_profession data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -157,7 +157,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_profession()))
 				{
 					preg_profession profession = new preg_profession();
-					profession = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id));
+					profession = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(profession_type_id)).FirstOrDefault();
 					if (profession == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

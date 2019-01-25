@@ -1,15 +1,15 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using System.IO;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -64,7 +64,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_size_guide data = dao.GetItemByWeekID(Convert.ToInt32(id));
+				preg_size_guide data = dao.GetItemByWeekID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -137,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_size_guide()))
 				{
 					preg_size_guide size_guide = new preg_size_guide();
-					size_guide = dao.GetItemByWeekID(Convert.ToInt32(id));
+					size_guide = dao.GetItemByWeekID(Convert.ToInt32(id)).FirstOrDefault();
 					if (size_guide == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -194,7 +194,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string size_guide_id)
 		{
 			// Check daily_id exist
-			preg_size_guide checkItem = dao.GetItemByWeekID(Convert.ToInt32(size_guide_id));
+			preg_size_guide checkItem = dao.GetItemByWeekID(Convert.ToInt32(size_guide_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, size_guide_id));

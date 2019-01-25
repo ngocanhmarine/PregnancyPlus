@@ -15,24 +15,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_user_hospital_bag_item> GetListItem()
+		public IQueryable<preg_user_hospital_bag_item> GetListItem()
 		{
 			return connect.preg_user_hospital_bag_item;
 		}
 
-		public preg_user_hospital_bag_item GetItemByID(int user_id, int hospital_bag_item_id)
+		public IQueryable<preg_user_hospital_bag_item> GetItemByID(int user_id, int hospital_bag_item_id)
 		{
-			return connect.preg_user_hospital_bag_item.Where(c => c.user_id == user_id && c.hospital_bag_item_id == hospital_bag_item_id).FirstOrDefault();
+			return connect.preg_user_hospital_bag_item.Where(c => c.user_id == user_id && c.hospital_bag_item_id == hospital_bag_item_id);
 		}
 
-		public IEnumerable<preg_user_hospital_bag_item> GetItemByUserID(int user_id)
+		public IQueryable<preg_user_hospital_bag_item> GetItemByUserID(int user_id)
 		{
 			return connect.preg_user_hospital_bag_item.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_user_hospital_bag_item> GetItemByParams(preg_user_hospital_bag_item data)
+		public IQueryable<preg_user_hospital_bag_item> GetItemByParams(preg_user_hospital_bag_item data)
 		{
-			IEnumerable<preg_user_hospital_bag_item> result = connect.preg_user_hospital_bag_item;
+			IQueryable<preg_user_hospital_bag_item> result = connect.preg_user_hospital_bag_item;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -73,9 +73,8 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-		public void DeleteData(int user_id, int hospital_bag_item_id)
+		public void DeleteData(preg_user_hospital_bag_item item)
 		{
-			preg_user_hospital_bag_item item = GetItemByID(user_id, hospital_bag_item_id);
 			connect.preg_user_hospital_bag_item.Remove(item);
 			connect.SaveChanges();
 		}

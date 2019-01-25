@@ -16,18 +16,18 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_help> GetListItem()
+		public IQueryable<preg_help> GetListItem()
 		{
 			return connect.preg_help;
 		}
 
-		public preg_help GetItemByID(int id)
+		public IQueryable<preg_help> GetItemByID(int id)
 		{
-			return connect.preg_help.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_help.Where(c => c.id == id);
 		}
-		public IEnumerable<preg_help> GetItemsByParams(preg_help data)
+		public IQueryable<preg_help> GetItemsByParams(preg_help data)
 		{
-			IEnumerable<preg_help> result = connect.preg_help;
+			IQueryable<preg_help> result = connect.preg_help;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;

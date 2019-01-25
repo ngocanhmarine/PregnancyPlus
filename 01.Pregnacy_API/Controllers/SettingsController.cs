@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -18,8 +19,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_setting()))
 				{
+					data.user_id = user_id;
 					IEnumerable<preg_setting> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
 					{
@@ -33,7 +36,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_setting> result = dao.GetListItem();
+					IEnumerable<preg_setting> result = dao.GetListItem().Where(c => c.user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -43,31 +46,6 @@ namespace _01.Pregnacy_API.Controllers
 						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 					}
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[Route("api/settings/{id}")]
-		public HttpResponseMessage Get(string id)
-		{
-			try
-			{
-				preg_setting data = dao.GetItemByID(Convert.ToInt32(id));
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 				}
 			}
 			catch (Exception ex)
@@ -83,8 +61,17 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_setting()))
 				{
+					//Check if data exist
+					preg_setting checkExist = dao.GetItemsByParams(new preg_setting() { user_id = user_id }).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -104,20 +91,23 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/settings/{id}")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_setting dataUpdate)
+		[Route("api/settings/update")]
+		public HttpResponseMessage Put([FromBody]preg_setting dataUpdate)
 		{
-			return UpdateData(id, dataUpdate);
+			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+			return UpdateData(user_id, dataUpdate);
 		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/settings/{id}")]
-		public HttpResponseMessage Delete(string id)
+		[Route("api/settings/delete")]
+		public HttpResponseMessage Delete()
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_setting item = dao.GetListItem().Where(c => c.user_id == user_id).FirstOrDefault();
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
@@ -127,14 +117,14 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		public HttpResponseMessage UpdateData(string id, [FromBody]preg_setting dataUpdate)
+		public HttpResponseMessage UpdateData(int user_id, [FromBody]preg_setting dataUpdate)
 		{
 			try
 			{
 				if (!dataUpdate.DeepEquals(new preg_setting()))
 				{
 					preg_setting setting = new preg_setting();
-					setting = dao.GetItemByID(Convert.ToInt32(id));
+					setting = dao.GetItemsByParams(new preg_setting() { user_id = user_id }).FirstOrDefault();
 					if (setting == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -150,10 +140,6 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.weight_unit != null)
 					{
 						setting.weight_unit = dataUpdate.weight_unit;
-					}
-					if (dataUpdate.user_id != null)
-					{
-						setting.user_id = dataUpdate.user_id;
 					}
 					if (dataUpdate.revoke_consent != null)
 					{

@@ -26,6 +26,8 @@ namespace PregnancyData.Entity
 
         public int? weeks_pregnant { get; set; }
 
+        public DateTime? start_date { get; set; }
+
         public virtual preg_gender preg_gender { get; set; }
 
         public virtual preg_user preg_user { get; set; }

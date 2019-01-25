@@ -16,19 +16,19 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_my_birth_plan_item> GetListItem()
+		public IQueryable<preg_my_birth_plan_item> GetListItem()
 		{
 			return connect.preg_my_birth_plan_item;
 		}
 
-		public preg_my_birth_plan_item GetItemByID(int id)
+		public IQueryable<preg_my_birth_plan_item> GetItemByID(int id)
 		{
-			return connect.preg_my_birth_plan_item.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_my_birth_plan_item.Where(c => c.id == id);
 		}
 
-		public IEnumerable<preg_my_birth_plan_item> GetItemsByParams(preg_my_birth_plan_item data)
+		public IQueryable<preg_my_birth_plan_item> GetItemsByParams(preg_my_birth_plan_item data)
 		{
-			IEnumerable<preg_my_birth_plan_item> result = connect.preg_my_birth_plan_item;
+			IQueryable<preg_my_birth_plan_item> result = connect.preg_my_birth_plan_item;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;

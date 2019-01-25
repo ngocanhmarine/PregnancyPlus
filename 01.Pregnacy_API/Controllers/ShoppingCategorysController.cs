@@ -62,7 +62,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_shopping_category data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_shopping_category data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -137,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_shopping_category()))
 				{
 					preg_shopping_category shopping_category = new preg_shopping_category();
-					shopping_category = dao.GetItemByID(Convert.ToInt32(id));
+					shopping_category = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (shopping_category == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -178,7 +178,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string id)
 		{
 			// Check preg_shopping_category exist
-			preg_shopping_category checkItem = dao.GetItemByID(Convert.ToInt32(id));
+			preg_shopping_category checkItem = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, id));

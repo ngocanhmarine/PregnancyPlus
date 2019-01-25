@@ -16,19 +16,19 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_phone> GetListItem()
+		public IQueryable<preg_phone> GetListItem()
 		{
 			return connect.preg_phone;
 		}
 
-		public preg_phone GetItemByID(int id)
+		public IQueryable<preg_phone> GetItemByID(int id)
 		{
-			return connect.preg_phone.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_phone.Where(c => c.id == id);
 		}
 
-		public IEnumerable<preg_phone> GetItemsByParams(preg_phone data)
+		public IQueryable<preg_phone> GetItemsByParams(preg_phone data)
 		{
-			IEnumerable<preg_phone> result = connect.preg_phone;
+			IQueryable<preg_phone> result = connect.preg_phone;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -66,7 +66,7 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int id)
 		{
-			preg_phone Phone = GetItemByID(id);
+			preg_phone Phone = GetItemByID(id).FirstOrDefault();
 			connect.preg_phone.Remove(Phone);
 			connect.SaveChanges();
 		}

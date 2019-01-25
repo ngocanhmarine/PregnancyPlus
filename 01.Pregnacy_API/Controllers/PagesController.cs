@@ -63,7 +63,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_page data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_page data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -138,7 +138,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_page()))
 				{
 					preg_page page = new preg_page();
-					page = dao.GetItemByID(Convert.ToInt32(id));
+					page = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (page == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -179,7 +179,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string page_id)
 		{
 			// Check daily_id exist
-			preg_page checkItem = dao.GetItemByID(Convert.ToInt32(page_id));
+			preg_page checkItem = dao.GetItemByID(Convert.ToInt32(page_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, page_id));

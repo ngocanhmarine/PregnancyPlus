@@ -1,9 +1,6 @@
 ﻿using PregnancyData.Entity;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -16,19 +13,14 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_my_belly> GetListItem()
+		public IQueryable<preg_my_belly> GetListItem()
 		{
 			return connect.preg_my_belly;
 		}
 
-		public preg_my_belly GetItemByMonthID(int month)
+		public IQueryable<preg_my_belly> GetItemsByParams(preg_my_belly data)
 		{
-			return connect.preg_my_belly.Where(c => c.month == month && c.user_id == null).FirstOrDefault();
-		}
-
-		public IEnumerable<preg_my_belly> GetItemsByParams(preg_my_belly data)
-		{
-			IEnumerable<preg_my_belly> result = connect.preg_my_belly;
+			IQueryable<preg_my_belly> result = connect.preg_my_belly;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -41,11 +33,11 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.image) > 0);
 				}
-				else if (propertyName == "month" && propertyValue != null)
+				else if (propertyName == "month" && (int)propertyValue != 0)
 				{
 					result = result.Where(c => c.month == (int)(propertyValue));
 				}
-				else if (propertyName == "user_id" && propertyValue != null)
+				else if (propertyName == "user_id" && (int)propertyValue != 0)
 				{
 					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}

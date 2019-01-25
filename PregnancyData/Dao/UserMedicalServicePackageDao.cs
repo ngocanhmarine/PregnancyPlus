@@ -16,24 +16,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_user_medical_service_package> GetListItem()
+		public IQueryable<preg_user_medical_service_package> GetListItem()
 		{
 			return connect.preg_user_medical_service_package;
 		}
 
-		public preg_user_medical_service_package GetItemByID(int user_id, int medical_service_package_id)
+		public IQueryable<preg_user_medical_service_package> GetItemByID(int user_id, int medical_service_package_id)
 		{
-			return connect.preg_user_medical_service_package.Where(c => c.user_id == user_id && c.medical_service_package_id == medical_service_package_id).FirstOrDefault();
+			return connect.preg_user_medical_service_package.Where(c => c.user_id == user_id && c.medical_service_package_id == medical_service_package_id);
 		}
 
-		public IEnumerable<preg_user_medical_service_package> GetItemByUserID(int user_id)
+		public IQueryable<preg_user_medical_service_package> GetItemByUserID(int user_id)
 		{
 			return connect.preg_user_medical_service_package.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_user_medical_service_package> GetItemByParams(preg_user_medical_service_package data)
+		public IQueryable<preg_user_medical_service_package> GetItemByParams(preg_user_medical_service_package data)
 		{
-			IEnumerable<preg_user_medical_service_package> result = connect.preg_user_medical_service_package;
+			IQueryable<preg_user_medical_service_package> result = connect.preg_user_medical_service_package;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -96,7 +96,7 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int user_id, int medical_service_package_id)
 		{
-			preg_user_medical_service_package item = GetItemByID(user_id, medical_service_package_id);
+			preg_user_medical_service_package item = GetItemByID(user_id, medical_service_package_id).FirstOrDefault();
 			connect.preg_user_medical_service_package.Remove(item);
 			connect.SaveChanges();
 		}

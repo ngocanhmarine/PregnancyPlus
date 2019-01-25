@@ -8,8 +8,8 @@ namespace PregnancyData.Entity
 
     public partial class preg_customer_response
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int id { get; set; }
+
         public int user_id { get; set; }
 
         [StringLength(1024)]

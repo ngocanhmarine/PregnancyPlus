@@ -1,9 +1,6 @@
 ﻿using PregnancyData.Entity;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -16,18 +13,19 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_contact_us> GetListItem()
+		public IQueryable<preg_contact_us> GetListItem()
 		{
 			return connect.preg_contact_us;
 		}
 
-		public preg_contact_us GetItemByID(int id)
+		public IQueryable<preg_contact_us> GetItemByID(int id)
 		{
-			return connect.preg_contact_us.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_contact_us.Where(c => c.id == id);
 		}
-		public IEnumerable<preg_contact_us> GetItemsByParams(preg_contact_us data)
+
+		public IQueryable<preg_contact_us> GetItemsByParams(preg_contact_us data)
 		{
-			IEnumerable<preg_contact_us> result = connect.preg_contact_us;
+			IQueryable<preg_contact_us> result = connect.preg_contact_us;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -51,6 +49,7 @@ namespace PregnancyData.Dao
 			}
 			return result;
 		}
+
 		public void InsertData(preg_contact_us item)
 		{
 			connect.preg_contact_us.Add(item);
@@ -67,6 +66,5 @@ namespace PregnancyData.Dao
 			connect.preg_contact_us.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

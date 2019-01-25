@@ -1,9 +1,7 @@
 ﻿using PregnancyData.Entity;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -16,24 +14,28 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_customer_response> GetListItem()
+		public IQueryable<preg_customer_response> GetListItem()
 		{
 			return connect.preg_customer_response;
 		}
 
-		public preg_customer_response GetItemByID(int user_id)
+		public IQueryable<preg_customer_response> GetItemByUserID(int user_id)
 		{
-			return connect.preg_customer_response.Where(c => c.user_id == user_id).FirstOrDefault();
+			return connect.preg_customer_response.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_customer_response> GetItemsByParams(preg_customer_response data)
+		public IQueryable<preg_customer_response> GetItemsByParams(preg_customer_response data)
 		{
-			IEnumerable<preg_customer_response> result = connect.preg_customer_response;
+			IQueryable<preg_customer_response> result = connect.preg_customer_response;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
 				var propertyValue = data.GetType().GetProperty(propertyName).GetValue(data, null);
-				if (propertyName == "user_id" && (int)(propertyValue) != 0)
+				if (propertyName == "id" && (int)(propertyValue) != 0)
+				{
+					result = result.Where(c => c.id == (int)(propertyValue));
+				}
+				else if (propertyName == "user_id" && (int)(propertyValue) != 0)
 				{
 					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}

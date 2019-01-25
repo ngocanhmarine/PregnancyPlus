@@ -112,6 +112,8 @@
     <Compile Include="Dao\MyBirthPlanTypeDao.cs" />
     <Compile Include="Dao\MyWeightDao.cs" />
     <Compile Include="Dao\MyWeightUnitDao.cs" />
+    <Compile Include="Dao\NotificationDao.cs" />
+    <Compile Include="Dao\OtherAppDao.cs" />
     <Compile Include="Dao\PageDao.cs" />
     <Compile Include="Dao\PhoneDao.cs" />
     <Compile Include="Dao\PregnancyDao.cs" />
@@ -131,8 +133,8 @@
     <Compile Include="Dao\UserBabyNameDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dao\UserHospitalBagItemDao.cs" />
+    <Compile Include="Dao\UserKickHistoryDao.cs" />
     <Compile Include="Dao\UserMedicalServicePackageDao.cs" />
-    <Compile Include="Dao\UserKickHistory.cs" />
     <Compile Include="Dao\UserShoppingCart.cs" />
     <Compile Include="Dao\UserTodoDao.cs" />
     <Compile Include="Dao\WeekDao.cs" />
@@ -170,6 +172,8 @@
     <Compile Include="Entity\preg_my_birth_plan_type.cs" />
     <Compile Include="Entity\preg_my_weight.cs" />
     <Compile Include="Entity\preg_my_weight_unit.cs" />
+    <Compile Include="Entity\preg_notification.cs" />
+    <Compile Include="Entity\preg_other_app.cs" />
     <Compile Include="Entity\preg_page.cs" />
     <Compile Include="Entity\preg_phone.cs" />
     <Compile Include="Entity\preg_pregnancy.cs" />

@@ -15,14 +15,14 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_user_shopping_cart> GetListItem()
+		public IQueryable<preg_user_shopping_cart> GetListItem()
 		{
 			return connect.preg_user_shopping_cart;
 		}
 
-		public preg_user_shopping_cart GetItemByID(int user_id, int shopping_item_id)
+		public IQueryable<preg_user_shopping_cart> GetItemByID(int user_id, int shopping_item_id)
 		{
-			return connect.preg_user_shopping_cart.Where(c => c.user_id == user_id && c.shopping_item_id == shopping_item_id).FirstOrDefault();
+			return connect.preg_user_shopping_cart.Where(c => c.user_id == user_id && c.shopping_item_id == shopping_item_id);
 		}
 
 		public IEnumerable<preg_user_shopping_cart> GetItemByUserID(int user_id)
@@ -30,9 +30,9 @@ namespace PregnancyData.Dao
 			return connect.preg_user_shopping_cart.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_user_shopping_cart> GetItemByParams(preg_user_shopping_cart data)
+		public IQueryable<preg_user_shopping_cart> GetItemByParams(preg_user_shopping_cart data)
 		{
-			IEnumerable<preg_user_shopping_cart> result = connect.preg_user_shopping_cart;
+			IQueryable<preg_user_shopping_cart> result = connect.preg_user_shopping_cart;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -73,9 +73,8 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-		public void DeleteData(int user_id, int shopping_item_id)
+		public void DeleteData(preg_user_shopping_cart item)
 		{
-			preg_user_shopping_cart item = GetItemByID(user_id, shopping_item_id);
 			connect.preg_user_shopping_cart.Remove(item);
 			connect.SaveChanges();
 		}

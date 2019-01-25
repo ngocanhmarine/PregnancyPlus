@@ -1,9 +1,7 @@
 ﻿using PregnancyData.Entity;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Linq;
-using System.Web;
 
 namespace PregnancyData.Dao
 {
@@ -16,19 +14,19 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_page> GetListItem()
+		public IQueryable<preg_page> GetListItem()
 		{
 			return connect.preg_page;
 		}
 
-		public preg_page GetItemByID(int id)
+		public IQueryable<preg_page> GetItemByID(int id)
 		{
-			return connect.preg_page.Where(c => c.id == id).FirstOrDefault();
+			return connect.preg_page.Where(c => c.id == id);
 		}
 
-		public IEnumerable<preg_page> GetItemsByParams(preg_page data)
+		public IQueryable<preg_page> GetItemsByParams(preg_page data)
 		{
-			IEnumerable<preg_page> result = connect.preg_page;
+			IQueryable<preg_page> result = connect.preg_page;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -66,7 +64,7 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int id)
 		{
-			preg_page item = GetItemByID(id);
+			preg_page item = GetItemByID(id).FirstOrDefault();
 			connect.preg_page.Remove(item);
 			connect.SaveChanges();
 		}

@@ -3,9 +3,10 @@ using PregnancyData.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -19,16 +20,16 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IEnumerable<preg_auth> result;
 				if (!data.DeepEquals(new preg_auth()))
 				{
+					data.user_id = user_id;
 					result = dao.GetItemsByParams(data);
-
 				}
 				else
 				{
-					result = dao.GetListItem();
-
+					result = dao.GetListItem().Where(c => c.user_id == user_id);
 				}
 				if (result.Count() > 0)
 				{
@@ -47,17 +48,26 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		// GET api/values/5
-		[Authorize(Roles = "dev, admin")]
-		[Route("api/auths/{id}")]
-		public HttpResponseMessage Get(string id)
+
+		// GET api/values
+		[Authorize(Roles = "admin")]
+		[Route("api/auths/getall")]
+		public async Task<HttpResponseMessage> GetAll([FromUri]preg_auth data)
 		{
 			try
 			{
-				preg_auth data = dao.GetItemByID(Convert.ToInt32(id));
-				if (data != null)
+				IEnumerable<preg_auth> result;
+				if (!data.DeepEquals(new preg_auth()))
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
+					result = dao.GetItemsByParams(data);
+				}
+				else
+				{
+					result = dao.GetListItem();
+				}
+				if (result.Count() > 0)
+				{
+					return Request.CreateResponse(HttpStatusCode.OK, result);
 				}
 				else
 				{
@@ -78,8 +88,16 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_auth()))
 				{
+					//Check exist
+					preg_auth checkExist = dao.GetItemsByParams(new preg_auth() { user_id = user_id }).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -99,23 +117,19 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/auths/{id}")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_auth dataUpdate)
+		[Route("api/auths/update")]
+		public HttpResponseMessage Put([FromBody]preg_auth dataUpdate)
 		{
-
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_auth()))
 				{
 					preg_auth auth = new preg_auth();
-					auth = dao.GetItemByID(Convert.ToInt32(id));
+					auth = dao.GetListItem().Where(c => c.user_id == user_id).FirstOrDefault();
 					if (auth == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-					}
-					if (dataUpdate.user_id != null)
-					{
-						auth.user_id = dataUpdate.user_id;
 					}
 					if (dataUpdate.token != null)
 					{
@@ -144,16 +158,18 @@ namespace _01.Pregnacy_API.Controllers
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/auths/{id}")]
-		public HttpResponseMessage Delete(string id)
+		[Route("api/auths/delete")]
+		public HttpResponseMessage Delete()
 		{
 			try
 			{
-				preg_auth auth = dao.GetItemByID(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_auth auth = dao.GetListItem().Where(c => c.user_id == user_id).FirstOrDefault();
 				if (auth == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 				}
+
 				dao.DeleteData(auth);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}

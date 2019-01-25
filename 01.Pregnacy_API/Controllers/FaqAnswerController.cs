@@ -51,7 +51,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_faq_answer data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_faq_answer data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -104,7 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_faq_answer()))
 				{
 					preg_faq_answer faq_answer = new preg_faq_answer();
-					faq_answer = dao.GetItemByID(Convert.ToInt32(id));
+					faq_answer = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (faq_answer == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -141,7 +141,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_faq_answer item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_faq_answer item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

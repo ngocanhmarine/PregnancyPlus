@@ -1,15 +1,15 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using PregnancyData.Entity;
-using System.IO;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -64,7 +64,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_time_line data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_time_line data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -137,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_time_line()))
 				{
 					preg_time_line time_line = new preg_time_line();
-					time_line = dao.GetItemByID(Convert.ToInt32(id));
+					time_line = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (time_line == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -186,7 +186,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string timeline_id)
 		{
 			// Check daily_id exist
-			preg_time_line checkItem = dao.GetItemByID(Convert.ToInt32(timeline_id));
+			preg_time_line checkItem = dao.GetItemByID(Convert.ToInt32(timeline_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, timeline_id));

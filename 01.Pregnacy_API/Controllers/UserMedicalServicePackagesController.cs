@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -19,8 +20,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_user_medical_service_package()))
 				{
+					data.user_id = user_id;
 					IEnumerable<preg_user_medical_service_package> result = dao.GetItemByParams(data);
 					if (result.Count() > 0)
 					{
@@ -34,7 +37,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_user_medical_service_package> result = dao.GetListItem();
+					IEnumerable<preg_user_medical_service_package> result = dao.GetListItem().Where(c => c.user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -56,39 +59,14 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpGet]
-		[Route("api/usermedicalservicepackages/{user_id}/{medical_service_package_id}")]
-		public HttpResponseMessage Get(string user_id, string medical_service_package_id)
+		[Route("api/usermedicalservicepackages/{medical_service_package_id}")]
+		public HttpResponseMessage Get( string medical_service_package_id)
 		{
 			try
 			{
-				preg_user_medical_service_package data = dao.GetItemByID(Convert.ToInt32(user_id), Convert.ToInt32(medical_service_package_id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_user_medical_service_package data = dao.GetItemByID(user_id, Convert.ToInt32(medical_service_package_id)).FirstOrDefault();
 				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize(Roles = "dev, admin")]
-		[HttpGet]
-		[Route("api/usermedicalservicepackages/{user_id}")]
-		public HttpResponseMessage Get(string user_id)
-		{
-			try
-			{
-				IEnumerable<preg_user_medical_service_package> data = dao.GetItemByUserID(Convert.ToInt32(user_id));
-				if (data.Count() > 0)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
 				}

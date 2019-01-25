@@ -32,6 +32,7 @@ public class SysConst
 	public static string ID_MUST_INTEGER = "ID must be an integer.";
 	public static string ITEM_ID_NOT_EXIST = "Item with ID={0} not exist.";
 	public static string PHONE_EXIST = "Phone already exist.";
+	public static string PASSWORD_LENGTH = "Password too short.";
 	public static string PHONE_PASSWORD_NOT_NULL = "Phone and password cannot be null.";
 	public static string DATA_INSERT_SUCCESS = "Data insert succeed.";
 	public static string DATA_INSERT_FAIL = "Data insert failed.";
@@ -45,5 +46,6 @@ public class SysConst
 	public static string INVALID_FILE_TYPE = "Invalid file type.";
 	public static string FILE_NOT_EXIST = "File with path {0} not exist.";
 	public static string FILE_EXIST = "File with name {0} already exist.";
+	public static string FILE_EXIST_AND_UPDATE = "File with name {0} already exist and updated to your data.";
 	#endregion
 }

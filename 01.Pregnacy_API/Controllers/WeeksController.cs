@@ -1,15 +1,15 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
-using System.IO;
-using System.Web;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
-using System.Threading.Tasks;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -63,7 +63,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_week data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_week data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -140,7 +140,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_week()))
 				{
 					preg_week week = new preg_week();
-					week = dao.GetItemByID(Convert.ToInt32(id));
+					week = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (week == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -193,7 +193,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string id)
 		{
 			// Check weekly_id exist
-			preg_week checkItem = dao.GetItemByID(Convert.ToInt32(id));
+			preg_week checkItem = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, id));

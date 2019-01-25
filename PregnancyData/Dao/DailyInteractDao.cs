@@ -16,24 +16,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_daily_interact> GetListItem()
+		public IQueryable<preg_daily_interact> GetListItem()
 		{
 			return connect.preg_daily_interact;
 		}
 
-		public preg_daily_interact GetItemByID(int daily_id, int user_id)
+		public IQueryable<preg_daily_interact> GetItemByID(int daily_id, int user_id)
 		{
-			return connect.preg_daily_interact.Where(c => c.daily_id == daily_id & c.user_id == user_id).FirstOrDefault();
+			return connect.preg_daily_interact.Where(c => c.daily_id == daily_id & c.user_id == user_id);
 		}
 
-		public preg_daily_interact GetItemByUserID(int user_id)
+		public IQueryable<preg_daily_interact> GetItemByUserID(int user_id)
 		{
-			return connect.preg_daily_interact.Where(c => c.user_id == user_id).FirstOrDefault();
+			return connect.preg_daily_interact.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_daily_interact> GetItemsByParams(preg_daily_interact data)
+		public IQueryable<preg_daily_interact> GetItemsByParams(preg_daily_interact data)
 		{
-			IEnumerable<preg_daily_interact> result = connect.preg_daily_interact;
+			IQueryable<preg_daily_interact> result = connect.preg_daily_interact;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;

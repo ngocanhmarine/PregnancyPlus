@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
-using PregnancyData.Entity;
-using System.Text;
-using System.Security.Cryptography;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -66,7 +60,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_my_weight_unit data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_my_weight_unit data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -118,7 +112,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_my_weight_unit()))
 				{
 					preg_my_weight_unit my_weight_type = new preg_my_weight_unit();
-					my_weight_type = dao.GetItemByID(Convert.ToInt32(id));
+					my_weight_type = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (my_weight_type == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

@@ -7,27 +7,27 @@ using System.Web;
 
 namespace PregnancyData.Dao
 {
-    public class HospitalBagItemDao
-    {
-         PregnancyEntity connect = null;
-         public HospitalBagItemDao()
-        {
-            connect = new PregnancyEntity();
+	public class HospitalBagItemDao
+	{
+		PregnancyEntity connect = null;
+		public HospitalBagItemDao()
+		{
+			connect = new PregnancyEntity();
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-        public IEnumerable<preg_hospital_bag_item> GetListItem()
-        {
-            return connect.preg_hospital_bag_item;
-        }
-
-        public preg_hospital_bag_item GetItemByID(int id)
-        {
-            return connect.preg_hospital_bag_item.Where(c => c.id == id).FirstOrDefault();
-        }
-		public IEnumerable<preg_hospital_bag_item> GetItemsByParams(preg_hospital_bag_item data)
+		public IQueryable<preg_hospital_bag_item> GetListItem()
 		{
-			IEnumerable<preg_hospital_bag_item> result = connect.preg_hospital_bag_item;
+			return connect.preg_hospital_bag_item;
+		}
+
+		public IQueryable<preg_hospital_bag_item> GetItemByID(int id)
+		{
+			return connect.preg_hospital_bag_item.Where(c => c.id == id);
+		}
+		public IQueryable<preg_hospital_bag_item> GetItemsByParams(preg_hospital_bag_item data)
+		{
+			IQueryable<preg_hospital_bag_item> result = connect.preg_hospital_bag_item;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;
@@ -40,7 +40,7 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.name) > 0);
 				}
-				else if (propertyName == "type" && propertyValue != null)
+				else if (propertyName == "type" && (int)propertyValue != 0)
 				{
 					result = result.Where(c => c.type == (int)(propertyValue));
 				}
@@ -52,20 +52,20 @@ namespace PregnancyData.Dao
 			return result;
 		}
 		public void InsertData(preg_hospital_bag_item item)
-        {
-            connect.preg_hospital_bag_item.Add(item);
-            connect.SaveChanges();
-        }
+		{
+			connect.preg_hospital_bag_item.Add(item);
+			connect.SaveChanges();
+		}
 
-        public void UpdateData(preg_hospital_bag_item item)
-        {
-            connect.SaveChanges();
-        }
+		public void UpdateData(preg_hospital_bag_item item)
+		{
+			connect.SaveChanges();
+		}
 
-        public void DeleteData(preg_hospital_bag_item item)
-        {
-            connect.preg_hospital_bag_item.Remove(item);
-            connect.SaveChanges();
-        }
-    }
+		public void DeleteData(preg_hospital_bag_item item)
+		{
+			connect.preg_hospital_bag_item.Remove(item);
+			connect.SaveChanges();
+		}
+	}
 }

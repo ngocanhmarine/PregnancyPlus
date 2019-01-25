@@ -15,24 +15,24 @@ namespace PregnancyData.Dao
 			connect.Configuration.ProxyCreationEnabled = false;
 		}
 
-		public IEnumerable<preg_my_birth_plan> GetListItem()
+		public IQueryable<preg_my_birth_plan> GetListItem()
 		{
 			return connect.preg_my_birth_plan;
 		}
 
-		public preg_my_birth_plan GetItemByID(int user_id, int my_birth_plan_item_id)
+		public IQueryable<preg_my_birth_plan> GetItemByID(int user_id, int my_birth_plan_item_id)
 		{
-			return connect.preg_my_birth_plan.Where(c => c.my_birth_plan_item_id == my_birth_plan_item_id && c.user_id == user_id).FirstOrDefault();
+			return connect.preg_my_birth_plan.Where(c => c.my_birth_plan_item_id == my_birth_plan_item_id && c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_my_birth_plan> GetItemByUserID(int user_id)
+		public IQueryable<preg_my_birth_plan> GetItemByUserID(int user_id)
 		{
 			return connect.preg_my_birth_plan.Where(c => c.user_id == user_id);
 		}
 
-		public IEnumerable<preg_my_birth_plan> GetItemsByParams(preg_my_birth_plan data)
+		public IQueryable<preg_my_birth_plan> GetItemsByParams(preg_my_birth_plan data)
 		{
-			IEnumerable<preg_my_birth_plan> result = connect.preg_my_birth_plan;
+			IQueryable<preg_my_birth_plan> result = connect.preg_my_birth_plan;
 			for (int i = 0; i < data.GetType().GetProperties().ToList().Count(); i++)
 			{
 				string propertyName = data.GetType().GetProperties().ToList()[i].Name;

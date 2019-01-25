@@ -26,7 +26,6 @@ namespace _01.Pregnacy_API.Controllers
 				else
 				{
 					result = dao.GetListItem();
-
 				}
 				if (result.Count() > 0)
 				{
@@ -52,7 +51,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_country data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_country data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -105,7 +104,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_country()))
 				{
 					preg_country country = new preg_country();
-					country = dao.GetItemByID(Convert.ToInt32(id));
+					country = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (country == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -138,7 +137,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_country country = dao.GetItemByID(Convert.ToInt32(id));
+				preg_country country = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (country == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

@@ -270,6 +270,8 @@
     <Compile Include="Controllers\MyBirthPlanTypesController.cs" />
     <Compile Include="Controllers\MyWeightsController.cs" />
     <Compile Include="Controllers\MyWeightUnitsController.cs" />
+    <Compile Include="Controllers\NotificationController.cs" />
+    <Compile Include="Controllers\OtherAppController.cs" />
     <Compile Include="Controllers\PagesController.cs" />
     <Compile Include="Controllers\PhonesController.cs" />
     <Compile Include="Controllers\PregnancysController.cs" />
@@ -281,6 +283,7 @@
     <Compile Include="Controllers\ShoppingCategorysController.cs" />
     <Compile Include="Controllers\ShoppingItemsController.cs" />
     <Compile Include="Controllers\SizeGuidesController.cs" />
+    <Compile Include="Controllers\SocialLoginController.cs" />
     <Compile Include="Controllers\SocialTypesController.cs" />
     <Compile Include="Controllers\TimeFramesController.cs" />
     <Compile Include="Controllers\TimeLinesController.cs" />

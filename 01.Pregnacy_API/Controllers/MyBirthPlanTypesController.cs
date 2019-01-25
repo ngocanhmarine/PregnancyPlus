@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -55,7 +54,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_my_birth_plan_type data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_my_birth_plan_type data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -112,7 +111,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_my_birth_plan_type item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_my_birth_plan_type item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -134,7 +133,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_my_birth_plan_type()))
 				{
 					preg_my_birth_plan_type myBirthPlanType = new preg_my_birth_plan_type();
-					myBirthPlanType = dao.GetItemByID(Convert.ToInt32(id));
+					myBirthPlanType = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (myBirthPlanType == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -171,7 +170,7 @@ namespace _01.Pregnacy_API.Controllers
 		public async Task<HttpResponseMessage> Upload(string id)
 		{
 			// Check my_birth_plan_type exist
-			preg_my_birth_plan_type checkItem = dao.GetItemByID(Convert.ToInt32(id));
+			preg_my_birth_plan_type checkItem = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 			if (checkItem == null)
 			{
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, id));

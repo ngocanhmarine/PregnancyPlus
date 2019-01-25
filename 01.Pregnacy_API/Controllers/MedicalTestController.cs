@@ -51,7 +51,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_medical_test data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_medical_test data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -108,7 +108,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_medical_test item = dao.GetItemByID(Convert.ToInt32(id));
+				preg_medical_test item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -130,7 +130,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_medical_test()))
 				{
 					preg_medical_test medical_service_package = new preg_medical_test();
-					medical_service_package = dao.GetItemByID(Convert.ToInt32(id));
+					medical_service_package = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (medical_service_package == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

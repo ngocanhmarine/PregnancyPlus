@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using PregnancyData.Entity;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -60,7 +60,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_social_type data = dao.GetItemByID(Convert.ToInt32(id));
+				preg_social_type data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (data != null)
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, data);
@@ -112,7 +112,7 @@ namespace _01.Pregnacy_API.Controllers
 				if (!dataUpdate.DeepEquals(new preg_social_type()))
 				{
 					preg_social_type social_type = new preg_social_type();
-					social_type = dao.GetItemByID(Convert.ToInt32(id));
+					social_type = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 					if (social_type == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

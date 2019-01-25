@@ -44,6 +44,8 @@ namespace PregnancyData.Entity
 		public virtual DbSet<preg_my_birth_plan_type> preg_my_birth_plan_type { get; set; }
 		public virtual DbSet<preg_my_weight> preg_my_weight { get; set; }
 		public virtual DbSet<preg_my_weight_unit> preg_my_weight_unit { get; set; }
+		public virtual DbSet<preg_notification> preg_notification { get; set; }
+		public virtual DbSet<preg_other_app> preg_other_app { get; set; }
 		public virtual DbSet<preg_page> preg_page { get; set; }
 		public virtual DbSet<preg_phone> preg_phone { get; set; }
 		public virtual DbSet<preg_pregnancy> preg_pregnancy { get; set; }
@@ -240,6 +242,26 @@ namespace PregnancyData.Entity
 				.WithOptional(e => e.preg_my_weight_unit)
 				.HasForeignKey(e => e.my_weight_type_id);
 
+			modelBuilder.Entity<preg_notification>()
+				.Property(e => e.title)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_notification>()
+				.Property(e => e.content)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_other_app>()
+				.Property(e => e.name)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_other_app>()
+				.Property(e => e.google_play)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_other_app>()
+				.Property(e => e.app_store)
+				.IsUnicode(false);
+
 			modelBuilder.Entity<preg_page>()
 				.HasMany(e => e.preg_guides)
 				.WithOptional(e => e.preg_page)
@@ -358,8 +380,10 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.user_id);
 
 			modelBuilder.Entity<preg_user>()
-				.HasOptional(e => e.preg_customer_response)
-				.WithRequired(e => e.preg_user);
+				.HasMany(e => e.preg_customer_response)
+				.WithRequired(e => e.preg_user)
+				.HasForeignKey(e => e.user_id)
+				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_user>()
 				.HasMany(e => e.preg_customer_response1)
@@ -488,6 +512,11 @@ namespace PregnancyData.Entity
 
 			modelBuilder.Entity<preg_week>()
 				.HasMany(e => e.preg_my_weight)
+				.WithOptional(e => e.preg_week)
+				.HasForeignKey(e => e.week_id);
+
+			modelBuilder.Entity<preg_week>()
+				.HasMany(e => e.preg_notification)
 				.WithOptional(e => e.preg_week)
 				.HasForeignKey(e => e.week_id);
 

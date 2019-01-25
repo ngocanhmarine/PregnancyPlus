@@ -1,15 +1,14 @@
-﻿using System;
+﻿using PregnancyData.Dao;
+using PregnancyData.Entity;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-using PregnancyData.Entity;
-using System.IO;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using PregnancyData.Dao;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -113,7 +112,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_image image = dao.GetItemByID(Convert.ToInt32(id));
+				preg_image image = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
 				if (image == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -179,7 +178,7 @@ namespace _01.Pregnacy_API.Controllers
 			preg_image checkItem = dao.GetItemsByParams(new preg_image() { week_id = Convert.ToInt32(week), image_type_id = Convert.ToInt32(image_type_id) }).FirstOrDefault();
 			if (checkItem == null)
 			{
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_NOT_FOUND);
+				return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 			}
 			string dir = "/Files/Images/" + week + "/" + image_type_id;
 			string dirRoot = HttpContext.Current.Server.MapPath(dir);

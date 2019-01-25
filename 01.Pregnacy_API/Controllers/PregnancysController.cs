@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace _01.Pregnacy_API.Controllers
@@ -18,8 +19,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_pregnancy()))
 				{
+					data.user_id = user_id;
 					IEnumerable<preg_pregnancy> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
 					{
@@ -33,7 +36,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_pregnancy> result = dao.GetListItem();
+					IEnumerable<preg_pregnancy> result = dao.GetListItem().Where(c => c.user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -43,31 +46,6 @@ namespace _01.Pregnacy_API.Controllers
 						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 					}
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[Route("api/pregnancys/{id}")]
-		public HttpResponseMessage Get(string id)
-		{
-			try
-			{
-				preg_pregnancy data = dao.GetItemByID(Convert.ToInt32(id));
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 				}
 			}
 			catch (Exception ex)
@@ -83,8 +61,17 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				// Check data exist
+				preg_pregnancy checkData = dao.GetItemsByParams(new preg_pregnancy() { user_id = user_id }).FirstOrDefault();
+				if (checkData != null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+				}
+				// Check data null
 				if (!data.DeepEquals(new preg_pregnancy()))
 				{
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -104,20 +91,22 @@ namespace _01.Pregnacy_API.Controllers
 
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/pregnancys/{id}")]
-		public HttpResponseMessage Put(string id, [FromBody]preg_pregnancy dataUpdate)
+		[Route("api/pregnancys/update")]
+		public HttpResponseMessage Put([FromBody]preg_pregnancy dataUpdate)
 		{
-			return UpdateData(id, dataUpdate);
+			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+			return UpdateData(user_id.ToString(), dataUpdate);
 		}
 
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
-		[Route("api/pregnancys/{id}")]
-		public HttpResponseMessage Delete(string id)
+		[Route("api/pregnancys/delete")]
+		public HttpResponseMessage Delete()
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				dao.DeleteData(user_id);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
@@ -127,21 +116,17 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
-		public HttpResponseMessage UpdateData(string id, [FromBody]preg_pregnancy dataUpdate)
+		public HttpResponseMessage UpdateData(string user_id, [FromBody]preg_pregnancy dataUpdate)
 		{
 			try
 			{
 				if (!dataUpdate.DeepEquals(new preg_pregnancy()))
 				{
 					preg_pregnancy pregnancy = new preg_pregnancy();
-					pregnancy = dao.GetItemByID(Convert.ToInt32(id));
+					pregnancy = dao.GetItemsByParams(new preg_pregnancy() { user_id = Convert.ToInt32(user_id) }).FirstOrDefault();
 					if (pregnancy == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
-					}
-					if (dataUpdate.user_id != null)
-					{
-						pregnancy.user_id = dataUpdate.user_id;
 					}
 					if (dataUpdate.baby_gender != null)
 					{
@@ -170,6 +155,10 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.weeks_pregnant != null)
 					{
 						pregnancy.weeks_pregnant = dataUpdate.weeks_pregnant;
+					}
+					if (dataUpdate.start_date != null)
+					{
+						pregnancy.start_date = dataUpdate.start_date;
 					}
 
 					dao.UpdateData(pregnancy);

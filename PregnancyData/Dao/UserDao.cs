@@ -71,9 +71,9 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.status) > 0);
 				}
-				else if (propertyName == "avarta" && propertyValue != null)
+				else if (propertyName == "avatar" && propertyValue != null)
 				{
-					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.avarta) > 0);
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.avatar) > 0);
 				}
 				else if (propertyName == "email" && propertyValue != null)
 				{
@@ -82,6 +82,10 @@ namespace PregnancyData.Dao
 				else if (propertyName == "uid" && propertyValue != null)
 				{
 					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.uid) > 0);
+				}
+				else if (propertyName == "time_last_login" && propertyValue != null)
+				{
+					result = result.Where(c => c.time_last_login == (DateTime)(propertyValue));
 				}
 			}
 			return result;
@@ -109,7 +113,7 @@ namespace PregnancyData.Dao
 
 		public void DeleteData(int id)
 		{
-			preg_user user = connect.preg_user.Where(c => c.id == id).ToList()[0];
+			preg_user user = connect.preg_user.Where(c => c.id == id).FirstOrDefault();
 			connect.preg_user.Remove(user);
 			connect.SaveChanges();
 		}
@@ -122,7 +126,7 @@ namespace PregnancyData.Dao
 			IQueryable query = (from u in items
 								join up in myPregnancy on u.id equals up.user_id into joined
 								from j in joined.DefaultIfEmpty()
-								select new { u.id, u.phone, u.social_type_id, u.first_name, u.last_name, u.you_are_the, u.location, u.status, u.avarta, u.email, u.uid, j.baby_gender, j.due_date });
+								select new { u.id, u.phone, u.social_type_id, u.first_name, u.last_name, u.you_are_the, u.location, u.status, u.avatar, u.email, u.uid, u.time_created, u.time_last_login, j.baby_gender, j.due_date });
 			return query;
 		}
 	}
