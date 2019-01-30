@@ -242,14 +242,6 @@ namespace PregnancyData.Entity
 				.WithOptional(e => e.preg_my_weight_unit)
 				.HasForeignKey(e => e.my_weight_type_id);
 
-			modelBuilder.Entity<preg_notification>()
-				.Property(e => e.title)
-				.IsUnicode(false);
-
-			modelBuilder.Entity<preg_notification>()
-				.Property(e => e.content)
-				.IsUnicode(false);
-
 			modelBuilder.Entity<preg_other_app>()
 				.Property(e => e.name)
 				.IsUnicode(false);

@@ -358,8 +358,7 @@ Table "preg_time_line" {
 
 Table "preg_todo" {
   "id" int
-  "week_id" int
-  "month" int
+  "day_id" int
   "title" nvarchar
   "custom_task_by_user_id" int
 }
@@ -545,7 +544,7 @@ Ref:"preg_week"."id" < "preg_time_line"."week_id"
 
 Ref:"preg_user"."id" < "preg_todo"."custom_task_by_user_id"
 
-Ref:"preg_week"."id" < "preg_todo"."week_id"
+Ref:"preg_daily"."id" < "preg_todo"."day_id"
 
 Ref:"preg_user"."id" < "preg_upgrade"."user_id"
 
