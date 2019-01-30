@@ -31,6 +31,8 @@ namespace PregnancyData.Entity
         [StringLength(1024)]
         public string daily_blog { get; set; }
 
+        public string meta_description { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_daily_interact> preg_daily_interact { get; set; }
 

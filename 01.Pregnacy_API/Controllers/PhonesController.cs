@@ -20,8 +20,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_phone()))
 				{
+					data.user_id = user_id;
 					IEnumerable<preg_phone> result = dao.GetItemsByParams(data);
 					if (result.Count() > 0)
 					{
@@ -35,7 +37,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_phone> result = dao.GetListItem();
+					IEnumerable<preg_phone> result = dao.GetListItem().Where(c => c.user_id == user_id);
 					if (result.Count() > 0)
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -45,31 +47,6 @@ namespace _01.Pregnacy_API.Controllers
 						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 					}
-				}
-			}
-			catch (Exception ex)
-			{
-				HttpError err = new HttpError(ex.Message);
-				return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
-			}
-		}
-
-		// GET api/values/5
-		[Authorize]
-		[Route("api/phones/{id}")]
-		public HttpResponseMessage Get(string id)
-		{
-			try
-			{
-				preg_phone data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
-				if (data != null)
-				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
-				}
-				else
-				{
-					HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
 				}
 			}
 			catch (Exception ex)
@@ -85,8 +62,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_phone()))
 				{
+					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -118,7 +97,13 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				preg_phone item = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.user_id == user_id).FirstOrDefault();
+				if (item == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(item);
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
@@ -132,10 +117,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_phone()))
 				{
 					preg_phone phone = new preg_phone();
-					phone = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
+					phone = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.user_id == user_id).FirstOrDefault();
 					if (phone == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
@@ -148,9 +134,9 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						phone.phone_number = dataUpdate.phone_number;
 					}
-					if (dataUpdate.user_id != null)
+					if (dataUpdate.name != null)
 					{
-						phone.user_id = dataUpdate.user_id;
+						phone.name = dataUpdate.name;
 					}
 
 					dao.UpdateData(phone);

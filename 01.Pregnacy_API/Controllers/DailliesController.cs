@@ -161,6 +161,10 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						daily.daily_blog = dataUpdate.daily_blog;
 					}
+					if (dataUpdate.meta_description != null)
+					{
+						daily.meta_description = dataUpdate.meta_description;
+					}
 
 					dao.UpdateData(daily);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);

@@ -29,6 +29,9 @@ namespace PregnancyData.Entity
         public string title { get; set; }
 
         [StringLength(1024)]
+        public string highline_image { get; set; }
+
+        [StringLength(1024)]
         public string short_description { get; set; }
 
         [StringLength(1024)]
@@ -36,6 +39,8 @@ namespace PregnancyData.Entity
 
         [StringLength(1024)]
         public string daily_relation { get; set; }
+
+        public string meta_description { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<preg_image> preg_image { get; set; }

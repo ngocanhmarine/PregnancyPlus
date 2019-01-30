@@ -49,6 +49,10 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.title) > 0);
 				}
+				else if (propertyName == "highline_image" && propertyValue != null)
+				{
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.highline_image) > 0);
+				}
 				else if (propertyName == "short_description" && propertyValue != null)
 				{
 					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.short_description) > 0);
@@ -60,6 +64,10 @@ namespace PregnancyData.Dao
 				else if (propertyName == "daily_relation" && propertyValue != null)
 				{
 					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.daily_relation) > 0);
+				}
+				else if (propertyName == "meta_description" && propertyValue != null)
+				{
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.meta_description) > 0);
 				}
 			}
 			return result;

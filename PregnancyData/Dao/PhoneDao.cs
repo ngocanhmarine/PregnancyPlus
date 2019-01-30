@@ -49,6 +49,10 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}
+				else if (propertyName == "name" && propertyValue != null)
+				{
+					result = result.Where(c => SqlFunctions.PatIndex("%" + propertyValue.ToString() + "%", c.name) > 0);
+				}
 			}
 			return result;
 		}
@@ -64,12 +68,10 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
-		public void DeleteData(int id)
+		public void DeleteData(preg_phone item)
 		{
-			preg_phone Phone = GetItemByID(id).FirstOrDefault();
-			connect.preg_phone.Remove(Phone);
+			connect.preg_phone.Remove(item);
 			connect.SaveChanges();
 		}
-
 	}
 }

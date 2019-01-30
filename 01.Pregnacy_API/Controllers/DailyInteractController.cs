@@ -55,8 +55,14 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-				if (!data.DeepEquals(new preg_daily_interact()))
+				if (data.daily_id != 0)
 				{
+					//Check exist
+					preg_daily_interact checkExist = dao.GetItemByID(data.daily_id, user_id).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
 					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);

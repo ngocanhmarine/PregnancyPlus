@@ -157,6 +157,10 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						week.title = dataUpdate.title;
 					}
+					if (dataUpdate.highline_image != null)
+					{
+						week.highline_image = dataUpdate.highline_image;
+					}
 					if (dataUpdate.short_description != null)
 					{
 						week.short_description = dataUpdate.short_description;
@@ -168,6 +172,10 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.daily_relation != null)
 					{
 						week.daily_relation = dataUpdate.daily_relation;
+					}
+					if (dataUpdate.meta_description != null)
+					{
+						week.meta_description = dataUpdate.meta_description;
 					}
 
 					dao.UpdateData(week);
@@ -248,7 +256,7 @@ namespace _01.Pregnacy_API.Controllers
 					}
 					else
 					{
-						updateRow.short_description = path;
+						updateRow.highline_image = path;
 					}
 				}
 				UpdateData(id, updateRow);

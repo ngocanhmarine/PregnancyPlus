@@ -100,7 +100,7 @@ namespace _01.Pregnacy_API.Controllers
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpPut]
-		[Route("api/userbabyname/{kick_result_id}")]
+		[Route("api/userkickhistories/{kick_result_id}")]
 		public HttpResponseMessage Put(string kick_result_id, [FromBody]preg_user_kick_history dataUpdate)
 		{
 			try

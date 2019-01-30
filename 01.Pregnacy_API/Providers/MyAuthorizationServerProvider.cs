@@ -49,8 +49,8 @@ namespace _01.Pregnacy_API
 						preg_user user = connect.preg_user.Where(c => c.uid == userInfo.id && c.social_type_id == (int)SysConst.SocialTypes.facebook).FirstOrDefault();
 						if (user != null)
 						{
-							user.email = userInfo.email;
-							user.first_name = userInfo.name;
+							//user.email = userInfo.email;
+							//user.first_name = userInfo.name;
 							user.time_last_login = DateTime.Now;
 							connect.SaveChanges();
 						}
@@ -102,9 +102,9 @@ namespace _01.Pregnacy_API
 						preg_user user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
 						if (user != null)
 						{
-							user.email = userInfo.email;
-							user.first_name = userInfo.name;
-							user.avatar = userInfo.picture;
+							//user.email = userInfo.email;
+							//user.first_name = userInfo.name;
+							//user.avatar = userInfo.picture;
 							user.time_last_login = DateTime.Now;
 							connect.SaveChanges();
 						}
@@ -138,12 +138,61 @@ namespace _01.Pregnacy_API
 					}
 					else
 					{
-						context.SetError("Invalid grant", SysConst.LOGIN_SOCIAL_FAILED);
-						return;
+						var client2 = new RestClient("https://www.googleapis.com/oauth2/v1/");
+						var request2 = new RestRequest("userinfo", Method.GET);
+						request2.AddQueryParameter("alt", "json");
+						request2.AddQueryParameter("access_token", accessToken);
+						var response2 = client.Execute(request2);
+						if (response2.StatusCode == HttpStatusCode.OK)
+						{
+							var content = JObject.Parse(response2.Content);
+							var userInfo = new GoogleUserInfo() { sub = content["sub"].ToString(), name = content["name"].ToString(), email = content["email"].ToString(), picture = content["picture"].ToString(), given_name = content["given_name"].ToString(), family_name = content["family_name"].ToString() };
+							PregnancyEntity connect = new PregnancyEntity();
+							preg_user user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
+							if (user != null)
+							{
+								//user.email = userInfo.email;
+								//user.first_name = userInfo.name;
+								//user.avatar = userInfo.picture;
+								user.time_last_login = DateTime.Now;
+								connect.SaveChanges();
+							}
+							else
+							{
+								user = new preg_user();
+								user.uid = userInfo.sub;
+								user.email = userInfo.email;
+								user.first_name = userInfo.name;
+								user.avatar = userInfo.picture;
+								user.social_type_id = (int)SysConst.SocialTypes.google;
+								user.time_created = DateTime.Now;
+								connect.preg_user.Add(user);
+								connect.SaveChanges();
+								user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
+							}
+							preg_auth auth = connect.preg_auth.Where(c => c.user_id == user.id).FirstOrDefault();
+							if (auth == null)
+							{
+								auth = new preg_auth() { user_id = user.id };
+								connect.preg_auth.Add(auth);
+							}
+							auth.token = context.OwinContext.Request.Headers["access_token"];
+							connect.SaveChanges();
+
+							var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+							identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
+							identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
+							identity.AddClaim(new Claim("id", user.id.ToString()));
+							context.Validated(identity);
+						}
+						else
+						{
+							context.SetError("Invalid grant", SysConst.LOGIN_SOCIAL_FAILED);
+							return;
+						}
 					}
 				}
 			}
-
 			else if (context.UserName != null && context.Password != null)
 			{
 				var identity = new ClaimsIdentity(context.Options.AuthenticationType);
@@ -157,7 +206,7 @@ namespace _01.Pregnacy_API
 				if (user != null)
 				{
 					user.time_last_login = DateTime.Now;
-					dao.UpdateData(user);
+					connect.SaveChanges();
 					identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
 					identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.user.ToString()));
 					identity.AddClaim(new Claim("id", user.id.ToString()));

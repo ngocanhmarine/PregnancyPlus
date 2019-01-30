@@ -12,7 +12,6 @@ namespace PregnancyData.Entity
 
         public int? user_id { get; set; }
 
-        [StringLength(1024)]
         public string token { get; set; }
 
         [StringLength(1024)]

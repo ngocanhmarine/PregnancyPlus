@@ -74,8 +74,15 @@ namespace PregnancyData.Dao
 
 		public void InsertData(preg_weekly_interact item)
 		{
-			connect.preg_weekly_interact.Add(item);
-			connect.SaveChanges();
+			try
+			{
+				connect.preg_weekly_interact.Add(item);
+				connect.SaveChanges();
+			}
+			catch (System.Exception ex)
+			{
+				throw ex;
+			}
 		}
 
 		public void UpdateData(preg_weekly_interact item)

@@ -506,6 +506,10 @@ namespace PregnancyData.Entity
 				.WillCascadeOnDelete(false);
 
 			modelBuilder.Entity<preg_week>()
+				.Property(e => e.highline_image)
+				.IsUnicode(false);
+
+			modelBuilder.Entity<preg_week>()
 				.HasMany(e => e.preg_image)
 				.WithOptional(e => e.preg_week)
 				.HasForeignKey(e => e.week_id);

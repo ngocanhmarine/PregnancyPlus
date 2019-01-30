@@ -1,45 +1,48 @@
-table "preg_answer" {
-  "user_id" int PK
-  "question_id" int PK
+Table "preg_answer" {
+  "user_id" int
+  "question_id" int
   "questiondate" datetime
   "title" nvarchar
   "content" text
 }
 
-table "preg_appointment" {
-  "id" int PK
+Table "preg_appointment" {
+  "id" int
   "name" nvarchar
   "contact_name" nvarchar
   "profession_id" int
   "appointment_date" datetime
   "appointment_time" datetime
   "my_weight_type_id" int
+  "weight_in_st" float
   "sync_to_calendar" int
   "note" nvarchar
   "user_id" int
   "appointment_type_id" int
 }
 
-table "preg_appointment_measurement" {
-  "id" int PK
+Table "preg_appointment_measurement" {
+  "id" int
   "appointment_id" int
   "bp_dia" int
   "bp_sys" int
   "baby_heart" int
 }
 
-table "preg_appointment_type" {
-  "id" int PK
+Table "preg_appointment_type" {
+  "id" int
   "type" nvarchar
 }
 
-table "preg_auth" {
-  "id" int PK
+Table "preg_auth" {
+  "id" int
   "user_id" int
+  "token" varchar
+  "valid_to" varchar
 }
 
-table "preg_baby_name" {
-  "id" int PK
+Table "preg_baby_name" {
+  "id" int
   "country_id" int
   "gender_id" int
   "name" nvarchar
@@ -47,27 +50,29 @@ table "preg_baby_name" {
   "order" int
 }
 
-table "preg_contact_us" {
-  "id" int PK
+Table "preg_contact_us" {
+  "id" int
   "user_id" int
+  "email" varchar
   "message" nvarchar
 }
 
-table "preg_contraction" {
-  "id" int PK
+Table "preg_contraction" {
+  "id" int
   "user_id" int
   "date_time" datetime
   "duration" datetime
   "interval" datetime
 }
 
-table "preg_country" {
-  "id" int PK
+Table "preg_country" {
+  "id" int
   "name" nvarchar
 }
 
-table "preg_customer_response" {
-  "user_id" int PK
+Table "preg_customer_response" {
+  "id" int
+  "user_id" int
   "content" nvarchar
   "time" datetime
   "answer_user_id" int
@@ -75,17 +80,19 @@ table "preg_customer_response" {
   "answer_content" nvarchar
 }
 
-table "preg_daily" {
-  "id" int PK
+Table "preg_daily" {
+  "id" int
   "title" nvarchar
+  "highline_image" varchar
   "short_description" nvarchar
   "description" nvarchar
   "daily_blog" nvarchar
+  "meta_description" nvarchar
 }
 
-table "preg_daily_interact" {
-  "daily_id" int PK
-  "user_id" int PK
+Table "preg_daily_interact" {
+  "daily_id" int
+  "user_id" int
   "like" int
   "comment" nvarchar
   "share" int
@@ -93,144 +100,174 @@ table "preg_daily_interact" {
   "status" int
 }
 
-table "preg_faq" {
-  "id" int PK
+Table "preg_faq" {
+  "id" int
   "question" nvarchar
   "status" int
 }
 
-table "preg_faq_answer" {
-  "id" int PK
+Table "preg_faq_answer" {
+  "id" int
   "faq_id" int
   "answer_content" nvarchar
 }
 
-table "preg_gender" {
-  "id" int PK
+Table "preg_gender" {
+  "id" int
   "gender" nvarchar
 }
 
-table "preg_guides" {
-  "id" int PK
+Table "preg_guides" {
+  "id" int
   "page_id" int
   "guides_type_id" int
 }
 
-table "preg_guides_type" {
-  "id" int PK
+Table "preg_guides_type" {
+  "id" int
   "type" nvarchar
 }
 
-table "preg_help" {
-  "id" int PK
+Table "preg_help" {
+  "id" int
   "help_category_id" int
+  "image" varchar
   "description" nvarchar
 }
 
-table "preg_help_category" {
-  "id" int PK
+Table "preg_help_category" {
+  "id" int
   "name" nvarchar
+  "highline_image" varchar
   "order" int
 }
 
-table "preg_hospital_bag_item" {
-  "id" int PK
+Table "preg_hospital_bag_item" {
+  "id" int
   "name" nvarchar
   "type" int
   "custom_item_by_user_id" int
 }
 
-table "preg_image" {
-  "id" int PK
+Table "preg_image" {
+  "id" int
   "image_type_id" int
+  "image" varchar
   "week_id" int
 }
 
-table "preg_image_type" {
-  "id" int PK
+Table "preg_image_type" {
+  "id" int
   "type" nvarchar
 }
 
-table "preg_kick_result" {
-  "id" int PK
+Table "preg_kick_result" {
+  "id" int
   "kick_order" int
   "kick_time" datetime
   "elapsed_time" datetime
 }
 
-table "preg_medical_package_test" {
-  "medical_service_package_id" int PK
-  "medical_test_id" int PK
+Table "preg_medical_package_test" {
+  "medical_service_package_id" int
+  "medical_test_id" int
 }
 
-table "preg_medical_service_package" {
-  "id" int PK
+Table "preg_medical_service_package" {
+  "id" int
   "title" nvarchar
   "description" nvarchar
   "content" nvarchar
+  "discount" float
   "execution_department" nvarchar
   "address" nvarchar
   "execution_time" datetime
   "place" int
 }
 
-table "preg_medical_test" {
-  "id" int PK
+Table "preg_medical_test" {
+  "id" int
   "title" nvarchar
   "type" nvarchar
+  "price" float
 }
 
-table "preg_my_belly" {
-  "id" int PK
+Table "preg_my_belly" {
+  "id" int
+  "image" varchar
   "month" int
   "user_id" int
 }
 
-table "preg_my_birth_plan" {
-  "my_birth_plan_item_id" int PK
-  "user_id" int PK
+Table "preg_my_birth_plan" {
+  "my_birth_plan_item_id" int
+  "user_id" int
 }
 
-table "preg_my_birth_plan_item" {
-  "id" int PK
+Table "preg_my_birth_plan_item" {
+  "id" int
   "my_birth_plan_type_id" int
   "item_content" nvarchar
   "custom_item_by_user_id" int
 }
 
-table "preg_my_birth_plan_type" {
-  "id" int PK
+Table "preg_my_birth_plan_type" {
+  "id" int
   "type" nvarchar
   "type_icon" nvarchar
 }
 
-table "preg_my_weight" {
-  "id" int PK
+Table "preg_my_weight" {
+  "id" int
   "user_id" int
   "my_weight_type_id" int
   "start_date" datetime
+  "pre_pregnancy_weight" float
+  "current_weight" float
+  "week_id" int
+  "current_date" datetime
 }
 
-table "preg_my_weight_unit" {
-  "id" int PK
+Table "preg_my_weight_unit" {
+  "id" int
   "unit" nvarchar
 }
 
-table "preg_page" {
-  "id" int PK
+Table "preg_notification" {
+  "id" int
+  "week_id" int
+  "title" nvarchar
+  "content" nvarchar
+  "time_created" datetime
+  "time_last_push" datetime
+}
+
+Table "preg_other_app" {
+  "id" int
+  "name" varchar
+  "google_play" varchar
+  "app_store" varchar
+  "time_created" datetime
+  "time_last_update" datetime
+}
+
+Table "preg_page" {
+  "id" int
   "title" nvarchar
   "content" nvarchar
   "page_image" nvarchar
 }
 
-table "preg_phone" {
-  "id" int PK
+Table "preg_phone" {
+  "id" int
   "profession_id" int
+  "phone_number" varchar
   "user_id" int
+  "name" nvarchar
 }
 
-table "preg_pregnancy" {
-  "id" int PK
+Table "preg_pregnancy" {
+  "id" int
   "user_id" int
   "baby_gender" int
   "due_date" datetime
@@ -239,93 +276,103 @@ table "preg_pregnancy" {
   "baby_already_born" int
   "date_of_birth" datetime
   "weeks_pregnant" int
+  "start_date" datetime
 }
 
-table "preg_profession" {
-  "user_id" int PK
-  "profession_type_id" int PK
+Table "preg_profession" {
+  "user_id" int
+  "profession_type_id" int
   "status" int
 }
 
-table "preg_profession_type" {
-  "id" int PK
+Table "preg_profession_type" {
+  "id" int
   "profession_type" nvarchar
 }
 
-table "preg_question" {
-  "id" int PK
+Table "preg_question" {
+  "id" int
   "question_type_id" int
   "content" nvarchar
   "custom_question_by_user_id" int
 }
 
-table "preg_question_type" {
-  "id" int PK
+Table "preg_question_type" {
+  "id" int
   "type" nvarchar
 }
 
-table "preg_setting" {
-  "id" int PK
+Table "preg_setting" {
+  "id" int
+  "reminders" bit
+  "length_units" bit
   "weight_unit" int
   "user_id" int
   "revoke_consent" int
 }
 
-table "preg_shopping_category" {
-  "id" int PK
+Table "preg_shopping_category" {
+  "id" int
   "title" nvarchar
   "status" int
+  "icon" varchar
 }
 
-table "preg_shopping_item" {
-  "id" int PK
+Table "preg_shopping_item" {
+  "id" int
   "item_name" nvarchar
   "custom_item_by_user_id" int
   "category_id" int
   "status" int
 }
 
-table "preg_size_guide" {
-  "id" int PK
+Table "preg_size_guide" {
+  "id" int
+  "image" varchar
   "title" nvarchar
   "description" nvarchar
   "week_id" int
+  "length" float
+  "weight" float
   "type" int
 }
 
-table "preg_social_type" {
-  "id" int PK
+Table "preg_social_type" {
+  "id" int
   "type" nvarchar
 }
 
-table "preg_time_frame" {
-  "id" int PK
+Table "preg_time_frame" {
+  "id" int
   "frame_title" nvarchar
 }
 
-table "preg_time_line" {
-  "id" int PK
+Table "preg_time_line" {
+  "id" int
   "week_id" int
   "title" nvarchar
+  "image" varchar
   "position" nvarchar
   "time_frame_id" int
 }
 
-table "preg_todo" {
-  "id" int PK
+Table "preg_todo" {
+  "id" int
   "day_id" int
   "title" nvarchar
   "custom_task_by_user_id" int
 }
 
-table "preg_upgrade" {
-  "id" int PK
+Table "preg_upgrade" {
+  "id" int
   "user_id" int
   "version" varchar
 }
 
-table "preg_user" {
-  "id" int PK
+Table "preg_user" {
+  "id" int
+  "password" varchar
+  "phone" varchar
   "social_type_id" int
   "first_name" nvarchar
   "last_name" nvarchar
@@ -334,61 +381,70 @@ table "preg_user" {
   "status" nvarchar
   "avarta" nvarchar
   "email" nvarchar
+  "uid" varchar
+  "time_created" datetime
+  "time_last_login" datetime
 }
 
-table "preg_user_baby_name" {
-  "user_id" int PK
-  "baby_name_id" int PK
+Table "preg_user_baby_name" {
+  "user_id" int
+  "baby_name_id" int
 }
 
-table "preg_user_hospital_bag_item" {
-  "user_id" int PK
-  "hospital_bag_item_id" int PK
+Table "preg_user_hospital_bag_item" {
+  "user_id" int
+  "hospital_bag_item_id" int
   "status" int
 }
 
-table "preg_user_kick_history" {
-  "user_id" int PK
-  "kick_result_id" int PK
+Table "preg_user_kick_history" {
+  "user_id" int
+  "kick_result_id" int
   "kick_date" datetime
   "duration" datetime
 }
 
-table "preg_user_medical_service_package" {
-  "user_id" int PK
-  "medical_service_package_id" int PK
+Table "preg_user_medical_service_package" {
+  "user_id" int
+  "medical_service_package_id" int
   "time" datetime
   "description" nvarchar
+  "total_cost" float
   "status" int
   "payment_method" nvarchar
   "already_paid" int
 }
 
-table "preg_user_shopping_cart" {
-  "user_id" int PK
-  "shopping_item_id" int PK
+Table "preg_user_shopping_cart" {
+  "user_id" int
+  "shopping_item_id" int
   "status" int
 }
 
-table "preg_user_todo" {
-  "user_id" int PK
-  "todo_id" int PK
+Table "preg_user_todo" {
+  "user_id" int
+  "todo_id" int
   "status" int
 }
 
-table "preg_week" {
-  "id" int PK
+Table "preg_week" {
+  "id" int
+  "length" float
+  "weight" float
   "title" nvarchar
+  "highline_image" varchar
   "short_description" nvarchar
   "description" nvarchar
   "daily_relation" nvarchar
+  "meta_description" nvarchar
 }
 
-table "preg_weekly_interact" {
-  "week_id" int PK
-  "user_id" int PK
+Table "preg_weekly_interact" {
+  "week_id" int
+  "user_id" int
   "like" int
   "comment" nvarchar
+  "photo" varchar
   "share" nvarchar
   "notification" int
   "status" int
@@ -457,6 +513,8 @@ Ref:"preg_user"."id" < "preg_my_birth_plan_item"."custom_item_by_user_id"
 Ref:"preg_my_weight_unit"."id" < "preg_my_weight"."my_weight_type_id"
 
 Ref:"preg_user"."id" < "preg_my_weight"."user_id"
+
+Ref:"preg_week"."id" < "preg_my_weight"."week_id"
 
 Ref:"preg_profession_type"."id" < "preg_phone"."profession_id"
 

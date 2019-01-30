@@ -127,7 +127,7 @@ namespace _01.Pregnacy_API.Controllers
 		// PUT api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpPut]
-		[Route("api/userbabyname/{shopping_item_id}")]
+		[Route("api/usershoppingcart/{shopping_item_id}")]
 		public HttpResponseMessage Put(string shopping_item_id, [FromBody]preg_user_shopping_cart dataUpdate)
 		{
 			try

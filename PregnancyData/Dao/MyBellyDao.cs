@@ -37,7 +37,7 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.month == (int)(propertyValue));
 				}
-				else if (propertyName == "user_id" && (int)propertyValue != 0)
+				else if (propertyName == "user_id" && propertyValue != null)
 				{
 					result = result.Where(c => c.user_id == (int)(propertyValue));
 				}

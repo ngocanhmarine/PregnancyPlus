@@ -61,15 +61,15 @@ namespace _01.Pregnacy_API
 
 			#region Use google authentication
 			app.UseGoogleAuthentication(
-				clientId: "847363778687-nfritbg3svps0pm791o5tbdfpkmijo7r.apps.googleusercontent.com",
-				clientSecret: "FAfihg1Tw0xeWV4nY9R0Ld4n"
+				clientId: "777897868147-rp2lsjcfekdpo8f4grpas83otv45oe6a.apps.googleusercontent.com",
+				clientSecret: "C9cygLhslt_SakR1bWQA_L-4"
 				);
 			#endregion
 
 			#region Use facebook authentication
 			app.UseFacebookAuthentication(
-				appId: "2255664454668775",
-				appSecret: "994ab93f9bfd5d4c3f519d479d1fe7fe"
+				appId: "776758092657629",
+				appSecret: "1714101cf0a2fc53bc350f518b513cd7"
 			);
 			#endregion
 
