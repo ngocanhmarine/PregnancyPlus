@@ -90,5 +90,14 @@ namespace PregnancyData.Dao
 			connect.preg_week.Remove(item);
 			connect.SaveChanges();
 		}
+
+		public IQueryable FilterJoin(IQueryable<preg_week> items, int user_id)
+		{
+			var query = (from w in items
+						 join wi in connect.preg_weekly_interact on new { a = w.id, user_id } equals new { a = wi.week_id, wi.user_id } into joined
+						 from j in joined.DefaultIfEmpty()
+						 select new { w.id, w.length, w.weight, w.title, w.highline_image, w.short_description, w.description, w.daily_relation, w.meta_description, j.like, j.comment, j.photo, j.share, j.notification, j.status });
+			return query;
+		}
 	}
 }

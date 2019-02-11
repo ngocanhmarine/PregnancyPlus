@@ -60,7 +60,7 @@ namespace _01.Pregnacy_API.Controllers
 		[Authorize(Roles = "dev, admin")]
 		[HttpGet]
 		[Route("api/usermedicalservicepackages/{medical_service_package_id}")]
-		public HttpResponseMessage Get( string medical_service_package_id)
+		public HttpResponseMessage Get(string medical_service_package_id)
 		{
 			try
 			{
@@ -90,8 +90,25 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (data.user_id != 0 && data.medical_service_package_id != 0)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (data.medical_service_package_id != 0)
 				{
+					data.user_id = user_id;
+					//Check exist
+					preg_user_medical_service_package checkExist = dao.GetItemByID(user_id, data.medical_service_package_id).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+					//Check Medical Service Package
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_medical_service_package checkMedicalPackageExist = connect.preg_medical_service_package.Where(c => c.id == data.medical_service_package_id).FirstOrDefault();
+						if (checkMedicalPackageExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+					}
 					if (dao.InsertData(data))
 					{
 						return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
@@ -118,12 +135,19 @@ namespace _01.Pregnacy_API.Controllers
 		// DELETE api/values/5
 		[Authorize(Roles = "dev, admin")]
 		[HttpDelete]
-		[Route("api/usermedicalservicepackages/{user_id}/{medical_service_package_id}")]
-		public HttpResponseMessage Delete(string user_id, string medical_service_package_id)
+		[Route("api/usermedicalservicepackages/{medical_service_package_id}")]
+		public HttpResponseMessage Delete(string medical_service_package_id)
 		{
 			try
 			{
-				dao.DeleteData(Convert.ToInt32(user_id), Convert.ToInt32(medical_service_package_id));
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				//Check exist
+				preg_user_medical_service_package item = dao.GetItemByID(user_id, Convert.ToInt32(medical_service_package_id)).FirstOrDefault();
+				if (item == null)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				dao.DeleteData(user_id, Convert.ToInt32(medical_service_package_id));
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)

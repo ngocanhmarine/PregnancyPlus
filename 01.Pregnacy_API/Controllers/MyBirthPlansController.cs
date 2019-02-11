@@ -57,8 +57,24 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-				if (!data.DeepEquals(new preg_my_birth_plan()))
+				if (data.my_birth_plan_item_id != 0)
 				{
+					//Check exist
+					preg_my_birth_plan checkExist = dao.GetItemByID(user_id, data.my_birth_plan_item_id).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+					//Check My Birth Plan Item Exist
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_my_birth_plan_item checkMyBPIExist = connect.preg_my_birth_plan_item.Where(c => c.id == data.my_birth_plan_item_id).FirstOrDefault();
+						if (checkMyBPIExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+					}
+
 					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);

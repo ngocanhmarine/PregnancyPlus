@@ -22,6 +22,10 @@ namespace _01.Pregnacy_API.Controllers
 				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_shopping_item()))
 				{
+					if (data.custom_item_by_user_id != null)
+					{
+						data.custom_item_by_user_id = user_id;
+					}
 					IEnumerable<preg_shopping_item> result = dao.GetItemsByParams(data).Where(c => c.custom_item_by_user_id == null || c.custom_item_by_user_id == user_id);
 					if (result.Count() > 0)
 					{

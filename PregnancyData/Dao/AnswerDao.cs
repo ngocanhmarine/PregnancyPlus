@@ -2,6 +2,7 @@
 using System;
 using System.Data.Entity.SqlServer;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PregnancyData.Dao
 {
@@ -15,6 +16,11 @@ namespace PregnancyData.Dao
 		}
 
 		public IQueryable<preg_answer> GetListItem()
+		{
+			return connect.preg_answer;
+		}
+
+		public async Task<IQueryable<preg_answer>> GetListItemAsync()
 		{
 			return connect.preg_answer;
 		}

@@ -119,6 +119,24 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (data.medical_service_package_id != 0 && data.medical_test_id != 0)
 				{
+					//Check exist
+					preg_medical_package_test checkExist = dao.GetItemByID(data.medical_service_package_id, data.medical_test_id).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
+					//check medical service package & medical test exist
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_medical_service_package checkMedicalPackageExist = connect.preg_medical_service_package.Where(c => c.id == data.medical_service_package_id).FirstOrDefault();
+						preg_medical_test checkMedicalTestExist = connect.preg_medical_test.Where(c => c.id == data.medical_test_id).FirstOrDefault();
+						if (checkMedicalPackageExist == null || checkMedicalTestExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+					}
+
 					if (dao.InsertData(data))
 					{
 						return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);

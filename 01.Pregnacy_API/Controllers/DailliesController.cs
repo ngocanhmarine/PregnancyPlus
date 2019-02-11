@@ -60,7 +60,7 @@ namespace _01.Pregnacy_API.Controllers
 				IQueryable<preg_daily> data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
-					return Request.CreateResponse(HttpStatusCode.OK,dao.FilterJoin( data,user_id));
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(data, user_id));
 				}
 				else
 				{
@@ -218,7 +218,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else if (File.Exists(dirRoot + "/" + file.FileName))
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+					File.Delete(dirRoot + "/" + file.FileName);
 				}
 			}
 

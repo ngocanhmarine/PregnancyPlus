@@ -52,7 +52,7 @@ namespace _01.Pregnacy_API.Controllers
 		// GET api/values
 		[Authorize(Roles = "admin")]
 		[Route("api/auths/getall")]
-		public async Task<HttpResponseMessage> GetAll([FromUri]preg_auth data)
+		public HttpResponseMessage GetAll([FromUri]preg_auth data)
 		{
 			try
 			{

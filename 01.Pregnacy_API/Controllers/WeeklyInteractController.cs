@@ -27,8 +27,8 @@ namespace _01.Pregnacy_API.Controllers
 				if (!data.DeepEquals(new preg_weekly_interact()))
 				{
 					data.user_id = user_id;
-					IEnumerable<preg_weekly_interact> result = dao.GetItemsByParams(data);
-					if (result.Count() > 0)
+					IQueryable<preg_weekly_interact> result = dao.GetItemsByParams(data);
+					if (result.Any())
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
 					}
@@ -40,8 +40,8 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else
 				{
-					IEnumerable<preg_weekly_interact> result = dao.GetListItem().Where(c => c.user_id == user_id);
-					if (result.Count() > 0)
+					IQueryable<preg_weekly_interact> result = dao.GetListItem().Where(c => c.user_id == user_id);
+					if (result.Any())
 					{
 						return Request.CreateResponse(HttpStatusCode.OK, result);
 					}
@@ -191,7 +191,8 @@ namespace _01.Pregnacy_API.Controllers
 			preg_weekly_interact checkItem = dao.GetItemByID(Convert.ToInt32(week_id), Convert.ToInt32(user_id)).FirstOrDefault();
 			if (checkItem == null)
 			{
-				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.ITEM_ID_NOT_EXIST, week_id));
+				preg_weekly_interact insertItem = new preg_weekly_interact() { week_id = Convert.ToInt32(week_id), user_id = Convert.ToInt32(user_id) };
+				dao.InsertData(insertItem);
 			}
 
 			string dir = "/Files/WeeklyInteract/" + week_id.ToString() + "/" + user_id.ToString();
@@ -216,7 +217,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else if (File.Exists(dirRoot + "/" + file.FileName))
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+					File.Delete(dirRoot + "/" + file.FileName);
 				}
 			}
 

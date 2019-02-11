@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Linq;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -155,6 +156,43 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					HttpError err = new HttpError(SysConst.PHONE_PASSWORD_NOT_NULL);
 					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+				}
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		// POST api/values
+		[AllowAnonymous]
+		[HttpPost]
+		[Route("api/users/createguestaccount")]
+		public HttpResponseMessage CreateGuestAccount()
+		{
+			try
+			{
+				preg_user newGuestAccount = new preg_user();
+				preg_user checkExist = new preg_user();
+				while (checkExist != null)
+				{
+					newGuestAccount = RandomGuestAccount();
+					//Check account exist
+					checkExist = dao.GetListUser().Where(c => c.phone == newGuestAccount.phone).FirstOrDefault();
+				}
+				string password = newGuestAccount.password;
+				newGuestAccount.password = SysMethod.MD5Hash(newGuestAccount.password);
+				newGuestAccount.time_created = DateTime.Now;
+				newGuestAccount.social_type_id = null;
+				newGuestAccount.uid = null;
+				if (dao.InsertData(newGuestAccount))
+				{
+					return Request.CreateResponse(HttpStatusCode.Created, new { newGuestAccount.phone, password });
+				}
+				else
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_INSERT_FAIL);
 				}
 			}
 			catch (Exception ex)
@@ -450,6 +488,39 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				return false;
 			}
+		}
+
+		protected string RandomString(int length)
+		{
+			var chars = "0123456789";
+			var chars2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			var stringChars = new char[length];
+			var random = new Random();
+			for (int i = 0; i < stringChars.Length; i++)
+			{
+				stringChars[i] = chars[random.Next(chars.Length)];
+			}
+			return new String(stringChars);
+		}
+		protected preg_user RandomGuestAccount()
+		{
+			var chars = "0123456789";
+			var chars2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			var stringUsername = new char[8];
+			var random = new Random();
+			for (int i = 0; i < stringUsername.Length; i++)
+			{
+				stringUsername[i] = chars[random.Next(chars.Length)];
+			}
+			string username = "guest" + new string(stringUsername);
+			var stringPassword = new char[8];
+			var random2 = new Random();
+			for (int i = 0; i < stringPassword.Length; i++)
+			{
+				stringPassword[i] = chars2[random.Next(chars2.Length)];
+			}
+			string password = new string(stringPassword);
+			return new preg_user() { phone = username, password = password };
 		}
 	}
 }

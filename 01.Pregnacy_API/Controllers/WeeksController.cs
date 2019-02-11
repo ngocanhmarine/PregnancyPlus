@@ -23,25 +23,25 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_week()))
 				{
-					IEnumerable<preg_week> result = dao.GetItemsByParams(data);
-					if (result.Count() > 0)
+					IQueryable<preg_week> result = dao.GetItemsByParams(data);
+					if (result.Any())
 					{
-						return Request.CreateResponse(HttpStatusCode.OK, result);
+						return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result, user_id));
 					}
 					else
 					{
-						HttpError err = new HttpError(SysConst.DATA_NOT_FOUND);
-						return Request.CreateErrorResponse(HttpStatusCode.NotFound, err);
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 				}
 				else
 				{
-					IEnumerable<preg_week> result = dao.GetListItem();
-					if (result.Count() > 0)
+					IQueryable<preg_week> result = dao.GetListItem();
+					if (result.Any())
 					{
-						return Request.CreateResponse(HttpStatusCode.OK, result);
+						return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result, user_id));
 					}
 					else
 					{
@@ -63,10 +63,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_week data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
-				if (data != null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				IQueryable<preg_week> data = dao.GetItemByID(Convert.ToInt32(id));
+				if (data.Any())
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(data, user_id));
 				}
 				else
 				{
@@ -231,7 +232,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else if (File.Exists(dirRoot + "/" + file.FileName))
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+					File.Delete(dirRoot + "/" + file.FileName);
 				}
 			}
 

@@ -35,17 +35,13 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.id == (int)(propertyValue));
 				}
-				else if (propertyName == "kick_order" && propertyValue != null)
+				else if (propertyName == "kick_date" && propertyValue != null)
 				{
-					result = result.Where(c => c.kick_order == (int)(propertyValue));
+					result = result.Where(c => c.kick_date == (DateTime)(propertyValue));
 				}
-				else if (propertyName == "kick_time" && propertyValue != null)
+				else if (propertyName == "duration" && propertyValue != null)
 				{
-					result = result.Where(c => c.kick_time == (DateTime)(propertyValue));
-				}
-				else if (propertyName == "elapsed_time" && propertyValue != null)
-				{
-					result = result.Where(c => c.elapsed_time == (DateTime)(propertyValue));
+					result = result.Where(c => c.duration == (float)(propertyValue));
 				}
 			}
 			return result;
@@ -68,5 +64,18 @@ namespace PregnancyData.Dao
 			connect.SaveChanges();
 		}
 
+		/// <summary>
+		/// Filter the result to display only with the user_id provided
+		/// </summary>
+		/// <param name="items"></param>
+		/// <param name="user_id"></param>
+		/// <returns></returns>
+		public IQueryable FilterJoin(IQueryable<preg_kick_result> items, int user_id)
+		{
+			IQueryable query = (from ks in items
+								join ukh in connect.preg_user_kick_history on new { ks.id, user_id } equals new { id = ukh.kick_result_id, ukh.user_id }
+								select ks);
+			return query;
+		}
 	}
 }

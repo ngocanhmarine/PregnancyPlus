@@ -102,6 +102,7 @@
     <Compile Include="Dao\HospitalBagItemDao.cs" />
     <Compile Include="Dao\ImageDao.cs" />
     <Compile Include="Dao\ImageTypeDao.cs" />
+    <Compile Include="Dao\KickResultDetailDao.cs" />
     <Compile Include="Dao\MedicalTestDao.cs" />
     <Compile Include="Dao\MedicalServicePackageDao.cs" />
     <Compile Include="Dao\MedicalPackageTestDao.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Entity\preg_image.cs" />
     <Compile Include="Entity\preg_image_type.cs" />
     <Compile Include="Entity\preg_kick_result.cs" />
+    <Compile Include="Entity\preg_kick_result_detail.cs" />
     <Compile Include="Entity\preg_medical_package_test.cs" />
     <Compile Include="Entity\preg_medical_service_package.cs" />
     <Compile Include="Entity\preg_medical_test.cs" />

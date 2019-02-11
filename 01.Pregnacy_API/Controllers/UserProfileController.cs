@@ -369,11 +369,7 @@ namespace _01.Pregnacy_API.Controllers
 				// Check if exist file
 				else if (File.Exists(dirRoot + "/" + file.FileName))
 				{
-					// Update old file path to data
-					string path = dir + "/" + HttpUtility.UrlPathEncode(file.FileName);
-					preg_user updateRow = new preg_user() { avatar = path };
-					UpdateData(user_id.ToString(), updateRow);
-					return Request.CreateResponse(HttpStatusCode.Accepted, String.Format(SysConst.FILE_EXIST_AND_UPDATE, file.FileName));
+					File.Delete(dirRoot + "/" + file.FileName);
 				}
 			}
 

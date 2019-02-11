@@ -163,9 +163,15 @@ Table "preg_image_type" {
 
 Table "preg_kick_result" {
   "id" int
+  "kick_date" datetime
+  "duration" float
+}
+
+Table "preg_kick_result_detail" {
+  "kick_result_id" int
   "kick_order" int
   "kick_time" datetime
-  "elapsed_time" datetime
+  "elapsed_time" float
 }
 
 Table "preg_medical_package_test" {
@@ -561,6 +567,8 @@ Ref:"preg_user"."id" < "preg_user_hospital_bag_item"."user_id"
 Ref:"preg_user"."id" < "preg_user_kick_history"."user_id"
 
 Ref:"preg_kick_result"."id" < "preg_user_kick_history"."kick_result_id"
+
+Ref:"preg_kick_result"."id" < "preg_kick_result_detail"."kick_result_id"
 
 Ref:"preg_medical_service_package"."id" < "preg_user_medical_service_package"."medical_service_package_id"
 

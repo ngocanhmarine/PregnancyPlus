@@ -94,11 +94,22 @@ namespace _01.Pregnacy_API.Controllers
 				if (data.shopping_item_id != 0)
 				{
 					data.user_id = user_id;
+
 					//Check exist
 					preg_user_shopping_cart checkExist = dao.GetItemByParams(new preg_user_shopping_cart() { user_id = user_id, shopping_item_id = data.shopping_item_id }).FirstOrDefault();
 					if (checkExist != null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
+					//Check Shopping Item Exist
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_shopping_item checkShoppingItemExist = connect.preg_shopping_item.Where(c => c.id == data.shopping_item_id).FirstOrDefault();
+						if (checkShoppingItemExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
 					}
 
 					if (dao.InsertData(data))

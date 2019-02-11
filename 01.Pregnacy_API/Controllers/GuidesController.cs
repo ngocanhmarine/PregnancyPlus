@@ -20,7 +20,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				IEnumerable<preg_guides> result;
+				IQueryable<preg_guides> result;
 				if (!data.DeepEquals(new preg_guides()))
 				{
 					result = dao.GetItemsByParams(data);
@@ -31,7 +31,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				if (result.Count() > 0)
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, result);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result));
 				}
 				else
 				{
@@ -54,10 +54,10 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_guides data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
+				IQueryable<preg_guides> data = dao.GetItemByID(Convert.ToInt32(id));
 				if (data != null)
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(data));
 				}
 				else
 				{
@@ -78,8 +78,25 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				if (!data.DeepEquals(new preg_guides()))
+				if (data.page_id != 0 && data.guides_type_id != 0)
 				{
+					//Check exist
+					preg_guides checkExist = dao.GetItemsByParams(new preg_guides() { page_id = data.page_id, guides_type_id = data.guides_type_id }).FirstOrDefault();
+					if (checkExist != null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
+					}
+
+					//Check page & guide type exist
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_page checkPageExist = connect.preg_page.Where(c => c.id == data.page_id).FirstOrDefault();
+						preg_guides_type checkGuideTypeExist = connect.preg_guides_type.Where(c => c.id == data.guides_type_id).FirstOrDefault();
+						if (checkPageExist == null || checkGuideTypeExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+					}
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}

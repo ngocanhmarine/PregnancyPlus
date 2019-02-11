@@ -178,5 +178,34 @@ namespace _01.Pregnacy_API.Controllers
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
 			}
 		}
+
+		// DELETE all
+		[Authorize(Roles = "dev, admin")]
+		[Route("api/myweights/all")]
+		[HttpDelete]
+		public HttpResponseMessage DeleteAll()
+		{
+			try
+			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				IQueryable<preg_my_weight> item = dao.GetListItem().Where(c => c.user_id == user_id);
+				if (!item.Any())
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+				}
+				while (item.AsEnumerable().Count() > 0)
+				{
+					dao.DeleteData(item.FirstOrDefault());
+				}
+
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
 	}
 }

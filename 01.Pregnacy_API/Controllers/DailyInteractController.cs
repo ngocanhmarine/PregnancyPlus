@@ -63,6 +63,17 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
 					}
+
+					//Check Daily Exist
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_daily checkDailyExist = connect.preg_daily.Where(c => c.id == data.daily_id).FirstOrDefault();
+						if (checkDailyExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+					}
+
 					data.user_id = user_id;
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);

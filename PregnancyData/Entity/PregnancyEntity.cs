@@ -35,6 +35,7 @@ namespace PregnancyData.Entity
 		public virtual DbSet<preg_image> preg_image { get; set; }
 		public virtual DbSet<preg_image_type> preg_image_type { get; set; }
 		public virtual DbSet<preg_kick_result> preg_kick_result { get; set; }
+		public virtual DbSet<preg_kick_result_detail> preg_kick_result_detail { get; set; }
 		public virtual DbSet<preg_medical_package_test> preg_medical_package_test { get; set; }
 		public virtual DbSet<preg_medical_service_package> preg_medical_service_package { get; set; }
 		public virtual DbSet<preg_medical_test> preg_medical_test { get; set; }
@@ -182,8 +183,20 @@ namespace PregnancyData.Entity
 				.HasForeignKey(e => e.image_type_id);
 
 			modelBuilder.Entity<preg_kick_result>()
+				.HasMany(e => e.preg_kick_result_detail)
+				.WithRequired(e => e.preg_kick_result)
+				.HasForeignKey(e => e.kick_result_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_kick_result>()
 				.HasMany(e => e.preg_user_kick_history)
 				.WithRequired(e => e.preg_kick_result)
+				.HasForeignKey(e => e.kick_result_id)
+				.WillCascadeOnDelete(false);
+
+			modelBuilder.Entity<preg_kick_result>()
+				.HasMany(e => e.preg_user_kick_history1)
+				.WithRequired(e => e.preg_kick_result1)
 				.HasForeignKey(e => e.kick_result_id)
 				.WillCascadeOnDelete(false);
 

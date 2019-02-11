@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using PregnancyData.Entity;
 using PregnancyData.Dao;
+using System.Security.Claims;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -19,7 +20,8 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				IEnumerable<preg_kick_result> result;
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				IQueryable<preg_kick_result> result;
 				if (!data.DeepEquals(new preg_kick_result()))
 				{
 					result = dao.GetItemsByParams(data);
@@ -28,9 +30,9 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					result = dao.GetListItem();
 				}
-				if (result.Count() > 0)
+				if (result.Any())
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, result);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result, user_id));
 				}
 				else
 				{
@@ -52,10 +54,11 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_kick_result data = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
-				if (data != null)
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				IQueryable<preg_kick_result> data = dao.GetItemByID(Convert.ToInt32(id));
+				if (data.Any())
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, data);
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(data, user_id));
 				}
 				else
 				{
@@ -79,7 +82,15 @@ namespace _01.Pregnacy_API.Controllers
 				if (!data.DeepEquals(new preg_kick_result()))
 				{
 					dao.InsertData(data);
-					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
+					//Insert to UserKickHistories
+					int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+					preg_user_kick_history userKickHistory = new preg_user_kick_history() { user_id = user_id, kick_result_id = data.id };
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						connect.preg_user_kick_history.Add(userKickHistory);
+						connect.SaveChanges();
+					}
+					return Request.CreateResponse(HttpStatusCode.Created, data);
 				}
 				else
 				{
@@ -99,7 +110,6 @@ namespace _01.Pregnacy_API.Controllers
 		[Route("api/kickresults/{id}")]
 		public HttpResponseMessage Put(string id, [FromBody]preg_kick_result dataUpdate)
 		{
-			//lstStrings[id] = value;
 			try
 			{
 				if (!dataUpdate.DeepEquals(new preg_kick_result()))
@@ -110,17 +120,13 @@ namespace _01.Pregnacy_API.Controllers
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
-					if (dataUpdate.kick_order != 0)
+					if (dataUpdate.kick_date != null)
 					{
-						kick_result.kick_order = dataUpdate.kick_order;
+						kick_result.kick_date = dataUpdate.kick_date;
 					}
-					if (dataUpdate.kick_time != null)
+					if (dataUpdate.duration != null)
 					{
-						kick_result.kick_time = dataUpdate.kick_time;
-					}
-					if (dataUpdate.elapsed_time != null)
-					{
-						kick_result.elapsed_time = dataUpdate.elapsed_time;
+						kick_result.duration = dataUpdate.duration;
 					}
 
 					dao.UpdateData(kick_result);
@@ -146,18 +152,53 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_kick_result item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
-				if (item == null)
+				//Delete reference
+				using (PregnancyEntity connect = new PregnancyEntity())
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					preg_kick_result item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
+					if (item == null)
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+					}
+					if (!DeleteReferenceData(Convert.ToInt32(id)))
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_DELETE_FAIL);
+					}
+
+					dao.DeleteData(item);
+					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 				}
-				dao.DeleteData(item);
-				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
 			{
 				HttpError err = new HttpError(ex.Message);
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		public bool DeleteReferenceData(int kick_result_id)
+		{
+			try
+			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				PregnancyEntity connect = new PregnancyEntity();
+				IEnumerable<preg_kick_result_detail> kickResultDetailDel = connect.preg_kick_result_detail.Where(c => c.kick_result_id == kick_result_id);
+				while (kickResultDetailDel.Count() > 0)
+				{
+					connect.preg_kick_result_detail.Remove(kickResultDetailDel.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				IEnumerable<preg_user_kick_history> userKickHistoryDel = connect.preg_user_kick_history.Where(c => c.user_id == user_id && c.kick_result_id == kick_result_id);
+				while (userKickHistoryDel.Count() > 0)
+				{
+					connect.preg_user_kick_history.Remove(userKickHistoryDel.FirstOrDefault());
+					connect.SaveChanges();
+				}
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
 			}
 		}
 	}

@@ -256,7 +256,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else if (File.Exists(dirRoot + "/" + file.FileName))
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+					File.Delete(dirRoot + "/" + file.FileName);
 				}
 			}
 
@@ -320,7 +320,7 @@ namespace _01.Pregnacy_API.Controllers
 				}
 				else if (File.Exists(dirRoot + "/" + file.FileName))
 				{
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, String.Format(SysConst.FILE_EXIST, file.FileName));
+					File.Delete(dirRoot + "/" + file.FileName);
 				}
 			}
 

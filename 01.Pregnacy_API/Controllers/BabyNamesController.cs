@@ -22,11 +22,15 @@ namespace _01.Pregnacy_API.Controllers
 				IQueryable<preg_baby_name> result;
 				if (!data.DeepEquals(new preg_baby_name()))
 				{
-					result = dao.GetItemsByParams(data);
+					if (data.custom_baby_name_by_user_id != null)
+					{
+						data.custom_baby_name_by_user_id = user_id;
+					}
+					result = dao.GetItemsByParams(data).Where(c => c.custom_baby_name_by_user_id == null || c.custom_baby_name_by_user_id == user_id);
 				}
 				else
 				{
-					result = dao.GetListItem();
+					result = dao.GetListItem().Where(c => c.custom_baby_name_by_user_id == null || c.custom_baby_name_by_user_id == user_id);
 				}
 				if (result.Any())
 				{
@@ -53,7 +57,7 @@ namespace _01.Pregnacy_API.Controllers
 			try
 			{
 				int user_id = Convert.ToInt32(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
-				IQueryable<preg_baby_name> data = dao.GetItemByID(Convert.ToInt32(id));
+				IQueryable<preg_baby_name> data = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_baby_name_by_user_id == null || c.custom_baby_name_by_user_id == user_id);
 				if (data.Any())
 				{
 					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterUserID(data, user_id));
@@ -77,8 +81,14 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
 				if (!data.DeepEquals(new preg_baby_name()))
 				{
+					if (data.custom_baby_name_by_user_id != null)
+					{
+						data.custom_baby_name_by_user_id = user_id;
+					}
+
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}
@@ -102,6 +112,7 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
 				if (!dataUpdate.DeepEquals(new preg_baby_name()))
 				{
 					preg_baby_name baby_name = new preg_baby_name();
@@ -124,7 +135,7 @@ namespace _01.Pregnacy_API.Controllers
 					}
 					if (dataUpdate.custom_baby_name_by_user_id != null)
 					{
-						baby_name.custom_baby_name_by_user_id = dataUpdate.custom_baby_name_by_user_id;
+						baby_name.custom_baby_name_by_user_id = user_id;
 					}
 					if (dataUpdate.order != null)
 					{
@@ -154,7 +165,8 @@ namespace _01.Pregnacy_API.Controllers
 		{
 			try
 			{
-				preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id)).FirstOrDefault();
+				int user_id = Convert.ToInt32(((ClaimsIdentity)User.Identity).FindFirst("id").Value);
+				preg_baby_name item = dao.GetItemByID(Convert.ToInt32(id)).Where(c => c.custom_baby_name_by_user_id == null || c.custom_baby_name_by_user_id == user_id).FirstOrDefault();
 				if (item == null)
 				{
 					return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);

@@ -109,6 +109,16 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (data.user_id != 0 && data.profession_type_id != 0)
 				{
+					//Check user & profession type exist
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_user checkUserExist = connect.preg_user.Where(c => c.id == data.user_id).FirstOrDefault();
+						preg_profession_type checkPTypeExist = connect.preg_profession_type.Where(c => c.id == data.profession_type_id).FirstOrDefault();
+						if (checkUserExist == null || checkPTypeExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+					}
 					dao.InsertData(data);
 					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
 				}

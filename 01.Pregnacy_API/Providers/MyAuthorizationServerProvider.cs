@@ -38,13 +38,25 @@ namespace _01.Pregnacy_API
 					var accessToken = context.OwinContext.Request.Headers["access_token"];
 					var client = new RestClient("https://graph.facebook.com/");
 					var request = new RestRequest("me", Method.GET);
-					request.AddQueryParameter("fields", "id,name,email");
+					request.AddQueryParameter("fields", "id,name,email,picture.width(2000).height(2000)");
 					request.AddQueryParameter("access_token", accessToken);
 					var response = client.Execute(request);
 					if (response.StatusCode == HttpStatusCode.OK)
 					{
 						var content = JObject.Parse(response.Content);
-						var userInfo = new FacebookUserInfo() { id = content["id"].ToString(), name = content["name"].ToString(), email = content["email"].ToString() };
+						var userInfo = new FacebookUserInfo() { id = content["id"].ToString() };
+						if (content["name"] != null)
+						{
+							userInfo.name = content["name"].ToString();
+						}
+						if (content["email"] != null)
+						{
+							userInfo.email = content["email"].ToString();
+						}
+						if (content["picture"]["data"]["url"] != null)
+						{
+							userInfo.avatar = content["picture"]["data"]["url"].ToString();
+						}
 						PregnancyEntity connect = new PregnancyEntity();
 						preg_user user = connect.preg_user.Where(c => c.uid == userInfo.id && c.social_type_id == (int)SysConst.SocialTypes.facebook).FirstOrDefault();
 						if (user != null)
@@ -60,6 +72,7 @@ namespace _01.Pregnacy_API
 							user.uid = userInfo.id;
 							user.email = userInfo.email;
 							user.first_name = userInfo.name;
+							user.avatar = userInfo.avatar;
 							user.social_type_id = (int)SysConst.SocialTypes.facebook;
 							user.time_created = DateTime.Now;
 							connect.preg_user.Add(user);
@@ -97,7 +110,27 @@ namespace _01.Pregnacy_API
 					if (response.StatusCode == HttpStatusCode.OK)
 					{
 						var content = JObject.Parse(response.Content);
-						var userInfo = new GoogleUserInfo() { sub = content["sub"].ToString(), name = content["name"].ToString(), email = content["email"].ToString(), picture = content["picture"].ToString(), given_name = content["given_name"].ToString(), family_name = content["family_name"].ToString() };
+						var userInfo = new GoogleUserInfo() { sub = content["sub"].ToString() };
+						if (content["name"] != null)
+						{
+							userInfo.name = content["name"].ToString();
+						}
+						if (content["email"] != null)
+						{
+							userInfo.email = content["email"].ToString();
+						}
+						if (content["picture"] != null)
+						{
+							userInfo.picture = content["picture"].ToString();
+						}
+						if (content["given_name"] != null)
+						{
+							userInfo.given_name = content["given_name"].ToString();
+						}
+						if (content["family_name"] != null)
+						{
+							userInfo.family_name = content["family_name"].ToString();
+						}
 						PregnancyEntity connect = new PregnancyEntity();
 						preg_user user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
 						if (user != null)
@@ -146,7 +179,27 @@ namespace _01.Pregnacy_API
 						if (response2.StatusCode == HttpStatusCode.OK)
 						{
 							var content = JObject.Parse(response2.Content);
-							var userInfo = new GoogleUserInfo() { sub = content["sub"].ToString(), name = content["name"].ToString(), email = content["email"].ToString(), picture = content["picture"].ToString(), given_name = content["given_name"].ToString(), family_name = content["family_name"].ToString() };
+							var userInfo = new GoogleUserInfo() { sub = content["sub"].ToString() };
+							if (content["name"] != null)
+							{
+								userInfo.name = content["name"].ToString();
+							}
+							if (content["email"] != null)
+							{
+								userInfo.email = content["email"].ToString();
+							}
+							if (content["picture"] != null)
+							{
+								userInfo.picture = content["picture"].ToString();
+							}
+							if (content["given_name"] != null)
+							{
+								userInfo.given_name = content["given_name"].ToString();
+							}
+							if (content["family_name"] != null)
+							{
+								userInfo.family_name = content["family_name"].ToString();
+							}
 							PregnancyEntity connect = new PregnancyEntity();
 							preg_user user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
 							if (user != null)

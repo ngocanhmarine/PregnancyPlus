@@ -23,6 +23,10 @@ namespace _01.Pregnacy_API.Controllers
 				IEnumerable<preg_hospital_bag_item> result;
 				if (!data.DeepEquals(new preg_hospital_bag_item()))
 				{
+					if (data.custom_item_by_user_id != null)
+					{
+						data.custom_item_by_user_id = user_id;
+					}
 					result = dao.GetItemsByParams(data).Where(c => c.custom_item_by_user_id == null || c.custom_item_by_user_id == user_id);
 				}
 				else

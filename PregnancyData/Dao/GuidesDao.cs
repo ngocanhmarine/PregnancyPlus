@@ -63,6 +63,18 @@ namespace PregnancyData.Dao
 			connect.preg_guides.Remove(item);
 			connect.SaveChanges();
 		}
+
+		public IQueryable FilterJoin(IQueryable<preg_guides> items)
+		{
+			IQueryable query = (from g in items
+								join p in connect.preg_page on g.page_id equals p.id into joined
+								from j in joined.DefaultIfEmpty()
+								join gt in connect.preg_guides_type on g.guides_type_id equals gt.id into joined2
+								from j2 in joined2.DefaultIfEmpty()
+								select new { g.id, g.guides_type_id, g.page_id, guides_type = j2.type, j.title, j.content, j.page_image });
+			return query;
+		}
+
 		public string resultReturn(preg_guides data)
 		{
 			string result = "{";

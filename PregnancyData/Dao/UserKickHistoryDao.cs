@@ -44,14 +44,6 @@ namespace PregnancyData.Dao
 				{
 					result = result.Where(c => c.kick_result_id == (int)(propertyValue));
 				}
-				else if (propertyName == "kick_date" && propertyValue != null)
-				{
-					result = result.Where(c => c.kick_date == (DateTime)(propertyValue));
-				}
-				else if (propertyName == "duration" && propertyValue != null)
-				{
-					result = result.Where(c => c.duration == (DateTime)(propertyValue));
-				}
 			}
 			return result;
 		}
@@ -80,6 +72,15 @@ namespace PregnancyData.Dao
 		{
 			connect.preg_user_kick_history.Remove(item);
 			connect.SaveChanges();
+		}
+
+		public IQueryable FilterJoin(IQueryable<preg_user_kick_history> items, int user_id)
+		{
+			var query = (from uk in items
+						 join k in connect.preg_kick_result on uk.kick_result_id equals k.id into joined
+						 from j in joined.DefaultIfEmpty()
+						 select new { uk.user_id, uk.kick_result_id, j.kick_date, j.duration });
+			return query;
 		}
 	}
 }

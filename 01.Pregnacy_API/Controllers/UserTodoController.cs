@@ -100,8 +100,17 @@ namespace _01.Pregnacy_API.Controllers
 						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_EXIST);
 					}
 
-					data.user_id = user_id;
+					//Check Todo Exist
+					using (PregnancyEntity connect = new PregnancyEntity())
+					{
+						preg_todo checkTodoExist = connect.preg_todo.Where(c => c.id == data.todo_id).FirstOrDefault();
+						if (checkTodoExist == null)
+						{
+							return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
+						}
+					}
 
+					data.user_id = user_id;
 					if (dao.InsertData(data))
 					{
 						return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);

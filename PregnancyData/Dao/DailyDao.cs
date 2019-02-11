@@ -91,7 +91,7 @@ namespace PregnancyData.Dao
 								from j2 in joined2.DefaultIfEmpty()
 								join td in connect.preg_todo on d.id equals td.day_id into joined3
 								from j3 in joined3.DefaultIfEmpty()
-								select new { d.id, d.title, d.highline_image, d.short_description, d.description, d.daily_blog, j.like, j.comment, j.share, todo_title = j3.title, todo_user_id = (j2.user_id > 0) ? j2.user_id.ToString() : null });
+								select new { d.id, d.title, d.highline_image, d.short_description, d.description, d.daily_blog, d.meta_description, j.like, j.comment, j.share, todo_title = j3.title, todo_id = (j2.user_id > 0) ? j2.todo_id.ToString() : null });
 			return query;
 		}
 	}

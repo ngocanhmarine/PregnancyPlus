@@ -259,6 +259,7 @@
     <Compile Include="Controllers\HospitalBagItemsController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\ImageTypesController.cs" />
+    <Compile Include="Controllers\KickResultDetailController.cs" />
     <Compile Include="Controllers\KickResultsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeController.cs" />
