@@ -135,6 +135,7 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.due_date != null)
 					{
 						pregnancy.due_date = dataUpdate.due_date;
+						pregnancy.start_date = dataUpdate.due_date - TimeSpan.FromDays(280);
 					}
 					if (dataUpdate.show_week != null)
 					{

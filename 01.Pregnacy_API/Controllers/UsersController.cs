@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Linq;
+using RestSharp;
+using Newtonsoft.Json.Linq;
 
 namespace _01.Pregnacy_API.Controllers
 {
@@ -137,9 +139,10 @@ namespace _01.Pregnacy_API.Controllers
 						data.uid = null;
 						if (dao.InsertData(data))
 						{
-							preg_user createdUser = dao.GetUsersByParams(data).FirstOrDefault();
-							createdUser.password = null;
-							return Request.CreateResponse(HttpStatusCode.Created, createdUser);
+							SysMethod.createAccountNop(data);
+							dao.UpdateData(data);
+							data.password = null;
+							return Request.CreateResponse(HttpStatusCode.Created, data);
 						}
 						else
 						{
@@ -188,6 +191,7 @@ namespace _01.Pregnacy_API.Controllers
 				newGuestAccount.uid = null;
 				if (dao.InsertData(newGuestAccount))
 				{
+					SysMethod.createAccountNop(newGuestAccount);
 					return Request.CreateResponse(HttpStatusCode.Created, new { newGuestAccount.phone, password });
 				}
 				else
@@ -261,6 +265,76 @@ namespace _01.Pregnacy_API.Controllers
 				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
 			}
 			catch (Exception ex)
+			{
+				HttpError err = new HttpError(String.Format(SysConst.ITEM_ID_NOT_EXIST, id));
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
+		// DELETE api/values/5
+		[Authorize(Roles = "admin")]
+		[Route("api/users/all")]
+		[HttpDelete]
+		public HttpResponseMessage DeleteAll()
+		{
+			try
+			{
+				PregnancyEntity connect = new PregnancyEntity();
+				IEnumerable<preg_user> users = connect.preg_user;
+				bool chkFlag = true;
+				List<int> listID = new List<int>();
+				foreach (preg_user user in users)
+				{
+					int id = user.id;
+					listID.Add(id);
+				}
+				foreach (int id in listID)
+				{
+					if (id == 4 || id == 409 || id == 130)
+					{
+						continue;
+					}
+					if (!DeleteReferenceData(Convert.ToInt32(id)))
+					{
+						chkFlag = false;
+					}
+
+					dao.DeleteData(Convert.ToInt32(id));
+				}
+				if (!chkFlag)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_DELETE_FAIL);
+				}
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_DELETE_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_DELETE_FAIL);
+			}
+		}
+
+
+		// DELETE api/values/5
+		[Authorize(Roles = "dev, admin")]
+		[Route("api/users/{id}/reset")]
+		[HttpDelete]
+		public HttpResponseMessage Reset(string id)
+		{
+			try
+			{
+				if (!DeleteReferenceData(Convert.ToInt32(id)))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_RESET_FAIL);
+				}
+
+				//preg_user item = dao.GetUserByID(Convert.ToInt32(id)).FirstOrDefault();
+				//item.you_are_the = null;
+				//item.location = null;
+				//item.status = null;
+				//dao.UpdateData(item);
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_RESET_SUCCESS);
+			}
+			catch (Exception)
 			{
 				HttpError err = new HttpError(String.Format(SysConst.ITEM_ID_NOT_EXIST, id));
 				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);

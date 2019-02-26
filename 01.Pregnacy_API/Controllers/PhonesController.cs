@@ -67,7 +67,7 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					data.user_id = user_id;
 					dao.InsertData(data);
-					return Request.CreateResponse(HttpStatusCode.Created, SysConst.DATA_INSERT_SUCCESS);
+					return Request.CreateResponse(HttpStatusCode.Created, data);
 				}
 				else
 				{

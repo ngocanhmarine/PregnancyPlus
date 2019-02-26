@@ -26,7 +26,7 @@ namespace _01.Pregnacy_API.Controllers
 					IQueryable<preg_user_kick_history> result = dao.GetItemByParams(data);
 					if (result.Any())
 					{
-						return Request.CreateResponse(HttpStatusCode.OK, result);
+						return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result, user_id));
 					}
 					else
 					{

@@ -145,14 +145,26 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.comment != null)
 					{
 						weekly_interact.comment = dataUpdate.comment;
+						if (dataUpdate.comment.ToLower() == "null")
+						{
+							weekly_interact.comment = null;
+						}
 					}
 					if (dataUpdate.photo != null)
 					{
 						weekly_interact.photo = dataUpdate.photo;
+						if (dataUpdate.photo.ToLower() == "null")
+						{
+							weekly_interact.photo = null;
+						}
 					}
 					if (dataUpdate.share != null)
 					{
 						weekly_interact.share = dataUpdate.share;
+						if (dataUpdate.share.ToLower() == "null")
+						{
+							weekly_interact.share = null;
+						}
 					}
 					if (dataUpdate.notification != null)
 					{

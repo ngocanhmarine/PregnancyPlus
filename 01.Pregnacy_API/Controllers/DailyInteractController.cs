@@ -129,34 +129,38 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				if (!dataUpdate.DeepEquals(new preg_daily_interact()))
 				{
-					preg_daily_interact daily = new preg_daily_interact();
-					daily = dao.GetItemByID(Convert.ToInt32(daily_id), Convert.ToInt32(user_id)).FirstOrDefault();
-					if (daily == null)
+					preg_daily_interact dailyInteract = new preg_daily_interact();
+					dailyInteract = dao.GetItemByID(Convert.ToInt32(daily_id), Convert.ToInt32(user_id)).FirstOrDefault();
+					if (dailyInteract == null)
 					{
 						return Request.CreateErrorResponse(HttpStatusCode.NotFound, SysConst.DATA_NOT_FOUND);
 					}
 					if (dataUpdate.like != null)
 					{
-						daily.like = dataUpdate.like;
+						dailyInteract.like = dataUpdate.like;
 					}
 					if (dataUpdate.comment != null)
 					{
-						daily.comment = dataUpdate.comment;
+						dailyInteract.comment = dataUpdate.comment;
+						if (dataUpdate.comment.ToLower() == "null")
+						{
+							dailyInteract.comment = null;
+						}
 					}
 					if (dataUpdate.share != null)
 					{
-						daily.share = dataUpdate.share;
+						dailyInteract.share = dataUpdate.share;
 					}
 					if (dataUpdate.notification != null)
 					{
-						daily.notification = dataUpdate.notification;
+						dailyInteract.notification = dataUpdate.notification;
 					}
 					if (dataUpdate.status != null)
 					{
-						daily.status = dataUpdate.status;
+						dailyInteract.status = dataUpdate.status;
 					}
 
-					dao.UpdateData(daily);
+					dao.UpdateData(dailyInteract);
 					return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_UPDATE_SUCCESS);
 				}
 				else

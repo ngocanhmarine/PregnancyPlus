@@ -77,9 +77,15 @@ namespace PregnancyData.Dao
 		public IQueryable FilterJoin(IQueryable<preg_user_kick_history> items, int user_id)
 		{
 			var query = (from uk in items
-						 join k in connect.preg_kick_result on uk.kick_result_id equals k.id into joined
-						 from j in joined.DefaultIfEmpty()
-						 select new { uk.user_id, uk.kick_result_id, j.kick_date, j.duration });
+						 join krd in (from uk in items
+									  join krd in connect.preg_kick_result_detail on uk.kick_result_id equals krd.kick_result_id
+									  group krd by krd.kick_result_id into joined
+									  from j in joined.DefaultIfEmpty().Distinct()
+									  select new { count = joined.Count() > 0 ? joined.Count() : 0, j.kick_result_id }).Distinct() on uk.kick_result_id equals krd.kick_result_id into joinedKrd
+						 from j in joinedKrd.DefaultIfEmpty()
+						 join k in connect.preg_kick_result on uk.kick_result_id equals k.id into joined2
+						 from j2 in joined2.DefaultIfEmpty()
+						 select new { uk.user_id, uk.kick_result_id, j2.kick_date, j2.duration, kick = j.count > 0 ? j.count : 0 });
 			return query;
 		}
 	}

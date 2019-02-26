@@ -126,7 +126,7 @@ namespace PregnancyData.Dao
 			IQueryable query = (from u in items
 								join up in myPregnancy on u.id equals up.user_id into joined
 								from j in joined.DefaultIfEmpty()
-								select new { u.id, u.phone, u.social_type_id, u.first_name, u.last_name, u.you_are_the, u.location, u.status, u.avatar, u.email, u.uid, u.time_created, u.time_last_login, j.baby_gender, j.due_date });
+								select new { u.id, u.phone, u.social_type_id, u.first_name, u.last_name, u.you_are_the, u.location, u.status, u.avatar, u.email, u.uid, u.time_created, u.time_last_login, u.nopcustomer_id, j.baby_gender, j.due_date });
 			return query;
 		}
 	}

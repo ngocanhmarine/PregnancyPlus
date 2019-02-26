@@ -76,6 +76,7 @@ namespace _01.Pregnacy_API
 							user.social_type_id = (int)SysConst.SocialTypes.facebook;
 							user.time_created = DateTime.Now;
 							connect.preg_user.Add(user);
+							SysMethod.createAccountNop(user);
 							connect.SaveChanges();
 							user = connect.preg_user.Where(c => c.uid == userInfo.id && c.social_type_id == (int)SysConst.SocialTypes.facebook).FirstOrDefault();
 						}
@@ -90,6 +91,7 @@ namespace _01.Pregnacy_API
 
 						var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
+						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.user.ToString()));
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
 						identity.AddClaim(new Claim("id", user.id.ToString()));
 						context.Validated(identity);
@@ -151,6 +153,7 @@ namespace _01.Pregnacy_API
 							user.social_type_id = (int)SysConst.SocialTypes.google;
 							user.time_created = DateTime.Now;
 							connect.preg_user.Add(user);
+							SysMethod.createAccountNop(user);
 							connect.SaveChanges();
 							user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
 						}
@@ -165,6 +168,7 @@ namespace _01.Pregnacy_API
 
 						var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
+						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.user.ToString()));
 						identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
 						identity.AddClaim(new Claim("id", user.id.ToString()));
 						context.Validated(identity);
@@ -220,6 +224,7 @@ namespace _01.Pregnacy_API
 								user.social_type_id = (int)SysConst.SocialTypes.google;
 								user.time_created = DateTime.Now;
 								connect.preg_user.Add(user);
+								SysMethod.createAccountNop(user);
 								connect.SaveChanges();
 								user = connect.preg_user.Where(c => c.uid == userInfo.sub && c.social_type_id == (int)SysConst.SocialTypes.google).FirstOrDefault();
 							}
@@ -234,6 +239,7 @@ namespace _01.Pregnacy_API
 
 							var identity = new ClaimsIdentity(context.Options.AuthenticationType);
 							identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.social.ToString()));
+							identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.user.ToString()));
 							identity.AddClaim(new Claim(ClaimTypes.Role, SysConst.UserType.dev.ToString()));
 							identity.AddClaim(new Claim("id", user.id.ToString()));
 							context.Validated(identity);

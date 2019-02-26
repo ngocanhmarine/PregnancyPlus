@@ -70,11 +70,29 @@ namespace PregnancyData.Dao
 		/// <param name="items"></param>
 		/// <param name="user_id"></param>
 		/// <returns></returns>
-		public IQueryable FilterJoin(IQueryable<preg_kick_result> items, int user_id)
+		public IQueryable<preg_kick_result> FilterByUserID(IQueryable<preg_kick_result> items, int user_id)
 		{
-			IQueryable query = (from ks in items
-								join ukh in connect.preg_user_kick_history on new { ks.id, user_id } equals new { id = ukh.kick_result_id, ukh.user_id }
-								select ks);
+			IQueryable<preg_kick_result> query = (from ks in items
+												  join ukh in connect.preg_user_kick_history on new { ks.id, user_id } equals new { id = ukh.kick_result_id, ukh.user_id }
+												  select ks);
+			return query;
+		}
+
+		/// <summary>
+		/// Filter the result, join with kick count in preg_kick_result_detail
+		/// </summary>
+		/// <param name="items"></param>
+		/// <returns></returns>
+		public IQueryable FilterJoin(IQueryable<preg_kick_result> items)
+		{
+			IQueryable query = (from kr in items
+								join krd in (from kr in items
+											 join krd in connect.preg_kick_result_detail on kr.id equals krd.kick_result_id
+											 group krd by krd.kick_result_id into joined
+											 from j in joined.DefaultIfEmpty().Distinct()
+											 select new { count = joined.Count() > 0 ? joined.Count() : 0, j.kick_result_id }).Distinct() on kr.id equals krd.kick_result_id into joinedKrd
+								from j in joinedKrd.DefaultIfEmpty()
+								select new { kr.id, kr.kick_date, kr.duration, kick = j.count > 0 ? j.count : 0 });
 			return query;
 		}
 	}

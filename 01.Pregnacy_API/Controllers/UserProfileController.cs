@@ -114,6 +114,34 @@ namespace _01.Pregnacy_API.Controllers
 			}
 		}
 
+		// DELETE api/values/5
+		[Authorize(Roles = "dev, admin")]
+		[Route("api/userprofile/reset")]
+		[HttpDelete]
+		public HttpResponseMessage Reset()
+		{
+			try
+			{
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
+				if (!DeleteReferenceData(user_id))
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.DATA_RESET_FAIL);
+				}
+
+				//preg_user item = userdao.GetUserByID(user_id).FirstOrDefault();
+				//item.you_are_the = null;
+				//item.location = null;
+				//item.status = null;
+				//userdao.UpdateData(item);
+				return Request.CreateResponse(HttpStatusCode.Accepted, SysConst.DATA_RESET_SUCCESS);
+			}
+			catch (Exception ex)
+			{
+				HttpError err = new HttpError(ex.Message);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, err);
+			}
+		}
+
 		public HttpResponseMessage UpdateData(string user_id, [FromBody]preg_user dataUpdate)
 		{
 			try
@@ -343,60 +371,67 @@ namespace _01.Pregnacy_API.Controllers
 		[HttpPost]
 		public async Task<HttpResponseMessage> Upload()
 		{
-			// Get current user_id
-			int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
-
-			string dir = "/Files/Upload/Users/" + user_id.ToString() + "/Avatar/";
-			string dirRoot = HttpContext.Current.Server.MapPath(dir);
-			// Check if request contains multipart/form-data
-			if (!Request.Content.IsMimeMultipartContent())
-			{
-				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-			}
-			// Check if directory folder created
-			if (!Directory.Exists(dirRoot))
-			{
-				Directory.CreateDirectory(dirRoot);
-			}
-			// Check if image filetype
-			for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
-			{
-				HttpPostedFile file = HttpContext.Current.Request.Files[i];
-				if (!SysConst.imgOnlyExtensions.Any(x => x.Equals(Path.GetExtension(file.FileName.ToLower()), StringComparison.OrdinalIgnoreCase)))
-				{
-					return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.INVALID_FILE_TYPE);
-				}
-				// Check if exist file
-				else if (File.Exists(dirRoot + "/" + file.FileName))
-				{
-					File.Delete(dirRoot + "/" + file.FileName);
-				}
-			}
-
-			CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(dirRoot);
-
-			List<string> files = new List<string>();
-
 			try
 			{
-				// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
-				await Request.Content.ReadAsMultipartAsync(provider);
+				// Get current user_id
+				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 
-				// Update to database
-				preg_user updateRow = new preg_user();
-				foreach (MultipartFileData file in provider.FileData)
+				string dir = "/Files/Upload/Users/" + user_id.ToString() + "/Avatar/";
+				string dirRoot = HttpContext.Current.Server.MapPath(dir);
+				// Check if request contains multipart/form-data
+				if (!Request.Content.IsMimeMultipartContent())
 				{
-					string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
-					files.Add(path);
-					updateRow.avatar = path;
+					throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
 				}
-				UpdateData(user_id.ToString(), updateRow);
+				// Check if directory folder created
+				if (!Directory.Exists(dirRoot))
+				{
+					Directory.CreateDirectory(dirRoot);
+				}
+				// Check if image filetype
+				for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
+				{
+					HttpPostedFile file = HttpContext.Current.Request.Files[i];
+					if (!SysConst.imgOnlyExtensions.Any(x => x.Equals(Path.GetExtension(file.FileName.ToLower()), StringComparison.OrdinalIgnoreCase)))
+					{
+						return Request.CreateErrorResponse(HttpStatusCode.BadRequest, SysConst.INVALID_FILE_TYPE);
+					}
+					// Check if exist file
+					else if (File.Exists(dirRoot + "/" + file.FileName))
+					{
+						File.Delete(dirRoot + "/" + file.FileName);
+					}
+				}
 
-				return Request.CreateResponse(HttpStatusCode.Created, files);
+				CustomMultipartFormDataStreamProvider provider = new CustomMultipartFormDataStreamProvider(dirRoot);
+
+				List<string> files = new List<string>();
+
+				try
+				{
+					// Read all contents of multipart message into CustomMultipartFormDataStreamProvider.
+					await Request.Content.ReadAsMultipartAsync(provider);
+
+					// Update to database
+					preg_user updateRow = new preg_user();
+					foreach (MultipartFileData file in provider.FileData)
+					{
+						string path = dir + "/" + HttpUtility.UrlPathEncode(Path.GetFileName(file.LocalFileName));
+						files.Add(path);
+						updateRow.avatar = path;
+					}
+					UpdateData(user_id.ToString(), updateRow);
+
+					return Request.CreateResponse(HttpStatusCode.Created, files);
+				}
+				catch (System.Exception ex)
+				{
+					return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+				}
 			}
-			catch (System.Exception ex)
+			catch (Exception ex)
 			{
-				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+				return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex.Message);
 			}
 		}
 

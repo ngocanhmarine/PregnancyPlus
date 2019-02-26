@@ -30,9 +30,10 @@ namespace _01.Pregnacy_API.Controllers
 				{
 					result = dao.GetListItem();
 				}
+				result = dao.FilterByUserID(result, user_id);
 				if (result.Any())
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result, user_id));
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(result));
 				}
 				else
 				{
@@ -56,9 +57,10 @@ namespace _01.Pregnacy_API.Controllers
 			{
 				int user_id = Convert.ToInt32(((ClaimsIdentity)(User.Identity)).FindFirst("id").Value);
 				IQueryable<preg_kick_result> data = dao.GetItemByID(Convert.ToInt32(id));
+				data = dao.FilterByUserID(data, user_id);
 				if (data.Any())
 				{
-					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(data, user_id));
+					return Request.CreateResponse(HttpStatusCode.OK, dao.FilterJoin(data));
 				}
 				else
 				{

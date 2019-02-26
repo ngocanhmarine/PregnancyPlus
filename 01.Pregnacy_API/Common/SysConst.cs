@@ -38,6 +38,8 @@ public class SysConst
 	public static string DATA_INSERT_FAIL = "Data insert failed.";
 	public static string DATA_UPDATE_SUCCESS = "Data update succeed.";
 	public static string DATA_UPDATE_FAIL = "Data update failed.";
+	public static string DATA_RESET_SUCCESS = "Data reset succeed.";
+	public static string DATA_RESET_FAIL = "Data reset failed.";
 	public static string DATA_DELETE_SUCCESS = "Data delete succeed.";
 	public static string DATA_DELETE_FAIL = "Data delete failed.";
 	public static string LOGIN_FAILED = "Provided username & password is incorrect.";

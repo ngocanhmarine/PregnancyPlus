@@ -144,26 +144,50 @@ namespace _01.Pregnacy_API.Controllers
 					if (dataUpdate.title != null)
 					{
 						daily.title = dataUpdate.title;
+						if (dataUpdate.title.ToLower() == "null")
+						{
+							daily.title = null;
+						}
 					}
 					if (dataUpdate.highline_image != null)
 					{
 						daily.highline_image = dataUpdate.highline_image;
+						if (dataUpdate.highline_image.ToLower() == "null")
+						{
+							daily.highline_image = null;
+						}
 					}
 					if (dataUpdate.short_description != null)
 					{
 						daily.short_description = dataUpdate.short_description;
+						if (dataUpdate.short_description.ToLower() == "null")
+						{
+							daily.short_description = null;
+						}
 					}
 					if (dataUpdate.description != null)
 					{
 						daily.description = dataUpdate.description;
+						if (dataUpdate.description.ToLower() == "null")
+						{
+							daily.description = null;
+						}
 					}
 					if (dataUpdate.daily_blog != null)
 					{
 						daily.daily_blog = dataUpdate.daily_blog;
+						if (dataUpdate.daily_blog.ToLower() == "null")
+						{
+							daily.daily_blog = null;
+						}
 					}
 					if (dataUpdate.meta_description != null)
 					{
 						daily.meta_description = dataUpdate.meta_description;
+						if (dataUpdate.meta_description.ToLower() == "null")
+						{
+							daily.meta_description = null;
+						}
 					}
 
 					dao.UpdateData(daily);
